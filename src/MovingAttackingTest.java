@@ -28,9 +28,44 @@ public class MovingAttackingTest extends GraphicsProgram
 		 ring = new GOval((SCREEN_HEIGHT - (ATTACK_RING - BALL_CIRC))/2, (SCREEN_WIDTH - (ATTACK_RING - BALL_CIRC))/2, ATTACK_RING, ATTACK_RING);
 		 ball.setFilled(true);
 		 ball.setFillColor(Color.RED);
+		 addKeyListeners();
 		 addMouseListeners();
 		 
 		 add(ball);
+	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+		
+		//standard 4 directions
+		if (e.getKeyChar() == 'w')
+		{
+			ball.move(0, -50);
+			ring.move(0, -50);
+		}
+		else if (e.getKeyChar() == 's')
+		{
+			ball.move(0, 50);
+			ring.move(0, 50);
+		}
+		
+		else if (e.getKeyChar() == 'a')
+		{
+			ball.move(-50, 0);
+			ring.move(-50, 0);
+		}
+		else if (e.getKeyChar() == 'd')
+		{
+			ball.move(50, 0);
+			ring.move(50, 0);
+		}
+		
+		//Bidirectional
+		else if (e.getKeyChar() == 'w' && e.getKeyChar() == 'd')
+		{
+			ball.move(50, -50);
+			ring.move(50, -50);
+		}
 	}
 	
 	public void mousePressed(MouseEvent e) {
