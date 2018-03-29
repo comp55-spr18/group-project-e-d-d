@@ -12,6 +12,6 @@ public interface Actor
 	public int getY();
 	public void setX(int x);
 	public void setY(int y);
-	public void setSprite(GImage image);
+	public void setSprite(GImage sprite);
 	public GImage getSprite();
 }
