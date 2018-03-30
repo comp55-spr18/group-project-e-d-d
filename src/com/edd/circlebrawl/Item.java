@@ -2,6 +2,9 @@ package com.edd.circlebrawl;
 
 public abstract class Item extends BaseActor {
 	
+	// Multiply any stat effects by this number
+	protected int multiple;
+	
 	public void consume(BaseActor consumer) {
 		// Access the item list
 		if(CircleBrawl.ITEM_LIST.contains(this)) {
