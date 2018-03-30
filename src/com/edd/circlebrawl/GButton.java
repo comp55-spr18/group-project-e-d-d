@@ -1,3 +1,4 @@
+package com.edd.circlebrawl;
 
 /*
  * File: GButton.java

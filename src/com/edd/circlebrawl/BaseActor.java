@@ -1,3 +1,4 @@
+package com.edd.circlebrawl;
 import acm.graphics.*;
 import acm.program.GraphicsProgram;
 
@@ -15,5 +16,8 @@ public abstract class BaseActor implements Actor {
 	public void setX(int x) { this.x = x; }
 	public void setY(int y) { this.y = y; }
 	public void setSprite(GImage sprite) { this.sprite = sprite; }
+	
+	//collision detection
+	public boolean collidesWith(BaseActor anotherActor) { return false; } // TODO: Make function
 	
 }

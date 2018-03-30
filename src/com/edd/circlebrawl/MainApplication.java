@@ -1,3 +1,4 @@
+package com.edd.circlebrawl;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;

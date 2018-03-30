@@ -1,3 +1,4 @@
+package com.edd.circlebrawl;
 import java.util.ArrayList;
 
 import acm.graphics.GObject;

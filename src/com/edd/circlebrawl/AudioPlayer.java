@@ -1,3 +1,4 @@
+package com.edd.circlebrawl;
 
 /*
  * Typical usage of the AudioPlayer.java

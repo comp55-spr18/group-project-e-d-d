@@ -1,3 +1,4 @@
+package com.edd.circlebrawl;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
