@@ -6,6 +6,7 @@ public abstract class BaseActor implements Actor {
 	private int x;
 	private int y;
 	private GImage sprite;
+	private CircleBrawl driver;
 	
 	//basic getters for the coordinates and for the sprite
 	public int getX() { return this.x; }
@@ -17,7 +18,8 @@ public abstract class BaseActor implements Actor {
 	public void setY(int y) { this.y = y; }
 	public void setSprite(GImage sprite) { this.sprite = sprite; }
 	
-	//collision detection
+	//other
 	public boolean collidesWith(BaseActor anotherActor) { return false; } // TODO: Make function
+	public void remove() { driver.remove(sprite); };
 	
 }

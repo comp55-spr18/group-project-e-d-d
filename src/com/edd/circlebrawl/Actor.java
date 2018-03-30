@@ -19,6 +19,7 @@ public interface Actor
 	public void setY(int y);
 	public void setSprite(GImage sprite);
 	
-	//collision detection
+	//other
 	public boolean collidesWith(BaseActor anotherActor);
+	public void remove();
 }
