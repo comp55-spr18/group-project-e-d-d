@@ -3,10 +3,10 @@ import acm.graphics.*;
 import acm.program.GraphicsProgram;
 
 public abstract class BaseActor implements Actor {
-	protected int x;
-	protected int y;
-	protected GImage sprite;
-	protected CircleBrawl driver;
+	private int x;
+	private int y;
+	private GImage sprite;
+	private CircleBrawl driver;
 	
 	//basic getters for the coordinates and for the sprite
 	public int getX() { return this.x; }
