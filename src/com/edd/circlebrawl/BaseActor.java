@@ -21,5 +21,10 @@ public abstract class BaseActor implements Actor {
 	//other
 	public boolean collidesWith(BaseActor anotherActor) { return false; } // TODO: Make function
 	public void remove() { driver.remove(sprite); };
+	public void setupSprite(String spriteFile) {
+		sprite = new GImage(spriteFile);
+		sprite.setLocation(x+sprite.getWidth()/2,y+sprite.getHeight()/2); // TODO: This is created assuming that the x and y of actors represent topleft corners.
+		driver.add(sprite);
+	}
 	
 }

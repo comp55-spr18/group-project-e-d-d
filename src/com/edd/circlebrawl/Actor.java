@@ -22,4 +22,5 @@ public interface Actor
 	//other
 	public boolean collidesWith(BaseActor anotherActor);
 	public void remove();
+	public void setupSprite(String spriteFile);
 }

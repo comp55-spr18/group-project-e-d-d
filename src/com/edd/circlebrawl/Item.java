@@ -2,13 +2,13 @@ package com.edd.circlebrawl;
 
 public abstract class Item extends BaseActor {
 	
-	// Multiply any stat effects by this number
-	protected int multiple;
+	protected int multiple; // multiply any stat effects by this number
+	protected int efficacy; // the strength of the item
 	
 	public void consume(BaseActor consumer) {
 		// Access the item list
-		if(CircleBrawl.ITEM_LIST.contains(this)) {
-			CircleBrawl.ITEM_LIST.remove(this); // remove this item from the global list
+		if(driver.ITEM_LIST.contains(this)) {
+			driver.ITEM_LIST.remove(this); // remove this item from the global list
 		}
 		
 		remove(); // remove this item from visual display of screen
