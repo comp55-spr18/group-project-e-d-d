@@ -1,7 +1,7 @@
 package com.edd.server;
 
 import java.net.*;
-import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.io.*;
 
 public class ServerHandler extends Thread {
@@ -9,8 +9,6 @@ public class ServerHandler extends Thread {
 	private PrintWriter out = null;
 	private BufferedReader in = null;
 	private ServerListener SL = null;
-	
-	private boolean clientInit = false;
 	
 	public ServerHandler(Socket socket, ServerListener SL) {
 		super("ServerHandler");
@@ -29,17 +27,83 @@ public class ServerHandler extends Thread {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String inputLine;
-
+			
 			while ((inputLine = in.readLine()) != null) {
+				System.out.println(inputLine);
 				if(inputLine.contains("<newclient>")) {
-					this.string_between(inputLine, "<newclient>", "</newclient>");
-					SL.clients.add(out);
-					System.out.println("new client: " + SL.clients);
+					String clientName = this.string_between(inputLine, "<newclient>", "</newclient>");
+					SL.clients.put(new ServerPlayer(clientName), out);
+					System.out.println("new client: " + SL.clients.keySet());
+					handleNewClient(clientName);
 				}
 			}
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void sendGlobalPacket(String packet) {
+		// From https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+		    PrintWriter out = entry.getValue();
+		    out.println(packet);
+		}
+	}
+	
+	public void sendGlobalPacket(String packet, String doNotSendTo) {
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+			String name = entry.getKey().getPlayerName();
+		    PrintWriter out = entry.getValue();
+		    if(name.equals(doNotSendTo))
+		    		continue;
+		    out.println(packet);
+		}
+	}
+	
+	public PrintWriter getPlayerSocket(String playerName) {
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+			String name = entry.getKey().getPlayerName();
+		    PrintWriter out = entry.getValue();
+		    if(name.equals(playerName)) {
+		    		return out;
+		    }
+		}
+		return null;
+	}
+	
+	public void sendPlayerPacket(String packet) {
+		out.println(packet);
+	}
+	
+	public void sendPlayerPacket(String packet, String playerName) {
+		PrintWriter w = getPlayerSocket(playerName);
+		w.println(packet);
+	}
+	
+	public String buildPlayerPacket(String playerName, int x, int y) {
+		return "(" + playerName + "," + x + "," + y + ")";
+	}
+	
+	public void sendPlayerList(String playerName) {
+		String allPlayers = "";
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+			String name = entry.getKey().getPlayerName();
+			int x = entry.getKey().getPlayerX();
+			int y = entry.getKey().getPlayerY();
+		    if(name.equals(playerName))
+		    		continue;
+		    allPlayers += buildPlayerPacket(name, x, y) + ",";
+		}
+		sendPlayerPacket("<playerlist>" + allPlayers + "</playerlist>", playerName);
+	}
+	
+	public void handleNewClient(String playerName) {
+		sendPlayerList(playerName);
+		sendGlobalPacket("<newclient>"+playerName+"</newclient>", playerName);
+	}
+	
+	public void handlePlayerMove(String clientName) {
+		
 	}
 }
