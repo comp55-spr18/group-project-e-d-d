@@ -16,7 +16,7 @@ public class Resource extends Item {
 	@Override
 	public void activate(BaseActor consumer) {
 		if(consumer instanceof Character) {
-			((Character)consumer).changeSize(efficacy*multiple);
+			((Character)consumer).modifySize(efficacy*multiple);
 		}
 	}
 
