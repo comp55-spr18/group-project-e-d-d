@@ -1,10 +1,9 @@
 package com.edd.powerup;
 
 import com.edd.circlebrawl.BaseActor;
+import com.edd.circlebrawl.Character;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
-
-import acm.graphics.GImage;
 
 public class PowerUp extends Item {
 
@@ -24,8 +23,24 @@ public class PowerUp extends Item {
 	
 	@Override
 	public void activate(BaseActor consumer) {
-		// TODO Auto-generated method stub
-		
+		if(consumer instanceof Character) {
+			Character consumerChar = (Character)consumer;
+			int finalEfficacy = getFinalEfficacy();
+			switch(type) {
+				case SPEED:
+					consumerChar.modifySpeed(finalEfficacy);
+					//TODO: Insert logic for reset in speed after time.
+					//consumerChar.modifySpeed(-finalEfficacy);
+				case STRENGTH:
+					consumerChar.modifyStrength(finalEfficacy);
+					//TODO: Insert logic for reset in strength after time
+					//consumerChar.modifyStrength(-finalEfficacy);
+				case ENDURANCE:
+					consumerChar.modifyDefense(finalEfficacy);
+					//TODO: Insert logic for reset in defense after time
+					//consumerChar.modifyDefense(-finalEfficacy);
+			}
+		}
 	}
 
 }

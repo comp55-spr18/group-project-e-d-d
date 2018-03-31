@@ -26,4 +26,8 @@ public abstract class Item extends BaseActor {
 		return false;
 	}
 	
+	protected int getFinalEfficacy() { // returns the efficacy and any modifiers one may want to make to it
+		return efficacy*multiple;
+	}
+	
 }
