@@ -50,6 +50,10 @@ public class MovingAttackingTest extends GraphicsProgram {
 			pause(10);
 		}
 	}
+	
+	public void tick() {
+		
+	}
 
 
 	public void keyPressed(KeyEvent e) {
