@@ -9,21 +9,21 @@ package com.edd.circlebrawl;
 import acm.graphics.GImage;
 
 public interface Actor {
-	// getters
+	// Setters
+	public void setX(double x);
+
+	public void setY(double y);
+
+	public void setSprite(GImage sprite);
+
+	// Setters
 	public double getX();
 
 	public double getY();
 
 	public GImage getSprite();
 
-	// setters
-	public void setX(int x);
-
-	public void setY(int y);
-
-	public void setSprite(GImage sprite);
-
-	// other
+	// Other
 	public boolean collidesWith(BaseActor anotherActor);
 
 	public void remove();
