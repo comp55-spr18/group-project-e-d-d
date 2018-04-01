@@ -42,5 +42,7 @@ public class PowerUp extends Item {
 			}
 		}
 	}
+	
+	public void tick() {};
 
 }

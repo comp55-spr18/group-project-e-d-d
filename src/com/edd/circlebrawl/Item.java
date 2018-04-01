@@ -1,6 +1,6 @@
 package com.edd.circlebrawl;
 
-public abstract class Item extends BaseActor {
+public abstract class Item extends BaseActor implements Tick {
 	
 	protected int multiple; // multiply any stat effects by this number
 	protected int efficacy; // the strength of the item
@@ -29,5 +29,7 @@ public abstract class Item extends BaseActor {
 	protected int getFinalEfficacy() { // returns the efficacy and any modifiers one may want to make to it
 		return efficacy*multiple;
 	}
+	
+	public abstract void tick();
 	
 }

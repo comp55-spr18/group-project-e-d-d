@@ -19,5 +19,7 @@ public class Resource extends Item {
 			((Character)consumer).modifySize(efficacy*multiple);
 		}
 	}
+	
+	public void tick() {}
 
 }
