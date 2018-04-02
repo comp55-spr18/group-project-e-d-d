@@ -18,11 +18,11 @@ public class CircleBrawl extends MainApplication implements Tick {
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
-	public final int WINDOW_HEIGHT = 1024;
-	public final int WINDOW_WIDTH = 768;
+	public final int WINDOW_WIDTH = 1024;
+	public final int WINDOW_HEIGHT = 768;
 	private double velX = 0;
 	private double velY = 0;
-	private Player player = new Player(MAP_WIDTH/2-100,MAP_HEIGHT/2-100,this);
+	private Player player;
 	
 	private final int BALL_CIRC = 100;
 	public static final int ATTACK_RING = 150;
@@ -40,11 +40,16 @@ public class CircleBrawl extends MainApplication implements Tick {
 	
 	@Override
 	public void init() {
-		setSize(WINDOW_HEIGHT, WINDOW_HEIGHT);
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	}
 	
 	@Override
 	public void run() {
+		for(int i=0;i<5;i++)
+			ITEM_LIST.add(POWERUP_GEN.generatePowerUp());
+		
+		player = new Player(MAP_WIDTH/2-100,MAP_HEIGHT/2-100,this);
+		
 		ring = new GOval(player.x+30,player.y+30,140,140);
 		addKeyListeners();
 		addMouseListeners();
@@ -58,8 +63,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 		int frames = 0;
 		long timer = System.currentTimeMillis();
 		
-		for(int i=0;i<5;i++)
-			ITEM_LIST.add(POWERUP_GEN.generatePowerUp());
+		
 		
 		GLabel g = new GLabel("Ticks: " + ticks + "\nFrames: " + frames);
 		g.setLocation(WINDOW_WIDTH - g.getX(), WINDOW_HEIGHT - g.getY());
@@ -122,24 +126,29 @@ public class CircleBrawl extends MainApplication implements Tick {
 		double x = player.getX();
 		double y = player.getY();
 		
+		
 		int count = 0;
         int LKP = lastKeyPressed;
         if(keyW && y >= 0) {
 	    	yVelocity = -10;
+	    	System.out.println("Y: " + y);
 	    }
         
-        else if(keyS && y + BALL_CIRC <= 768) {
+        else if(keyS && y + BALL_CIRC * 2 <= 768) {
 	    	yVelocity = 10;
+	    	System.out.println("Y: " + y);
 	    }
         else 
         	yVelocity = 0;
         
 	    if(keyLEFT && x >= 0) {
 	    	xVelocity = -10;
+	    	System.out.println("X: " + x);
 	    }
 	    
-	    else if(keyRIGHT && x + BALL_CIRC <= 1024) {
+	    else if(keyRIGHT && x + BALL_CIRC * 2 <= 1024) {
 	    	xVelocity = 10;
+	    	System.out.println("X: " + x);
 	    }
 	    else 
 	    	xVelocity = 0;
