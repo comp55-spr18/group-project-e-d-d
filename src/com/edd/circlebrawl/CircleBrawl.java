@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import com.edd.osvaldo.MainApplication;
 import com.edd.powerup.PowerUpGenerator;
 import acm.graphics.*;
 

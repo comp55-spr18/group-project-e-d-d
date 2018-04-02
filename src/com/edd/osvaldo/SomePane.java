@@ -1,4 +1,4 @@
-package com.edd.circlebrawl;
+package com.edd.osvaldo;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
