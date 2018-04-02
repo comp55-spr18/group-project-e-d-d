@@ -9,8 +9,8 @@ public class CircleBrawl extends MainApplication implements Tick {
 
 	public final ArrayList<Item> ITEM_LIST = new ArrayList<Item>();
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
-	public final int MAP_WIDTH = 10000;
-	public final int MAP_HEIGHT = 10000;
+	public final int MAP_WIDTH = 1024;
+	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_HEIGHT = 1024;
 	public final int WINDOW_WIDTH = 768;
 	private double velX = 0;

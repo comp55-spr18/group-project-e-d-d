@@ -46,18 +46,18 @@ public class PowerUp extends Item {
 		}
 	}
 	
-	public void tick() {}
+	public void tick() {
+		
+	}
 
 	
 	
 	// The following methods needed to be implemented or else Java complained. 
-	@Override
 	public void setX(int x) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
+	
 	public void setY(int y) {
 		// TODO Auto-generated method stub
 		
