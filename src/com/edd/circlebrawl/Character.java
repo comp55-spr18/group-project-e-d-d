@@ -27,4 +27,10 @@ public abstract class Character extends BaseActor {
 	public int getSpeed() { return speed; }
 	public int getStrength() { return strength; }
 	
+	public void move(double x, double y) {
+		sprite.move(x,y);
+		this.x += x;
+		this.y += y;
+	}
+	
 }

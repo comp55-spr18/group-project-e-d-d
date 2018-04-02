@@ -10,9 +10,6 @@ public class PowerUp extends Item {
 	private int time; // how many seconds the PowerUp stays in effect for
 	private PowerUpType type; // the type of the PowerUp
 	
-	private int x;
-	private int y;
-	
 	public PowerUp(int x, int y, CircleBrawl driver, int efficacy, int multiple, PowerUpType type) {
 		this.x = x;
 		this.y = y;
@@ -49,24 +46,5 @@ public class PowerUp extends Item {
 	public void tick() {
 		
 	}
-
-	
-	
-	// The following methods needed to be implemented or else Java complained. 
-	public void setX(int x) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void setY(int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setupSprite(String spriteFile) {
-		// TODO Auto-generated method stub
-		
-	};
 
 }

@@ -4,16 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-
 import javax.swing.Timer;
+
+import com.edd.powerup.PowerUpGenerator;
 
 import acm.graphics.GLabel;
 import acm.graphics.GOval;
 import acm.program.GraphicsProgram;
 
 public class MovingAttackingTest extends GraphicsProgram {
-	public static final int SCREEN_HEIGHT = 768;
-	public static final int SCREEN_WIDTH = 1024;
+	public final int MAP_WIDTH = 1024;
+	public final int MAP_HEIGHT = 768;
+	public final int WINDOW_HEIGHT = 1024;
+	public final int WINDOW_WIDTH = 768;
 	private final int BALL_CIRC = 100;
 	public static final int ATTACK_RING = 150;
 	private int keyI;
@@ -29,15 +32,13 @@ public class MovingAttackingTest extends GraphicsProgram {
 
 
 	public void run() {
-		ball = new GOval(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, BALL_CIRC, BALL_CIRC);
-		ring = new GOval((SCREEN_WIDTH - (ATTACK_RING - BALL_CIRC)) / 2,
-				(SCREEN_HEIGHT - (ATTACK_RING - BALL_CIRC)) / 2, ATTACK_RING, ATTACK_RING);
+		ball = new GOval(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, BALL_CIRC, BALL_CIRC);
+		ring = new GOval((WINDOW_WIDTH - (ATTACK_RING - BALL_CIRC)) / 2,
+				(WINDOW_HEIGHT - (ATTACK_RING - BALL_CIRC)) / 2, ATTACK_RING, ATTACK_RING);
 		ball.setFilled(true);
 		ball.setFillColor(Color.RED);
 		addKeyListeners();
 		addMouseListeners();
-		
-		
 		
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
@@ -48,7 +49,7 @@ public class MovingAttackingTest extends GraphicsProgram {
 		long timer = System.currentTimeMillis();
 		
 		GLabel g = new GLabel("Ticks: " + ticks + "\nFrames: " + frames);
-		g.setLocation(SCREEN_WIDTH - g.getX(), SCREEN_HEIGHT - g.getY());
+		g.setLocation(WINDOW_WIDTH - g.getX(), WINDOW_HEIGHT - g.getY());
 		add(g);
 		add(ball);
 		
@@ -178,6 +179,6 @@ public class MovingAttackingTest extends GraphicsProgram {
 	}
 
 	public void init() {
-		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	}
 }

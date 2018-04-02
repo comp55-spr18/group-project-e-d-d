@@ -7,6 +7,7 @@ package com.edd.circlebrawl;
  * guarantee some methods that every that implements 
  * Actor is going to be required to have.*/
 import acm.graphics.GImage;
+import acm.graphics.GObject;
 
 public interface Actor {
 	// Setters
@@ -21,7 +22,7 @@ public interface Actor {
 
 	public double getY();
 
-	public GImage getSprite();
+	public GObject getSprite();
 
 	// Other
 	public boolean collidesWith(BaseActor anotherActor);
@@ -29,4 +30,5 @@ public interface Actor {
 	public void remove();
 
 	public void setupSprite(String spriteFile);
+	public void setupSprite(GObject sprite);
 }

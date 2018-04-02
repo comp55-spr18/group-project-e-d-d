@@ -1,21 +1,26 @@
 package com.edd.circlebrawl;
 
-import java.util.Random;
-
 import acm.graphics.GImage;
+import acm.graphics.GObject;
 
 public abstract class BaseActor implements Actor {
-	protected GImage sprite;
+	protected GObject sprite;
 	protected CircleBrawl driver;
-	protected Random seed = new Random();
+	protected double x;
+	protected double y;
+	//protected Random seed = new Random();
 
 	// Setters for sprite
 	public void setX(double x) {
-		this.sprite.setLocation(x, this.sprite.getY());
+		this.x = x;
+		// why?
+		//this.sprite.setLocation(x, this.sprite.getY());
 	}
 
 	public void setY(double y) {
-		this.sprite.setLocation(this.sprite.getX(), y);
+		this.y =y;
+		// why?
+		//this.sprite.setLocation(this.sprite.getX(), y);
 	}
 
 	public void setSprite(GImage sprite) {
@@ -24,14 +29,14 @@ public abstract class BaseActor implements Actor {
 
 	// Getters for sprite
 	public double getX() {
-		return this.sprite.getX();
+		return x;// why? -- this.sprite.getX();
 	}
 
 	public double getY() {
-		return this.sprite.getY();
+		return y;// why? -- this.sprite.getY();
 	}
 
-	public GImage getSprite() {
+	public GObject getSprite() {
 		return this.sprite;
 	}
 
@@ -66,8 +71,18 @@ public abstract class BaseActor implements Actor {
 		sprite = new GImage(spriteFile);
 
 		// NOTE: Bottom replaced the top after coord generator implementation
-		// sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
-		sprite.setLocation(genRandCoord(), genRandCoord());
+		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
+		//sprite.setLocation(genRandCoord(), genRandCoord());
+
+		driver.add(sprite);
+	}
+	
+	public void setupSprite(GObject sprite) {
+		this.sprite = sprite;
+
+		// NOTE: Bottom replaced the top after coord generator implementation
+		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
+		//sprite.setLocation(genRandCoord(), genRandCoord());
 
 		driver.add(sprite);
 	}
@@ -83,8 +98,11 @@ public abstract class BaseActor implements Actor {
 	// most corner of sprite in calculation
 	// TODO: Should consider if there is a pre-existing object in that space prior
 	// to regenerating
-	public double genRandCoord() {
+	
+	// There is no point in having this here. - Zach
+	
+	/*public double genRandCoord() {
 		return 0.0;
-	}
+	}*/
 
 }
