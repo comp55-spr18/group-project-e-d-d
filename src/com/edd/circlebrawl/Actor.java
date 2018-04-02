@@ -16,7 +16,7 @@ public interface Actor {
 
 	public void setSprite(GImage sprite);
 
-	// Setters
+	// Getters
 	public double getX();
 
 	public double getY();
