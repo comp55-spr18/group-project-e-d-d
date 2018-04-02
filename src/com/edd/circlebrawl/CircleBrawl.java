@@ -34,6 +34,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 	private boolean keyW, keyS, keyLEFT, keyRIGHT;
 	private double xVelocity = 0;
 	private double yVelocity = 0;
+	private int i = 0;
 	
 	int ticks = 0;
 	int frames = 0;
@@ -66,7 +67,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 		
 		
 		GLabel g = new GLabel("Ticks: " + ticks + "\nFrames: " + frames);
-		g.setLocation(WINDOW_WIDTH - g.getX(), WINDOW_HEIGHT - g.getY());
+		g.setLocation(WINDOW_WIDTH - g.getWidth() - 60, WINDOW_HEIGHT - g.getHeight());
 		add(g);
 		
 		while(true) {
@@ -156,10 +157,20 @@ public class CircleBrawl extends MainApplication implements Tick {
 	    player.move(xVelocity, yVelocity);
 	    ring.move(xVelocity, yVelocity);
 	    
-	    for(Item item : ITEM_LIST) {
-	    	if(item != null && player.collidesWith(item)) {
-	    		item.consume(player);
-	    	}
+	    if (i < ITEM_LIST.size())
+	    {
+	    	if(ITEM_LIST.get(i) != null && player.getSprite().contains(ITEM_LIST.get(i).getX(), ITEM_LIST.get(i).getY())) {
+	    		ITEM_LIST.get(i).consume(player);
+	    		i++;
+	    }
+	    
+//	    for(Item item : ITEM_LIST) {
+//	    	if(item != null && player.getSprite().contains(item.getX(), item.getY())) {
+//	    		item.consume(player);
+//	    		ITEM_LIST.remove(i);
+//	    		i++;
+//	    	}
+//	    }
 	    }
 	}
 }
