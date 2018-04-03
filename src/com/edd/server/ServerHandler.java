@@ -36,6 +36,14 @@ public class ServerHandler extends Thread {
 					System.out.println("new client: " + SL.clients.keySet());
 					handleNewClient(clientName);
 				}
+				if(inputLine.contains("<remove>")) {
+					String clientName = this.string_between(inputLine, "<newclient>", "</newclient>");
+					if(SL.clients.containsKey(clientName)) {
+						SL.clients.remove(clientName);
+					}
+					System.out.println("removing client: " + clientName);
+					handlePlayerRemove(clientName);
+				}
 			}
 			socket.close();
 		} catch (IOException e) {
@@ -102,6 +110,10 @@ public class ServerHandler extends Thread {
 		sendPlayerList(playerName);
 		sendGlobalPacket("<newclient>"+playerName+"</newclient>", playerName);
 		sendPlayerPacket("<newclient>JOIN_OK</newclient>", playerName);
+	}
+	
+	public void handlePlayerRemove(String playerName) {
+		sendGlobalPacket("<remove>"+playerName+"</remove>", playerName);
 	}
 	
 	public void handlePlayerMove(String clientName) {

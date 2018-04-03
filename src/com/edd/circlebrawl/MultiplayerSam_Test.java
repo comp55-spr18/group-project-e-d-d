@@ -58,6 +58,13 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		Random r = new Random();
 		NC = new NetworkClient("127.0.0.1", 9991, r.nextInt(100), this);
 		NC.start();
+		
+		//This needs to be temporary.
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+		    public void run() {
+		    		NC.sendExit();
+		    }
+		}));
 	}
 	
 	class NetworkClient extends Thread{
@@ -134,6 +141,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    			world.addPlayer(name);
 		    		}
 		    }
+		}
+		
+		public void sendExit() {
+			sendPacket(out, "<remove>" + this.clientID + "</remove>");
 		}
 	
 	}
