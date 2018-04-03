@@ -8,19 +8,19 @@ public abstract class BaseActor implements Actor {
 	protected CircleBrawl driver;
 	protected double x;
 	protected double y;
-	//protected Random seed = new Random();
+	// protected Random seed = new Random();
 
 	// Setters for sprite
 	public void setX(double x) {
 		this.x = x;
 		// why?
-		//this.sprite.setLocation(x, this.sprite.getY());
+		// this.sprite.setLocation(x, this.sprite.getY());
 	}
 
 	public void setY(double y) {
-		this.y =y;
+		this.y = y;
 		// why?
-		//this.sprite.setLocation(this.sprite.getX(), y);
+		// this.sprite.setLocation(this.sprite.getX(), y);
 	}
 
 	public void setSprite(GImage sprite) {
@@ -48,9 +48,7 @@ public abstract class BaseActor implements Actor {
 	 * @return true/false indicating if the two Actors are intersecting
 	 */
 	public boolean collidesWith(BaseActor anotherActor) {
-		return Math.sqrt(Math.pow((anotherActor.getX() - this.getX()), 2)
-				+ Math.pow((anotherActor.getY() - this.getY()), 2)) == sprite.getWidth()
-						+ anotherActor.getSprite().getWidth();
+		return anotherActor.getSprite().contains(anotherActor.getX(), anotherActor.getY());
 	}
 
 	/**
@@ -72,17 +70,17 @@ public abstract class BaseActor implements Actor {
 
 		// NOTE: Bottom replaced the top after coord generator implementation
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
-		//sprite.setLocation(genRandCoord(), genRandCoord());
+		// sprite.setLocation(genRandCoord(), genRandCoord());
 
 		driver.add(sprite);
 	}
-	
+
 	public void setupSprite(GObject sprite) {
 		this.sprite = sprite;
 
 		// NOTE: Bottom replaced the top after coord generator implementation
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
-		//sprite.setLocation(genRandCoord(), genRandCoord());
+		// sprite.setLocation(genRandCoord(), genRandCoord());
 
 		driver.add(sprite);
 	}
@@ -98,11 +96,11 @@ public abstract class BaseActor implements Actor {
 	// most corner of sprite in calculation
 	// TODO: Should consider if there is a pre-existing object in that space prior
 	// to regenerating
-	
+
 	// There is no point in having this here. - Zach
-	
-	/*public double genRandCoord() {
-		return 0.0;
-	}*/
+
+	/*
+	 * public double genRandCoord() { return 0.0; }
+	 */
 
 }

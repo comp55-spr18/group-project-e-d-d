@@ -12,7 +12,7 @@ public abstract class Item extends BaseActor implements Tick {
 	 *            the actor to which the effects of item will be applied to
 	 */
 	public void consume(BaseActor consumer) {
-		if (driver.ITEM_LIST.contains(this)) {
+		if (this != null && driver.ITEM_LIST.contains(this)) {
 			driver.ITEM_LIST.remove(this); // remove this item from the global item list
 		}
 
