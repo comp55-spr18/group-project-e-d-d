@@ -73,6 +73,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		private int port;
 		private Socket socketClient;
 		private int clientID;
+		private String clientName;
 		private boolean client_initiated = false;
 		PrintWriter out;
 		MultiplayerSam_Test world;
@@ -134,6 +135,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    while ((userInput = stdIn.readLine()) != null) { //remember to implement ENUMS here
 		        System.out.println("recv: " + userInput);
 		    		if(parsePacket(userInput).equals("JOIN_OK")) {
+		    			System.out.println("Now true");
 		    			this.client_initiated = true;
 		    		}
 		    		if(parsePacket(userInput).equals("newclient")) {
@@ -143,25 +145,30 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    }
 		}
 		
+		public String getSaltString() {
+	        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+	        StringBuilder salt = new StringBuilder();
+	        Random rnd = new Random();
+	        while (salt.length() < 18) { // length of the random string.
+	            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+	            salt.append(SALTCHARS.charAt(index));
+	        }
+	        String saltStr = salt.toString();
+	        return saltStr;
+	    }
+		
+		public void sendJoin() {
+			this.clientName = getSaltString();
+			sendPacket(out, "<newclient>" + this.clientName + "</newclient>");
+		}
+		
 		public void sendExit() {
-			sendPacket(out, "<remove>" + this.clientID + "</remove>");
+			sendPacket(out, "<remove>" + this.clientName + "</remove>");
 		}
 	
 	}
 
 	// For testing
-	
-	public String getSaltString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
-    }
 	
 	@Override
 	public void run() {
@@ -174,7 +181,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		addKeyListeners();
 		addMouseListeners();
 		
-		NC.sendPacket(NC.out, "<newclient>" + getSaltString() + "</newclient>");
+		NC.sendJoin();
 		while(!NC.client_initiated) {} //wait until complete
 
 		long lastTime = System.nanoTime();

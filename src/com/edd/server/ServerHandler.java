@@ -37,11 +37,16 @@ public class ServerHandler extends Thread {
 					handleNewClient(clientName);
 				}
 				if(inputLine.contains("<remove>")) {
-					String clientName = this.string_between(inputLine, "<newclient>", "</newclient>");
-					if(SL.clients.containsKey(clientName)) {
-						SL.clients.remove(clientName);
+					String clientName = this.string_between(inputLine, "<remove>", "</remove>");
+					
+					ServerPlayer obj = null;
+					for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+						String name = entry.getKey().getPlayerName();
+					    if(name.equals(clientName))
+					    		obj = entry.getKey();
 					}
-					System.out.println("removing client: " + clientName);
+					if(obj != null)
+						SL.clients.remove(obj);
 					handlePlayerRemove(clientName);
 				}
 			}
