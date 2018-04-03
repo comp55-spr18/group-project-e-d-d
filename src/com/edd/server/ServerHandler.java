@@ -101,6 +101,7 @@ public class ServerHandler extends Thread {
 	public void handleNewClient(String playerName) {
 		sendPlayerList(playerName);
 		sendGlobalPacket("<newclient>"+playerName+"</newclient>", playerName);
+		sendPlayerPacket("<newclient>JOIN_OK</newclient>", playerName);
 	}
 	
 	public void handlePlayerMove(String clientName) {

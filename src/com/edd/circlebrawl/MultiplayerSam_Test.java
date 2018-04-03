@@ -56,7 +56,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		Random r = new Random();
-		NC = new NetworkClient("127.0.0.1", 9991, r.nextInt(100));
+		NC = new NetworkClient("127.0.0.1", 9991, r.nextInt(100), this);
 		NC.start();
 	}
 	
@@ -68,11 +68,13 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		private int clientID;
 		private boolean client_initiated = false;
 		PrintWriter out;
+		MultiplayerSam_Test world;
 		
-		public NetworkClient(String hostname, int port, int clientID) {
+		public NetworkClient(String hostname, int port, int clientID, MultiplayerSam_Test world) {
 			this.hostname = hostname;
 			this.port = port;
 			this.clientID = clientID;
+			this.world = world;
 		}
 		
 		public void run() {
@@ -112,17 +114,24 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			if(p.contains("JOIN_OK")) {
 				return "JOIN_OK";
 			}
+			if(p.contains("newclient")) {
+				return "newclient";
+			}
 			return "";
 		}
 		
 		public void readResponse() throws IOException, InterruptedException{
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(this.socketClient.getInputStream()));
 			out = new PrintWriter(this.socketClient.getOutputStream(), true);
-			System.out.println("Response from server:");
 		    String userInput;
 		    while ((userInput = stdIn.readLine()) != null) { //remember to implement ENUMS here
+		        System.out.println("recv: " + userInput);
 		    		if(parsePacket(userInput).equals("JOIN_OK")) {
 		    			this.client_initiated = true;
+		    		}
+		    		if(parsePacket(userInput).equals("newclient")) {
+		    			String name = string_between(userInput, "<newclient>", "</newclient>");
+		    			world.addPlayer(name);
 		    		}
 		    }
 		}
@@ -155,8 +164,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		addMouseListeners();
 		
 		NC.sendPacket(NC.out, "<newclient>" + getSaltString() + "</newclient>");
-//		while(!this.client_initiated)
-//			RR();
+		while(!NC.client_initiated) {} //wait until complete
 
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
@@ -188,6 +196,11 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 				frames = 0;
 			}
 		}
+	}
+	
+	public void addPlayer(String uniqName) {
+		Player p = new Player(MAP_WIDTH / 2 - 100, MAP_HEIGHT / 2 - 100, this);
+		characters.put(uniqName, p);
 	}
 
 	public void keyPressed(KeyEvent e) {
