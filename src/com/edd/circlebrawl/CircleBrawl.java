@@ -57,7 +57,6 @@ public class CircleBrawl extends MainApplication implements Tick {
 		addKeyListeners();
 		addMouseListeners();
 
-		// GOval spritePlaceHolder = new GOval()
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
 		double ns = 1000000000 / ticks;
@@ -132,13 +131,6 @@ public class CircleBrawl extends MainApplication implements Tick {
 
 	}
 
-	// public void mouseReleased(MouseEvent e)
-	// {
-	// remove(ring);
-	// testTimer.stop();
-	//
-	// }
-
 	public void actionPerformed(ActionEvent e) {
 		remove(ring);
 	}
@@ -174,21 +166,11 @@ public class CircleBrawl extends MainApplication implements Tick {
 		player.move(xVelocity, yVelocity);
 		ring.move(xVelocity, yVelocity);
 
-		// if (i < ITEM_LIST.size()) {
-		// if (ITEM_LIST.get(i) != null && collidesWith(ITEM_LIST.get(i))) {
-		// ITEM_LIST.get(i).consume(player);
-		// i++;
-		// }
-		// }
-
 		for (Item item : ITEM_LIST) {
-			if (item != null && player.getSprite().contains(item.getX() + item.getSprite().getWidth() / 2,
-					item.getY() + item.getSprite().getHeight() / 2)) {
+			if (item != null && player.collidesWith(item)) {
 				System.out.println("Intersection detected");
 				item.consume(player);
 				break;
-				// ITEM_LIST.remove(i);
-				// i++;
 			}
 		}
 	}
