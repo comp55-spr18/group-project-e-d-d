@@ -3,7 +3,15 @@ package com.edd.circlebrawl;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -16,6 +24,7 @@ import acm.graphics.GOval;
 // Driver Class
 public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 
+	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final ArrayList<Item> ITEM_LIST = new ArrayList<Item>();
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final int MAP_WIDTH = 1024;
@@ -40,12 +49,57 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 
 	int ticks = 0;
 	int frames = 0;
+	
+	private String hostname;
+	private int port;
+	private Socket socketClient;
+	private int clientID;
+	private String userAction;
 
 	@Override
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		Random r = new Random();
+		this.hostname = "127.0.0.1";
+		this.port = 9991;
+		this.clientID = r.nextInt(100);
+		try {
+			this.connect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String string_between(String input, String left, String right){
+		int pos_left = input.indexOf(left) + left.length();
+		int pos_right = input.indexOf(right);
+		return input.substring(pos_left, pos_right);
+	}
+	
+	public void connect() throws UnknownHostException, IOException{
+		System.out.println("Attempting to connect to " + this.hostname + ":" + this.port);
+	    this.socketClient = new Socket(this.hostname, this.port);
+	    System.out.println("Connection Established");
+	}
+	
+	public void sendPacket(PrintWriter out, String p) {
+		out.println(p);
+		System.out.println("Sent: " + p);
+	}
+	
+	public void readResponse() throws IOException, InterruptedException{
+		BufferedReader stdIn = new BufferedReader(new InputStreamReader(this.socketClient.getInputStream()));
+		final PrintWriter out = new PrintWriter(this.socketClient.getOutputStream(), true);
+		System.out.println("Response from server:");
+		while(true) {
+			if(userAction.equals("N")) {
+				sendPacket(out, "<clientID>" + this.clientID + "</clientID>");
+			}
+		}
 	}
 
+	
 	@Override
 	public void run() {
 		for (int i = 0; i < 5; i++)
