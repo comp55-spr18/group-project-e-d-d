@@ -46,59 +46,102 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	private double xVelocity = 0;
 	private double yVelocity = 0;
 	private int i = 0;
+	
+	NetworkClient NC;
 
 	int ticks = 0;
 	int frames = 0;
-	
-	private String hostname;
-	private int port;
-	private Socket socketClient;
-	private int clientID;
-	private String userAction;
 
 	@Override
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		Random r = new Random();
-		this.hostname = "127.0.0.1";
-		this.port = 9991;
-		this.clientID = r.nextInt(100);
-		try {
-			this.connect();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		NC = new NetworkClient("127.0.0.1", 9991, r.nextInt(100));
+		NC.start();
+	}
+	
+	class NetworkClient extends Thread{
+		
+		private String hostname;
+		private int port;
+		private Socket socketClient;
+		private int clientID;
+		private boolean client_initiated = false;
+		PrintWriter out;
+		
+		public NetworkClient(String hostname, int port, int clientID) {
+			this.hostname = hostname;
+			this.port = port;
+			this.clientID = clientID;
 		}
-	}
-	
-	public String string_between(String input, String left, String right){
-		int pos_left = input.indexOf(left) + left.length();
-		int pos_right = input.indexOf(right);
-		return input.substring(pos_left, pos_right);
-	}
-	
-	public void connect() throws UnknownHostException, IOException{
-		System.out.println("Attempting to connect to " + this.hostname + ":" + this.port);
-	    this.socketClient = new Socket(this.hostname, this.port);
-	    System.out.println("Connection Established");
-	}
-	
-	public void sendPacket(PrintWriter out, String p) {
-		out.println(p);
-		System.out.println("Sent: " + p);
-	}
-	
-	public void readResponse() throws IOException, InterruptedException{
-		BufferedReader stdIn = new BufferedReader(new InputStreamReader(this.socketClient.getInputStream()));
-		final PrintWriter out = new PrintWriter(this.socketClient.getOutputStream(), true);
-		System.out.println("Response from server:");
-		while(true) {
-			if(userAction.equals("N")) {
-				sendPacket(out, "<clientID>" + this.clientID + "</clientID>");
+		
+		public void run() {
+			System.out.println("Thread running");
+			try {
+				this.connect();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				this.readResponse();
+			} catch (IOException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		
+		public String string_between(String input, String left, String right){
+			int pos_left = input.indexOf(left) + left.length();
+			int pos_right = input.indexOf(right);
+			return input.substring(pos_left, pos_right);
+		}
+		
+		public void connect() throws UnknownHostException, IOException{
+			System.out.println("Attempting to connect to " + this.hostname + ":" + this.port);
+		    this.socketClient = new Socket(this.hostname, this.port);
+		    System.out.println("Connection Established");
+		}
+		
+		public void sendPacket(PrintWriter out, String p) {
+			out.println(p);
+			System.out.println("Sent: " + p);
+		}
+		
+		public String parsePacket(String p) {
+			if(p.contains("JOIN_OK")) {
+				return "JOIN_OK";
+			}
+			return "";
+		}
+		
+		public void readResponse() throws IOException, InterruptedException{
+			BufferedReader stdIn = new BufferedReader(new InputStreamReader(this.socketClient.getInputStream()));
+			out = new PrintWriter(this.socketClient.getOutputStream(), true);
+			System.out.println("Response from server:");
+		    String userInput;
+		    while ((userInput = stdIn.readLine()) != null) { //remember to implement ENUMS here
+		    		if(parsePacket(userInput).equals("JOIN_OK")) {
+		    			this.client_initiated = true;
+		    		}
+		    }
+		}
+	
 	}
 
+	// For testing
+	
+	public String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+    }
 	
 	@Override
 	public void run() {
@@ -110,6 +153,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		ring = new GOval(player.x + 30, player.y + 30, 140, 140);
 		addKeyListeners();
 		addMouseListeners();
+		
+		NC.sendPacket(NC.out, "<newclient>" + getSaltString() + "</newclient>");
+//		while(!this.client_initiated)
+//			RR();
 
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
