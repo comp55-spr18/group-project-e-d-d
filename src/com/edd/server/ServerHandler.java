@@ -1,6 +1,7 @@
 package com.edd.server;
 
 import java.net.*;
+import java.util.Arrays;
 import java.util.Map.Entry;
 import java.io.*;
 
@@ -51,9 +52,9 @@ public class ServerHandler extends Thread {
 				}
 				if(inputLine.contains("<move>")) {
 					String[] packetData = this.string_between(inputLine, "<move>", "</move>").split(",");
-					String clientName = packetData[0];
-					String xVelocity = packetData[1];
-					String yVelocity = packetData[2];
+					String clientName = this.getPlayerName(out);
+					String xVelocity = packetData[0];
+					String yVelocity = packetData[1];
 					handlePlayerMove(clientName, xVelocity, yVelocity);
 				}
 			}
@@ -91,6 +92,18 @@ public class ServerHandler extends Thread {
 		}
 		return null;
 	}
+	
+	public String getPlayerName(PrintWriter sock) {
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+			String name = entry.getKey().getPlayerName();
+		    PrintWriter out = entry.getValue();
+		    if(out.equals(sock)) {
+		    		return name;
+		    }
+		}
+		return null;
+	}
+	
 	
 	public void sendPlayerPacket(String packet) {
 		out.println(packet);

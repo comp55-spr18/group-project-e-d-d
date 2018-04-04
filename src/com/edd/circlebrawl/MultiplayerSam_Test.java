@@ -125,6 +125,9 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			if(p.contains("newclient")) {
 				return "newclient";
 			}
+			if(p.contains("move")) {
+				return "move";
+			}
 			return "";
 		}
 		
@@ -141,6 +144,13 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    		if(parsePacket(userInput).equals("newclient")) {
 		    			String name = string_between(userInput, "<newclient>", "</newclient>");
 		    			world.addPlayer(name);
+		    		}
+		    		if(parsePacket(userInput).equals("move")) {
+		    			String[] packet = string_between(userInput, "<move>", "</move>").split(",");
+		    			String clientName = packet[0];
+		    			double xVelocity = Double.parseDouble(packet[1]);
+		    			double yVelocity = Double.parseDouble(packet[2]);
+		    			characters.get(clientName).move(xVelocity, yVelocity);
 		    		}
 		    }
 		}
