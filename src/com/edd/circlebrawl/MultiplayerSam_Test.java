@@ -162,6 +162,11 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			sendPacket(out, "<newclient>" + this.clientName + "</newclient>");
 		}
 		
+		public void sendMove(double x, double y) {
+			this.clientName = getSaltString();
+			sendPacket(out, "<move>" + x + "," + y + "</move>");
+		}
+		
 		public void sendExit() {
 			sendPacket(out, "<remove>" + this.clientName + "</remove>");
 		}
@@ -297,6 +302,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 
 		player.move(xVelocity, yVelocity);
 		ring.move(xVelocity, yVelocity);
+		if(xVelocity != 0.0 || yVelocity != 0.0) {
+			System.out.println("Moving " + xVelocity + " " + yVelocity);
+			NC.sendMove(xVelocity, yVelocity);
+		}
 
 		for (Item item : ITEM_LIST) {
 			if (item != null && player.collidesWith(item)) {
