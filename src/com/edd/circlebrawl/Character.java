@@ -6,6 +6,7 @@ public abstract class Character extends BaseActor {
 	protected int defense; // how much damage this Character can take
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
+	protected String name;
 	
 	//modifiers
 	public void modifySize(int modifyValue) {
@@ -26,6 +27,7 @@ public abstract class Character extends BaseActor {
 	public int getDefense() { return defense; }
 	public int getSpeed() { return speed; }
 	public int getStrength() { return strength; }
+	public String getName() { return name; }
 	
 	public void move(double x, double y) {
 		sprite.move(x,y);
