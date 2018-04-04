@@ -22,6 +22,12 @@ public class Player extends Character {
 		localSprite.setFilled(true);
 	}
 	
+	public Player(String name, int x, int y, CircleBrawl driver) {
+		this(x, y, driver);
+		this.name = name;
+	}
+	
+	
 	public void move(double x, double y) {
 		sprite.move(x, y);
 		this.x += x;
