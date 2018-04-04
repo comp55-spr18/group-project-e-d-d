@@ -93,6 +93,16 @@ public class ServerHandler extends Thread {
 		return null;
 	}
 	
+	public ServerPlayer getPlayerKey(String playerName) {
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+			ServerPlayer key = entry.getKey();
+		    if(key.getPlayerName().equals(playerName)) {
+		    		return key;
+		    }
+		}
+		return null;
+	}
+	
 	public String getPlayerName(PrintWriter sock) {
 		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
 			String name = entry.getKey().getPlayerName();
@@ -103,7 +113,6 @@ public class ServerHandler extends Thread {
 		}
 		return null;
 	}
-	
 	
 	public void sendPlayerPacket(String packet) {
 		out.println(packet);
@@ -126,15 +135,17 @@ public class ServerHandler extends Thread {
 			int y = entry.getKey().getPlayerY();
 		    if(name.equals(playerName))
 		    		continue;
-		    allPlayers += buildPlayerPacket(name, x, y) + ",";
+		    allPlayers += buildPlayerPacket(name, x, y) + "%";
 		}
 		sendPlayerPacket("<playerlist>" + allPlayers + "</playerlist>", playerName);
 	}
 	
 	public void handleNewClient(String playerName) {
 		sendPlayerList(playerName);
-		sendGlobalPacket("<newclient>"+playerName+"</newclient>", playerName);
-		sendPlayerPacket("<newclient>JOIN_OK</newclient>", playerName);
+		ServerPlayer p = getPlayerKey(playerName);
+		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY());
+		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
+		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "</newclient>", playerName);
 	}
 	
 	public void handlePlayerRemove(String playerName) {

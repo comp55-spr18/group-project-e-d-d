@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -75,6 +76,8 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		private int clientID;
 		private String clientName;
 		private boolean client_initiated = false;
+		int myStartX = 0;
+		int myStartY = 0;
 		PrintWriter out;
 		MultiplayerSam_Test world;
 		
@@ -125,6 +128,12 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			if(p.contains("newclient")) {
 				return "newclient";
 			}
+			if(p.contains("playerlist")) {
+				return "playerlist";
+			}
+			if(p.contains("remove")) {
+				return "remove";
+			}
 			if(p.contains("move")) {
 				return "move";
 			}
@@ -138,19 +147,48 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    while ((userInput = stdIn.readLine()) != null) { //remember to implement ENUMS here
 		        System.out.println("recv: " + userInput);
 		    		if(parsePacket(userInput).equals("JOIN_OK")) {
+		    			String[] packet = string_between(userInput, "<newclient>", "</newclient>").split(",");
+		    			myStartX = Integer.parseInt(packet[1]);
+		    			myStartY = Integer.parseInt(packet[2]);
 		    			System.out.println("Now true");
 		    			this.client_initiated = true;
 		    		}
 		    		if(parsePacket(userInput).equals("newclient")) {
-		    			String name = string_between(userInput, "<newclient>", "</newclient>");
-		    			world.addPlayer(name);
+		    			String[] packet = string_between(userInput, "<newclient>(", ")</newclient>").split(",");
+		    			String name = packet[0];
+		    			int x = Integer.parseInt(packet[1]);
+		    			int y = Integer.parseInt(packet[2]);
+		    			Player p = new Player(name, x, y, world);
+		    			world.addPlayer(p);
+		    		}
+		    		if(parsePacket(userInput).equals("playerlist")) {
+		    			String[] packet = string_between(userInput, "<playerlist>", "</playerlist>").split("%");
+		    			System.out.println(packet.length);
+		    			if(packet.length != 1) {
+			    			for(String p : packet) {
+			    				System.out.println(p);
+			    				String[] playerInfo = string_between(p, "(", ")").split(",");
+			    				String clientName = playerInfo[0];
+			    				int clientX = Integer.parseInt(playerInfo[1]);
+			    				int clientY = Integer.parseInt(playerInfo[2]);
+			    				Player NP = new Player(clientName, clientX, clientY, world);
+			    				System.out.println("adding player" + clientName);
+			    				characters.put(clientName, NP);
+			    				world.addPlayer(NP);
+			    			}
+		    			}
+		    		}
+		    		if(parsePacket(userInput).equals("remove")) {
+		    			String toRemove = string_between(userInput, "<remove>", "</remove>");
+		    			Player tR = characters.get(toRemove);
 		    		}
 		    		if(parsePacket(userInput).equals("move")) {
 		    			String[] packet = string_between(userInput, "<move>", "</move>").split(",");
 		    			String clientName = packet[0];
 		    			double xVelocity = Double.parseDouble(packet[1]);
 		    			double yVelocity = Double.parseDouble(packet[2]);
-		    			characters.get(clientName).move(xVelocity, yVelocity);
+		    			Player p = characters.get(clientName);
+		    			movePlayer(p, xVelocity, yVelocity);
 		    		}
 		    }
 		}
@@ -187,17 +225,17 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	
 	@Override
 	public void run() {
+		NC.sendJoin();
+		while(!NC.client_initiated) {} //wait until complete
+		
 		for (int i = 0; i < 5; i++)
 			ITEM_LIST.add(POWERUP_GEN.generatePowerUp());
 
-		player = new Player(MAP_WIDTH / 2 - 100, MAP_HEIGHT / 2 - 100, this);
+		player = new Player(NC.myStartX, NC.myStartY, this);
 
 		ring = new GOval(player.x + 30, player.y + 30, 140, 140);
 		addKeyListeners();
 		addMouseListeners();
-		
-		NC.sendJoin();
-		while(!NC.client_initiated) {} //wait until complete
 
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
@@ -231,9 +269,15 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		}
 	}
 	
-	public void addPlayer(String uniqName) {
-		Player p = new Player(MAP_WIDTH / 2 - 100, MAP_HEIGHT / 2 - 100, this);
-		characters.put(uniqName, p);
+	public void addPlayer(Player p) {
+		characters.put(p.getName(), p);
+	}
+	
+	public void movePlayer(Player p, double xVelocity, double yVelocity) {
+		characters.get(p.getName()).move(xVelocity, yVelocity);
+		Player p2 = characters.get(p.getName());
+		characters.get(p.getName()).setX(p2.getX());
+		characters.get(p.getName()).setY(p2.getY());
 	}
 
 	public void keyPressed(KeyEvent e) {
