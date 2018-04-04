@@ -49,6 +49,13 @@ public class ServerHandler extends Thread {
 						SL.clients.remove(obj);
 					handlePlayerRemove(clientName);
 				}
+				if(inputLine.contains("<move>")) {
+					String[] packetData = this.string_between(inputLine, "<move>", "</move>").split(",");
+					String clientName = packetData[0];
+					String xVelocity = packetData[1];
+					String yVelocity = packetData[2];
+					handlePlayerMove(clientName, xVelocity, yVelocity);
+				}
 			}
 			socket.close();
 		} catch (IOException e) {
@@ -121,7 +128,7 @@ public class ServerHandler extends Thread {
 		sendGlobalPacket("<remove>"+playerName+"</remove>", playerName);
 	}
 	
-	public void handlePlayerMove(String clientName) {
-		
+	public void handlePlayerMove(String clientName, String xVelocity, String yVelocity) {
+		sendGlobalPacket("<move>" + clientName + "," + xVelocity + "," + yVelocity + "</move>", clientName);
 	}
 }
