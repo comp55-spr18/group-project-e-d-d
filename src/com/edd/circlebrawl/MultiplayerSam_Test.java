@@ -162,10 +162,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    			world.addPlayer(p);
 		    		}
 		    		if(parsePacket(userInput).equals("playerlist")) {
-		    			String[] packet = string_between(userInput, "<playerlist>", "</playerlist>").split("%");
-		    			System.out.println(packet.length);
-		    			if(packet.length != 1) {
-			    			for(String p : packet) {
+		    			String packet = string_between(userInput, "<playerlist>", "</playerlist>");
+		    			if(!packet.isEmpty()) {
+		    				String[] pArray = packet.split("%");
+			    			for(String p : pArray) {
 			    				System.out.println(p);
 			    				String[] playerInfo = string_between(p, "(", ")").split(",");
 			    				String clientName = playerInfo[0];
@@ -181,6 +181,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    		if(parsePacket(userInput).equals("remove")) {
 		    			String toRemove = string_between(userInput, "<remove>", "</remove>");
 		    			Player tR = characters.get(toRemove);
+		    			System.out.println(tR.getX());
 		    		}
 		    		if(parsePacket(userInput).equals("move")) {
 		    			String[] packet = string_between(userInput, "<move>", "</move>").split(",");
@@ -211,7 +212,6 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		}
 		
 		public void sendMove(double x, double y) {
-			this.clientName = getSaltString();
 			sendPacket(out, "<move>" + x + "," + y + "</move>");
 		}
 		
@@ -357,7 +357,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		player.move(xVelocity, yVelocity);
 		ring.move(xVelocity, yVelocity);
 		if(xVelocity != 0.0 || yVelocity != 0.0) {
-			System.out.println("Moving " + xVelocity + " " + yVelocity);
+			System.out.println("My Location: " + player.getX() + " " + player.getY());
 			NC.sendMove(xVelocity, yVelocity);
 		}
 

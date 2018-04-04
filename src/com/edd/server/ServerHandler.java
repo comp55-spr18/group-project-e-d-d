@@ -39,7 +39,7 @@ public class ServerHandler extends Thread {
 				}
 				if(inputLine.contains("<remove>")) {
 					String clientName = this.string_between(inputLine, "<remove>", "</remove>");
-					
+					System.out.println(SL.clients);
 					ServerPlayer obj = null;
 					for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
 						String name = entry.getKey().getPlayerName();
@@ -49,6 +49,7 @@ public class ServerHandler extends Thread {
 					if(obj != null)
 						SL.clients.remove(obj);
 					handlePlayerRemove(clientName);
+					System.out.println(SL.clients);
 				}
 				if(inputLine.contains("<move>")) {
 					String[] packetData = this.string_between(inputLine, "<move>", "</move>").split(",");
@@ -141,11 +142,11 @@ public class ServerHandler extends Thread {
 	}
 	
 	public void handleNewClient(String playerName) {
-		sendPlayerList(playerName);
 		ServerPlayer p = getPlayerKey(playerName);
 		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY());
 		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
 		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "</newclient>", playerName);
+		sendPlayerList(playerName);
 	}
 	
 	public void handlePlayerRemove(String playerName) {
@@ -154,5 +155,10 @@ public class ServerHandler extends Thread {
 	
 	public void handlePlayerMove(String clientName, String xVelocity, String yVelocity) {
 		sendGlobalPacket("<move>" + clientName + "," + xVelocity + "," + yVelocity + "</move>", clientName);
+		ServerPlayer sp = getPlayerKey(clientName);
+		int newX = (int)(sp.getPlayerX() + Double.parseDouble(xVelocity));
+		int newY = (int)(sp.getPlayerY() + Double.parseDouble(yVelocity));
+		sp.setPlayerX(newX);
+		sp.setPlayerY(newY);
 	}
 }

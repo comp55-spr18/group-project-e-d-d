@@ -26,7 +26,7 @@ public class ServerPlayer {
 		this.x = x;
 	}
 	
-	public void getPlayerY(int y) {
+	public void setPlayerY(int y) {
 		this.y = y;
 	}
 	
