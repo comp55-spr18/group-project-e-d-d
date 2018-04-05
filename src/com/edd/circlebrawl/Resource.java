@@ -1,12 +1,12 @@
 package com.edd.circlebrawl;
 
 import java.awt.Color;
+import java.util.Random;
 
 import acm.graphics.GOval;
 
 public class Resource extends Item {
 
-	
 	/**
 	 * Constructor
 	 * 
@@ -24,13 +24,20 @@ public class Resource extends Item {
 	 *            the multiplier for stat effects
 	 */
 	public Resource(int x, int y, CircleBrawl driver, int efficacy, int multiple) {
-		sprite = new GOval(x,y,efficacy*multiple,efficacy*multiple);
-		((GOval)sprite).setFilled(true);
-		//((GOval)sprite).setFillColor(Color.); TODO: random color
+		Random rand = new Random();
+		sprite = new GOval(x, y, efficacy * multiple, efficacy * multiple);
+		((GOval) sprite).setFilled(true);
+		((GOval) sprite).setFillColor(new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
 		setupSprite(sprite);
 		this.driver = driver;
 		this.efficacy = efficacy;
 		this.multiple = multiple;
+	}
+
+	public Resource generateResource() {
+		Random rand = new Random();
+		return new Resource(rand.nextInt(driver.MAP_WIDTH - 50) + 1, rand.nextInt(driver.MAP_HEIGHT - 50) + 1, driver,
+				rand.nextInt(10), rand.nextInt(10));
 	}
 
 	/**
@@ -48,7 +55,7 @@ public class Resource extends Item {
 
 	@Override
 	public void tick() {
-		
+
 	}
 
 }
