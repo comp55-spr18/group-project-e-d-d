@@ -22,6 +22,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
 	public final int WINDOW_HEIGHT = 768;
+	public final int TICKS_PER_SECOND = 60;
 	private double velX = 0;
 	private double velY = 0;
 	private Player player;

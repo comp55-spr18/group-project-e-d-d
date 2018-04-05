@@ -1,9 +1,12 @@
 package com.edd.circlebrawl;
 
-import acm.graphics.GImage;
+import java.awt.Color;
+
+import acm.graphics.GOval;
 
 public class Resource extends Item {
 
+	
 	/**
 	 * Constructor
 	 * 
@@ -20,9 +23,11 @@ public class Resource extends Item {
 	 * @param multiple
 	 *            the multiplier for stat effects
 	 */
-	public Resource(int x, int y, GImage sprite, CircleBrawl driver, int efficacy, int multiple) {
-		this.sprite = sprite;
-		this.sprite.setLocation(x, y);
+	public Resource(int x, int y, CircleBrawl driver, int efficacy, int multiple) {
+		sprite = new GOval(x,y,efficacy*multiple,efficacy*multiple);
+		((GOval)sprite).setFilled(true);
+		//((GOval)sprite).setFillColor(Color.); TODO: random color
+		setupSprite(sprite);
 		this.driver = driver;
 		this.efficacy = efficacy;
 		this.multiple = multiple;
@@ -41,7 +46,9 @@ public class Resource extends Item {
 		}
 	}
 
+	@Override
 	public void tick() {
+		
 	}
 
 }
