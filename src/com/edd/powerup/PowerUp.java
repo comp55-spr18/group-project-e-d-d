@@ -7,7 +7,8 @@ import com.edd.circlebrawl.Item;
 
 public class PowerUp extends Item {
 
-	private int time; // how many seconds the PowerUp stays in effect for
+	private int time;
+	private int timeInTicks;
 	private PowerUpType type; // the type of the PowerUp
 	
 	public PowerUp(int x, int y, CircleBrawl driver, int efficacy, int multiple, PowerUpType type) {
@@ -18,6 +19,7 @@ public class PowerUp extends Item {
 		this.multiple = multiple;
 		this.type = type;
 		this.time = type.getTime();
+		this.timeInTicks = driver.TICKS_PER_SECOND*time;
 		setupSprite("com/edd/powerup/"+type.getSpriteFile());
 	}
 	
@@ -43,6 +45,7 @@ public class PowerUp extends Item {
 		}
 	}
 	
+	@Override
 	public void tick() {
 		
 	}

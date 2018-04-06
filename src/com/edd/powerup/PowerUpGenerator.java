@@ -7,6 +7,7 @@ import com.edd.circlebrawl.CircleBrawl;
 public class PowerUpGenerator {
 
 	private CircleBrawl driver;
+	private boolean activated;
 	
 	public PowerUpGenerator(CircleBrawl driver) {
 		this.driver = driver;
@@ -33,6 +34,14 @@ public class PowerUpGenerator {
 	
 	public int getRandomEfficacy(Random rand) {
 		return rand.nextInt(11)+10; // Efficacy is between 10 and 20. This can be changed.
+	}
+	
+	public void activate() {
+		activated = true;
+	}
+	
+	public void deactivate() {
+		activated = false;
 	}
 	
 }
