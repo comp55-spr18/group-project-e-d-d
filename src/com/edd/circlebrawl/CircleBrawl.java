@@ -25,7 +25,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 	public final int TICKS_PER_SECOND = 60;
 	private double velX = 0;
 	private double velY = 0;
-	private Player player;
+	public Player player;
 
 	private final int BALL_CIRC = 100;
 	public static final int ATTACK_RING = 150;
@@ -49,8 +49,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 
 	@Override
 	public void run() {
-		for (int i = 0; i < 5; i++)
-			ITEM_LIST.add(POWERUP_GEN.generatePowerUp());
+		//POWERUP_GEN.generatePowerUp();
 
 		player = new Player(MAP_WIDTH / 2 - 100, MAP_HEIGHT / 2 - 100, this);
 
@@ -144,23 +143,19 @@ public class CircleBrawl extends MainApplication implements Tick {
 		int LKP = lastKeyPressed;
 		if (keyW && y >= 0) {
 			yVelocity = -10;
-			System.out.println("Y: " + y);
 		}
 
 		else if (keyS && y + BALL_CIRC * 2 <= 768) {
 			yVelocity = 10;
-			System.out.println("Y: " + y);
 		} else
 			yVelocity = 0;
 
 		if (keyLEFT && x >= 0) {
 			xVelocity = -10;
-			System.out.println("X: " + x);
 		}
 
 		else if (keyRIGHT && x + BALL_CIRC * 2 <= 1024) {
 			xVelocity = 10;
-			System.out.println("X: " + x);
 		} else
 			xVelocity = 0;
 
@@ -168,11 +163,10 @@ public class CircleBrawl extends MainApplication implements Tick {
 		ring.move(xVelocity, yVelocity);
 
 		for (Item item : ITEM_LIST) {
-			if (item != null && player.collidesWith(item)) {
-				System.out.println("Intersection detected");
-				item.consume(player);
-				break;
-			}
+			item.tick();
+			item.collisionCheck(player);
 		}
+		
+		POWERUP_GEN.tick();
 	}
 }
