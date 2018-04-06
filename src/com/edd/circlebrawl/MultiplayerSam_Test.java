@@ -57,7 +57,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		Random r = new Random();
-		NC = new NetworkClient("127.0.0.1", 9991, r.nextInt(100), this);
+		NC = new NetworkClient("138.68.18.227", 9991, r.nextInt(100), this);
 		NC.start();
 		
 		//This needs to be temporary.
@@ -75,7 +75,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		private Socket socketClient;
 		private int clientID;
 		private String clientName;
-		private boolean client_initiated = false;
+		boolean client_initiated = false;
 		int myStartX = 0;
 		int myStartY = 0;
 		PrintWriter out;
@@ -226,14 +226,13 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	@Override
 	public void run() {
 		NC.sendJoin();
-		while(!NC.client_initiated) {} //wait until complete
-		
+		//while(!NC.client_initiated) {} //wait until complete
 		for (int i = 0; i < 5; i++)
 			ITEM_LIST.add(POWERUP_GEN.generatePowerUp());
 
 		player = new Player(NC.myStartX, NC.myStartY, this);
 
-		ring = new GOval(player.x + 30, player.y + 30, 140, 140);
+		//ring = new GOval(player.x + 30, player.y + 30, 140, 140);
 		addKeyListeners();
 		addMouseListeners();
 
@@ -317,13 +316,13 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		add(ring);
+		//add(ring);
 		testTimer.start();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		remove(ring);
+		//remove(ring);
 	}
 
 	public void tick() {
@@ -355,7 +354,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			xVelocity = 0;
 
 		player.move(xVelocity, yVelocity);
-		ring.move(xVelocity, yVelocity);
+		//ring.move(xVelocity, yVelocity);
 		if(xVelocity != 0.0 || yVelocity != 0.0) {
 			System.out.println("My Location: " + player.getX() + " " + player.getY());
 			NC.sendMove(xVelocity, yVelocity);
