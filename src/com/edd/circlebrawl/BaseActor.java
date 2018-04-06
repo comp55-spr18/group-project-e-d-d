@@ -3,7 +3,7 @@ package com.edd.circlebrawl;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-public abstract class BaseActor implements Actor {
+public abstract class BaseActor implements Actor, Tick {
 	protected GObject sprite;
 	protected CircleBrawl driver;
 	protected double x;
