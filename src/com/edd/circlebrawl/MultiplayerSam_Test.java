@@ -237,7 +237,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		addMouseListeners();
 
 		long lastTime = System.nanoTime();
-		final double ticks = 30.0;
+		final double ticks = 60.0;
 		double ns = 1000000000 / ticks;
 		double delta = 0;
 		int updates = 0;
