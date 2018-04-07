@@ -79,28 +79,25 @@ public class Player extends Character {
 	}
 	
 	public void tick() {
-		double x = this.getX();
-		double y = this.getY();
-
-		if (keyW && y >= 0) {
+		double height = sprite.getHeight();
+		double width = sprite.getWidth();
+		int buffer = 10;
+		
+		if (keyW && y + height/2 - buffer >= 0) {
 			yVelocity = -10;
-			System.out.println("Y: " + y);
 		}
 
-		else if (keyS && y + this.getSprite().getHeight() * 2 <= 768) {
+		else if (keyS && y + height*1.5 + buffer <= driver.MAP_HEIGHT) {
 			yVelocity = 10;
-			System.out.println("Y: " + y);
 		} else
 			yVelocity = 0;
 
-		if (keyA && x >= 0) {
+		if (keyA && x + width/2 - buffer >= 0) {
 			xVelocity = -10;
-			System.out.println("X: " + x);
 		}
 
-		else if (keyD && x + this.getSprite().getWidth()* 2 <= 1024) {
+		else if (keyD && x + width*1.5 + buffer <= driver.MAP_WIDTH) {
 			xVelocity = 10;
-			System.out.println("X: " + x);
 		} else
 			xVelocity = 0;
 

@@ -45,7 +45,6 @@ public class PowerUp extends Item {
 				consumer.modifyDefense(finalEfficacy);
 		}
 		activated = !activated;
-		System.out.println("toggle - "+type+" - "+activated);
 	}
 	
 	@Override
@@ -60,7 +59,6 @@ public class PowerUp extends Item {
 	public void secondPassed() {
 		if(activated)
 			if(time <= 0) {
-				System.out.println("toggle");
 				toggleEffect();
 				generator.addToRemoveList(this); // removing this powerup from ticklist
 			} else {

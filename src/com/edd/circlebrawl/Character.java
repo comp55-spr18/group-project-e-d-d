@@ -22,7 +22,7 @@ public abstract class Character extends BaseActor {
 		sprite = new GOval(sprite.getX()-modifyValue/2,sprite.getY()-modifyValue/2,sprite.getSize().getWidth()+modifyValue,sprite.getSize().getHeight()+modifyValue);
 		((GOval)sprite).setFilled(true);
 		((GOval)sprite).setFillColor(oldSprite.getFillColor());
-		driver.add(sprite);
+		setupSprite(sprite);
 	}
 	public void modifyDefense(int modifyValue) {
 		defense += modifyValue; // TODO: Maybe insert defense limit?

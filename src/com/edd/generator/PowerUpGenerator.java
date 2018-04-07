@@ -43,7 +43,8 @@ public class PowerUpGenerator extends BaseGenerator {
 	public void checkCollision(BaseActor anotherActor){
 		for(BaseActor actor : actors){
 			if(((Item)actor).collisionCheck(anotherActor)){
-				use((PowerUp)actor);
+				usedPowerUps.add((PowerUp)actor);
+				addToRemoveList(actor);
 			}
 		}
 	}
@@ -79,10 +80,5 @@ public class PowerUpGenerator extends BaseGenerator {
 				powerUp.tick();
 			}
 		}
-	}
-	
-	public void use(PowerUp powerUp){
-		usedPowerUps.add((PowerUp)powerUp);
-		addToRemoveList(powerUp);
 	}
 }
