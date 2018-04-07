@@ -65,7 +65,7 @@ public abstract class BaseActor implements Actor, Tick {
 		sprite = new GImage(spriteFile);
 
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
-
+		driver.bringPlayersToFront();
 		driver.add(sprite);
 	}
 
@@ -76,5 +76,8 @@ public abstract class BaseActor implements Actor, Tick {
 
 		driver.add(sprite);
 	}
+	
+	@Override
+	public void tick(){}
 
 }

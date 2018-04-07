@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.Timer;
 
-import com.edd.powerup.PowerUpGenerator;
+import com.edd.generator.PowerUpGenerator;
 
 import acm.graphics.GLabel;
 import acm.graphics.GOval;

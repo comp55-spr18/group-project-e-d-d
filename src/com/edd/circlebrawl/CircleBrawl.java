@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import com.edd.generator.PowerUpGenerator;
 import com.edd.osvaldo.MainApplication;
-import com.edd.powerup.PowerUpGenerator;
 
 import acm.graphics.GLabel;
 import acm.graphics.GOval;
@@ -168,5 +168,10 @@ public class CircleBrawl extends MainApplication implements Tick {
 		}
 		
 		POWERUP_GEN.tick();
+	}
+	
+	// temporary function. Removes Player sprite and readds.
+	public void bringPlayersToFront(){
+		player.bringToFront();
 	}
 }

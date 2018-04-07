@@ -23,17 +23,8 @@ public abstract class Item extends BaseActor implements Tick {
 	// Triggers an effect such as increase in size or strength
 	public abstract void activate(BaseActor consumer);
 
-	/**
-	 * Overrides BaseActor. Detects if the argument Actor collides with the Actor of
-	 * the current class. If so, then activate the effects.
-	 * 
-	 * @param anotherActor
-	 *            the player's character
-	 * @return boolean true/false indicating if actors are intersecting
-	 */
-	@Override
-	public boolean collidesWith(BaseActor anotherActor) {
-		if (super.collidesWith(anotherActor)) {
+	public boolean collisionCheck(BaseActor anotherActor) {
+		if(anotherActor.collidesWith(this)) {
 			consume(anotherActor);
 			return true;
 		}

@@ -34,4 +34,9 @@ public class Player extends Character {
 		this.y += y;
 	}
 	
+	public void bringToFront(){
+		driver.remove(sprite);
+		driver.add(sprite);
+	}
+	
 }

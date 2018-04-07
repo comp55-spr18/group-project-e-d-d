@@ -16,8 +16,8 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import com.edd.generator.PowerUpGenerator;
 import com.edd.osvaldo.MainApplication;
-import com.edd.powerup.PowerUpGenerator;
 
 import acm.graphics.GLabel;
 import acm.graphics.GOval;
@@ -227,8 +227,6 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	public void run() {
 		NC.sendJoin();
 		//while(!NC.client_initiated) {} //wait until complete
-		for (int i = 0; i < 5; i++)
-			ITEM_LIST.add(POWERUP_GEN.generatePowerUp());
 
 		player = new Player(NC.myStartX, NC.myStartY, this);
 
@@ -361,11 +359,12 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		}
 
 		for (Item item : ITEM_LIST) {
-			if (item != null && player.collidesWith(item)) {
-				System.out.println("Intersection detected");
-				item.consume(player);
-				break;
+			if(item != null){
+				item.tick();
+				item.collisionCheck(player);
 			}
 		}
+		
+		POWERUP_GEN.tick();
 	}
 }
