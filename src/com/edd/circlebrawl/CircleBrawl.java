@@ -165,6 +165,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 		
 		RESOURCE_GEN.tick();
 		POWERUP_GEN.tick();
+		player.tick();
 	}
 	
 	// temporary function. Removes Player sprite and readds.

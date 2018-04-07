@@ -12,7 +12,7 @@ import javafx.util.Pair;
 
 public class PowerUpGenerator extends BaseGenerator {
 	
-	public ArrayList<PowerUp> usedPowerUps; //a list of all powerups that have been consumed
+	private ArrayList<PowerUp> usedPowerUps; //a list of all powerups that have been consumed
 	
 	public PowerUpGenerator(CircleBrawl driver) {
 		usedPowerUps = new ArrayList<PowerUp>();
@@ -65,17 +65,14 @@ public class PowerUpGenerator extends BaseGenerator {
 		super.tick();
 		
 		if(activated) {
-			for(BaseActor powerUp : actors){
-				if(((PowerUp)powerUp).collisionCheck(driver.player)) {
-					usedPowerUps.add((PowerUp)powerUp);
-					actors.remove(powerUp);
-					break;
-				}
-			}
 			for(PowerUp powerUp : usedPowerUps) {
 				powerUp.tick();
 			}
 		}
 	}
 	
+	public void use(PowerUp powerUp){
+		usedPowerUps.add((PowerUp)powerUp);
+		addToRemoveList(powerUp);
+	}
 }

@@ -17,6 +17,7 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import com.edd.generator.PowerUpGenerator;
+import com.edd.generator.ResourceGenerator;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GLabel;
@@ -26,8 +27,8 @@ import acm.graphics.GOval;
 public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
-	public final ArrayList<Item> ITEM_LIST = new ArrayList<Item>();
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
+	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
@@ -358,13 +359,8 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			NC.sendMove(xVelocity, yVelocity);
 		}
 
-		for (Item item : ITEM_LIST) {
-			if(item != null){
-				item.tick();
-				item.collisionCheck(player);
-			}
-		}
-		
+		RESOURCE_GEN.tick();
 		POWERUP_GEN.tick();
+		player.tick();
 	}
 }

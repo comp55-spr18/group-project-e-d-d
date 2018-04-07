@@ -119,4 +119,6 @@ public abstract class BaseGenerator implements Tick{
 		return rand.nextInt(max-min+1)+min; // Efficacy is between min and max.
 	}
 	
+	public ArrayList<BaseActor> getActors(){ return actors; }
+	
 }

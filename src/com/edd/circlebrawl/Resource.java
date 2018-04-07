@@ -29,7 +29,7 @@ public class Resource extends Item {
 		this.x = x;
 		this.y = y;
 		Random rand = new Random();
-		sprite = new GOval(x, y, efficacy * multiple, efficacy * multiple);
+		sprite = new GOval(x, y, efficacy * multiple * 2, efficacy * multiple * 2);
 		((GOval) sprite).setFilled(true);
 		((GOval) sprite).setFillColor(new Color(rand.nextInt(200)+25, rand.nextInt(200)+25, rand.nextInt(200)+25));
 		this.driver = driver;

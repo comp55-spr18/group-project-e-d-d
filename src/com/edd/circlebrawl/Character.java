@@ -1,5 +1,7 @@
 package com.edd.circlebrawl;
 
+import com.edd.powerup.PowerUp;
+
 import acm.graphics.GOval;
 
 public abstract class Character extends BaseActor {
@@ -43,6 +45,17 @@ public abstract class Character extends BaseActor {
 		sprite.move(x,y);
 		this.x += x;
 		this.y += y;
+	}
+	
+	@Override
+	public void tick(){
+		for(BaseActor actor : driver.POWERUP_GEN.getActors()){
+			if(((Item)actor).collisionCheck(this))
+				driver.POWERUP_GEN.use((PowerUp)actor);
+		}
+		for(BaseActor actor : driver.RESOURCE_GEN.getActors()){
+			((Item)actor).collisionCheck(this);
+		}
 	}
 	
 }

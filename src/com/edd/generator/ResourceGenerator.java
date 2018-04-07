@@ -21,17 +21,9 @@ public class ResourceGenerator extends BaseGenerator {
 	@Override
 	public void spawn() {
 		Pair<Integer,Integer> loc1 = generateLocation();
-		actors.add(new Resource(loc1.getKey(),loc1.getValue(),driver,getRandomEfficacy(10,25),1,this));
+		actors.add(new Resource(loc1.getKey(),loc1.getValue(),driver,getRandomEfficacy(5,10),1,this));
 		Pair<Integer,Integer> loc2 = generateLocation();
-		actors.add(new Resource(loc2.getKey(),loc2.getValue(),driver,getRandomEfficacy(10,25),1,this));
-	}
-	
-	@Override
-	public void tick(){
-		super.tick();
-		for(BaseActor actor : actors){
-			((Item)actor).collisionCheck(driver.player);
-		}
+		actors.add(new Resource(loc2.getKey(),loc2.getValue(),driver,getRandomEfficacy(5,10),1,this));
 	}
 
 }
