@@ -20,9 +20,9 @@ public class ResourceGenerator extends BaseGenerator {
 	
 	@Override
 	public void spawn() {
-		Pair<Integer,Integer> loc1 = generateLocation();
+		Pair<Integer,Integer> loc1 = generateLocation(50,150);
 		actors.add(new Resource(loc1.getKey(),loc1.getValue(),driver,getRandomEfficacy(5,10),1,this));
-		Pair<Integer,Integer> loc2 = generateLocation();
+		Pair<Integer,Integer> loc2 = generateLocation(50,150);
 		actors.add(new Resource(loc2.getKey(),loc2.getValue(),driver,getRandomEfficacy(5,10),1,this));
 	}
 

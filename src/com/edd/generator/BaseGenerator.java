@@ -51,8 +51,16 @@ public abstract class BaseGenerator implements Tick{
 	 * Generates a random location for the actor to spawn.
 	 * @return the generated location
 	 */
-	public Pair<Integer,Integer> generateLocation(){
-		return new Pair<Integer,Integer>(rand.nextInt(driver.MAP_WIDTH-150)+50,rand.nextInt(driver.MAP_HEIGHT-150)+50);
+	public Pair<Integer,Integer> generateLocation(int min, int maxOffset){
+		return new Pair<Integer,Integer>(rand.nextInt(driver.MAP_WIDTH-maxOffset)+min,rand.nextInt(driver.MAP_HEIGHT-maxOffset)+min);
+	}
+	
+	/***
+	 * Generates a random location for the actor to spawn.
+	 * @return the generated location
+	 */
+	public Pair<Integer,Integer> generateLocation(int minX, int maxOffsetX, int minY, int maxOffsetY){
+		return new Pair<Integer,Integer>(rand.nextInt(driver.MAP_WIDTH-maxOffsetX)+minX,rand.nextInt(driver.MAP_HEIGHT-maxOffsetY)+minY);
 	}
 	
 	/***
