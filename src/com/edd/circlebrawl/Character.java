@@ -47,8 +47,7 @@ public abstract class Character extends BaseActor {
 		this.y += y;
 	}
 	
-	@Override
-	public void tick(){
+	public void collision(){
 		driver.POWERUP_GEN.checkCollision(this);
 		driver.RESOURCE_GEN.checkCollision(this);
 	}

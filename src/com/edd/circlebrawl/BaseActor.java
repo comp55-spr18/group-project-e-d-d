@@ -80,4 +80,9 @@ public abstract class BaseActor implements Actor, Tick {
 	@Override
 	public void tick(){}
 
+	public void collision() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

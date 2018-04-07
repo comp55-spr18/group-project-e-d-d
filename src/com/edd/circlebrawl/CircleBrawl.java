@@ -24,20 +24,13 @@ public class CircleBrawl extends MainApplication implements Tick {
 	public final int WINDOW_WIDTH = 1024;
 	public final int WINDOW_HEIGHT = 768;
 	public final int TICKS_PER_SECOND = 60;
-	private double velX = 0;
-	private double velY = 0;
 	public Player player;
 
-	private final int BALL_CIRC = 100;
 	public static final int ATTACK_RING = 150;
-	private int keyI;
-	private int lastKeyPressed;
+
 
 	private GOval ring;
 	private Timer testTimer = new Timer(2000, this);
-	private boolean keyW, keyS, keyLEFT, keyRIGHT;
-	private double xVelocity = 0;
-	private double yVelocity = 0;
 	private int i = 0;
 
 	int ticks = 0;
@@ -91,39 +84,11 @@ public class CircleBrawl extends MainApplication implements Tick {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		keyI = e.getKeyChar();
-		if (keyI == 'w') {
-			keyW = true;
-		}
-		if (keyI == 's') {
-			keyS = true;
-		}
-		if (keyI == 'a') {
-			keyLEFT = true;
-		}
-		if (keyI == 'd') {
-			keyRIGHT = true;
-		}
+		player.keyPressed(e);
 	}
 
 	public void keyReleased(KeyEvent e) {
-		keyI = e.getKeyChar();
-		if (keyI == 'w') {
-			keyW = false;
-			yVelocity = 0;
-		}
-		if (keyI == 's') {
-			keyS = false;
-			yVelocity = 0;
-		}
-		if (keyI == 'a') {
-			keyLEFT = false;
-			xVelocity = 0;
-		}
-		if (keyI == 'd') {
-			keyRIGHT = false;
-			xVelocity = 0;
-		}
+		player.keyReleased(e);
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -137,32 +102,6 @@ public class CircleBrawl extends MainApplication implements Tick {
 	}
 
 	public void tick() {
-		double x = player.getX();
-		double y = player.getY();
-
-		int count = 0;
-		int LKP = lastKeyPressed;
-		if (keyW && y >= 0) {
-			yVelocity = -10;
-		}
-
-		else if (keyS && y + BALL_CIRC * 2 <= 768) {
-			yVelocity = 10;
-		} else
-			yVelocity = 0;
-
-		if (keyLEFT && x >= 0) {
-			xVelocity = -10;
-		}
-
-		else if (keyRIGHT && x + BALL_CIRC * 2 <= 1024) {
-			xVelocity = 10;
-		} else
-			xVelocity = 0;
-
-		player.move(xVelocity, yVelocity);
-		ring.move(xVelocity, yVelocity);
-		
 		RESOURCE_GEN.tick();
 		POWERUP_GEN.tick();
 		player.tick();

@@ -31,4 +31,6 @@ public interface Actor {
 
 	public void setupSprite(String spriteFile);
 	public void setupSprite(GObject sprite);
+
+	void collision();
 }
