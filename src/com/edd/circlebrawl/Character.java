@@ -49,13 +49,8 @@ public abstract class Character extends BaseActor {
 	
 	@Override
 	public void tick(){
-		for(BaseActor actor : driver.POWERUP_GEN.getActors()){
-			if(((Item)actor).collisionCheck(this))
-				driver.POWERUP_GEN.use((PowerUp)actor);
-		}
-		for(BaseActor actor : driver.RESOURCE_GEN.getActors()){
-			((Item)actor).collisionCheck(this);
-		}
+		driver.POWERUP_GEN.checkCollision(this);
+		driver.RESOURCE_GEN.checkCollision(this);
 	}
 	
 }

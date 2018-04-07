@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
+import com.edd.circlebrawl.Item;
 import com.edd.circlebrawl.Tick;
 
 import javafx.util.Pair;
@@ -120,5 +121,15 @@ public abstract class BaseGenerator implements Tick{
 	}
 	
 	public ArrayList<BaseActor> getActors(){ return actors; }
+	
+	public void checkCollision(BaseActor anotherActor){
+		for(BaseActor actor : actors){
+			if(actor instanceof Item){
+				((Item)actor).collisionCheck(anotherActor);
+			} else {
+				actor.collidesWith(anotherActor);
+			}
+		}
+	}
 	
 }

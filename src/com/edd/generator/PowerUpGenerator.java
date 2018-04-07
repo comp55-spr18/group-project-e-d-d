@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
+import com.edd.circlebrawl.Item;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
 
@@ -36,6 +37,15 @@ public class PowerUpGenerator extends BaseGenerator {
 			typeTotal = nextTypeTotal;
 		}
 		return null; // This should never be reached
+	}
+	
+	@Override
+	public void checkCollision(BaseActor anotherActor){
+		for(BaseActor actor : actors){
+			if(((Item)actor).collisionCheck(anotherActor)){
+				use((PowerUp)actor);
+			}
+		}
 	}
 	
 	@Override
