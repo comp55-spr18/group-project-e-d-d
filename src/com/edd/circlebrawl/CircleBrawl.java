@@ -3,10 +3,10 @@ package com.edd.circlebrawl;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
 import com.edd.osvaldo.MainApplication;
@@ -19,6 +19,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
+	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
@@ -27,7 +28,6 @@ public class CircleBrawl extends MainApplication implements Tick {
 	public Player player;
 
 	public static final int ATTACK_RING = 150;
-
 
 	private GOval ring;
 	private Timer testTimer = new Timer(2000, this);
@@ -43,7 +43,7 @@ public class CircleBrawl extends MainApplication implements Tick {
 
 	@Override
 	public void run() {
-		//POWERUP_GEN.generatePowerUp();
+		// POWERUP_GEN.generatePowerUp();
 
 		player = new Player(MAP_WIDTH / 2 - 100, MAP_HEIGHT / 2 - 100, this);
 
@@ -102,13 +102,14 @@ public class CircleBrawl extends MainApplication implements Tick {
 	}
 
 	public void tick() {
+		OBSTACLE_GEN.tick();
 		RESOURCE_GEN.tick();
 		POWERUP_GEN.tick();
 		player.tick();
 	}
-	
+
 	// temporary function. Removes Player sprite and readds.
-	public void bringPlayersToFront(){
+	public void bringPlayersToFront() {
 		player.bringToFront();
 	}
 }
