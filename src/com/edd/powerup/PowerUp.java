@@ -4,7 +4,7 @@ import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.Character;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
-import com.edd.generator.PowerUpGenerator;
+import com.edd.generator.BaseGenerator;
 
 public class PowerUp extends Item {
 
@@ -12,10 +12,9 @@ public class PowerUp extends Item {
 	private int ticks;
 	private PowerUpType type; // the type of the PowerUp
 	private Character consumer; // the one who consumes the powerup
-	private PowerUpGenerator generator;
 	private boolean activated = false;
 	
-	public PowerUp(int x, int y, CircleBrawl driver, int efficacy, int multiple, PowerUpType type, PowerUpGenerator generator) {
+	public PowerUp(int x, int y, CircleBrawl driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
 		this.x = x;
 		this.y = y;
 		this.driver = driver;

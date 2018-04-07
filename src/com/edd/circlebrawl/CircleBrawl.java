@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import com.edd.generator.PowerUpGenerator;
+import com.edd.generator.ResourceGenerator;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GLabel;
@@ -16,8 +17,8 @@ import acm.graphics.GOval;
 // Driver Class
 public class CircleBrawl extends MainApplication implements Tick {
 
-	public final ArrayList<Item> ITEM_LIST = new ArrayList<Item>();
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
+	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
@@ -161,12 +162,8 @@ public class CircleBrawl extends MainApplication implements Tick {
 
 		player.move(xVelocity, yVelocity);
 		ring.move(xVelocity, yVelocity);
-
-		for (Item item : ITEM_LIST) {
-			item.tick();
-			item.collisionCheck(player);
-		}
 		
+		RESOURCE_GEN.tick();
 		POWERUP_GEN.tick();
 	}
 	

@@ -111,4 +111,12 @@ public abstract class BaseGenerator implements Tick{
 		return activated;
 	}
 	
+	/***
+	 * Determines a randomized efficacy.
+	 * @return the randomized efficacy.
+	 */
+	protected int getRandomEfficacy(int min, int max) {
+		return rand.nextInt(max-min+1)+min; // Efficacy is between min and max.
+	}
+	
 }

@@ -3,10 +3,12 @@ package com.edd.circlebrawl;
 import java.awt.Color;
 import java.util.Random;
 
+import com.edd.generator.BaseGenerator;
+
 import acm.graphics.GOval;
 
 public class Resource extends Item {
-
+	
 	/**
 	 * Constructor
 	 * 
@@ -23,23 +25,19 @@ public class Resource extends Item {
 	 * @param multiple
 	 *            the multiplier for stat effects
 	 */
-	public Resource(int x, int y, CircleBrawl driver, int efficacy, int multiple) {
+	public Resource(int x, int y, CircleBrawl driver, int efficacy, int multiple, BaseGenerator generator) {
+		this.x = x;
+		this.y = y;
 		Random rand = new Random();
 		sprite = new GOval(x, y, efficacy * multiple, efficacy * multiple);
 		((GOval) sprite).setFilled(true);
-		((GOval) sprite).setFillColor(new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
-		setupSprite(sprite);
+		((GOval) sprite).setFillColor(new Color(rand.nextInt(200)+25, rand.nextInt(200)+25, rand.nextInt(200)+25));
 		this.driver = driver;
 		this.efficacy = efficacy;
 		this.multiple = multiple;
+		this.generator = generator;
+		setupSprite(sprite);
 	}
-
-	public Resource generateResource() {
-		Random rand = new Random();
-		return new Resource(rand.nextInt(driver.MAP_WIDTH - 50) + 1, rand.nextInt(driver.MAP_HEIGHT - 50) + 1, driver,
-				rand.nextInt(10), rand.nextInt(10));
-	}
-
 	/**
 	 * Activates the side effects of the item. Specifically, consumer's size.
 	 * 
@@ -50,12 +48,13 @@ public class Resource extends Item {
 	public void activate(BaseActor consumer) {
 		if (consumer instanceof Character) {
 			((Character) consumer).modifySize(efficacy * multiple);
+			generator.addToRemoveList(this);
 		}
 	}
 
 	@Override
 	public void tick() {
-
+		//animation?
 	}
 
 }

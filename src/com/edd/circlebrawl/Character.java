@@ -1,5 +1,7 @@
 package com.edd.circlebrawl;
 
+import acm.graphics.GOval;
+
 public abstract class Character extends BaseActor {
 
 	protected int size; // how large this Character is; also indicative of health
@@ -11,6 +13,14 @@ public abstract class Character extends BaseActor {
 	//modifiers
 	public void modifySize(int modifyValue) {
 		size += modifyValue; // TODO: Implement proper size changes, include death detection!
+		
+		// stuff below is temporary to demonstrate resource effects
+		driver.remove(sprite);
+		GOval oldSprite = (GOval)sprite;
+		sprite = new GOval(sprite.getX()-modifyValue/2,sprite.getY()-modifyValue/2,sprite.getSize().getWidth()+modifyValue,sprite.getSize().getHeight()+modifyValue);
+		((GOval)sprite).setFilled(true);
+		((GOval)sprite).setFillColor(oldSprite.getFillColor());
+		driver.add(sprite);
 	}
 	public void modifyDefense(int modifyValue) {
 		defense += modifyValue; // TODO: Maybe insert defense limit?

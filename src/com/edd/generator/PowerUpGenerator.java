@@ -16,7 +16,6 @@ public class PowerUpGenerator extends BaseGenerator {
 	
 	public PowerUpGenerator(CircleBrawl driver) {
 		usedPowerUps = new ArrayList<PowerUp>();
-		usedPowerUps = new ArrayList<PowerUp>();
 		
 		this.driver = driver;
 		
@@ -39,10 +38,6 @@ public class PowerUpGenerator extends BaseGenerator {
 		return null; // This should never be reached
 	}
 	
-	public int getRandomEfficacy(Random rand) {
-		return rand.nextInt(11)+10; // Efficacy is between 10 and 20. This can be changed.
-	}
-	
 	@Override
 	protected boolean remove(BaseActor actor){
 		if(super.remove(actor) == true)
@@ -58,7 +53,7 @@ public class PowerUpGenerator extends BaseGenerator {
 	public void spawn() {
 		PowerUpType generatedType = generatePowerUpType(rand);
 		Pair<Integer,Integer> loc = generateLocation();
-		actors.add(new PowerUp(loc.getKey(),loc.getValue(),driver,getRandomEfficacy(rand),1,generatedType,this));
+		actors.add(new PowerUp(loc.getKey(),loc.getValue(),driver,getRandomEfficacy(10,20),1,generatedType,this));
 	}
 	
 	@Override
