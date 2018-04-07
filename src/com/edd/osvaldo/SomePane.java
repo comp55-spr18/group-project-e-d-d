@@ -7,6 +7,7 @@ import acm.graphics.GObject;
 public class SomePane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
+	
 	private GImage img;
 	private GParagraph para;
 
