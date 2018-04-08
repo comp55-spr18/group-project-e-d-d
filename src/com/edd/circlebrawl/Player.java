@@ -1,10 +1,16 @@
 package com.edd.circlebrawl;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import javax.swing.Timer;
+
 import acm.graphics.GOval;
 
-public class Player extends Character {
+public class Player extends Character implements ActionListener {
 	
 	private boolean keyW, keyS, keyA, keyD;
 	private double xVelocity = 0;
@@ -12,7 +18,8 @@ public class Player extends Character {
 	private int keyI;
 	public int ATTACK_RING = 150;
 	private GOval ring;
-
+	private Timer testTimer = new Timer(2000, this);
+	
 	public Player(int x, int y, CircleBrawl driver) {
 		this.x = x;
 		this.y = y;
@@ -78,6 +85,16 @@ public class Player extends Character {
 		}
 	}
 	
+	public void mousePressed(MouseEvent e) {
+		driver.add(ring);
+		testTimer.start();
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		driver.remove(ring);
+	}
+	
 	public void tick() {
 		double height = sprite.getHeight();
 		double width = sprite.getWidth();
@@ -104,13 +121,17 @@ public class Player extends Character {
 		this.move(xVelocity, yVelocity);
 		this.bringToFront();
 		this.collision();
-		//ring.move(xVelocity, yVelocity);
+		ring.move(xVelocity, yVelocity);
 	}
 
 	
 	public void bringToFront(){
 		driver.remove(sprite);
 		driver.add(sprite);
+	}
+	
+	public void removePlayer() {
+		this.remove();
 	}
 	
 }
