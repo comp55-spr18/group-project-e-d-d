@@ -1,5 +1,6 @@
 package com.edd.generator;
 
+import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.obstacle.Obstacle;
 
@@ -17,8 +18,15 @@ public class ObstacleGenerator extends BaseGenerator {
 
 	@Override
 	public void spawn() {
-		Pair<Integer, Integer> loc = generateLocation(0,200);
+		Pair<Integer, Integer> loc = generateLocation(0, 200);
 		actors.add(new Obstacle(loc.getKey(), loc.getValue(), driver, this));
 	}
 
+	public boolean collidesWith(BaseActor anotherActor) {
+		for (BaseActor actor : actors) {
+			if (actor instanceof Obstacle && actor.collidesWith(anotherActor))
+				return true;
+		}
+		return false;
+	}
 }
