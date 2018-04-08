@@ -10,8 +10,8 @@ public class ServerPlayer {
 	public ServerPlayer(String name) {
 		Random rand = new Random();
 		this.name = name;
-		this.x = rand.nextInt(1024 + 1 - 0) + 0;
-		this.y = rand.nextInt(768 + 1 - 0) + 0;
+		this.x = rand.nextInt(830 + 1 - 0) + 0;
+		this.y = rand.nextInt(571 + 1 - 0) + 0;
 	}
 	
 	public int getPlayerX() {

@@ -160,5 +160,6 @@ public class ServerHandler extends Thread {
 		int newY = (int)(sp.getPlayerY() + Double.parseDouble(yVelocity));
 		sp.setPlayerX(newX);
 		sp.setPlayerY(newY);
+		System.out.println("Player:" + sp.getPlayerX() + ", " + sp.getPlayerY());
 	}
 }

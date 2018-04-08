@@ -42,12 +42,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	private int keyI;
 	private int lastKeyPressed;
 
-	private GOval ring;
 	private Timer testTimer = new Timer(2000, this);
 	private boolean keyW, keyS, keyLEFT, keyRIGHT;
 	private double xVelocity = 0;
 	private double yVelocity = 0;
-	private int i = 0;
 	
 	NetworkClient NC;
 
@@ -220,6 +218,18 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		public void sendExit() {
 			sendPacket(out, "<remove>" + this.clientName + "</remove>");
 		}
+		
+		public int getStartX() {
+			return this.myStartX;
+		}
+		
+		public int getStartY() {
+			return this.myStartY;
+		}
+		
+		public boolean getClientInitiated() {
+			return this.client_initiated;
+		}
 	
 	}
 
@@ -228,8 +238,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	@Override
 	public void run() {
 		NC.sendJoin();
-		//while(!NC.client_initiated) {} //wait until complete
-
+		while(!NC.getClientInitiated()) {
+			System.out.println("waiting");
+		} //wait until complete
+		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.myStartX, NC.myStartY, this);
 
 		//ring = new GOval(player.x + 30, player.y + 30, 140, 140);
