@@ -1,13 +1,6 @@
 package com.edd.osvaldo;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
