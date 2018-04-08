@@ -182,6 +182,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    		if(parsePacket(userInput).equals("remove")) {
 		    			String toRemove = string_between(userInput, "<remove>", "</remove>");
 		    			Player tR = characters.get(toRemove);
+		    			tR.removePlayer();
 		    			System.out.println(tR.getX());
 		    		}
 		    		if(parsePacket(userInput).equals("move")) {
@@ -359,8 +360,8 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			NC.sendMove(xVelocity, yVelocity);
 		}
 
-		RESOURCE_GEN.tick();
-		POWERUP_GEN.tick();
+		//RESOURCE_GEN.tick();
+		//POWERUP_GEN.tick();
 		player.tick();
 	}
 }
