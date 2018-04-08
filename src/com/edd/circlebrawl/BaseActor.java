@@ -43,8 +43,24 @@ public abstract class BaseActor implements Actor, Tick {
 	 * @return true/false indicating if the two Actors are intersecting
 	 */
 	public boolean collidesWith(BaseActor anotherActor) {
-		return this.getSprite().contains(anotherActor.getX() + anotherActor.getSprite().getWidth() / 2,
-				anotherActor.getY() + anotherActor.getSprite().getHeight() / 2);
+		// return (this.getSprite().contains(anotherActor.getX() +
+		// anotherActor.getSprite().getWidth() / 2,
+		// anotherActor.getY() + anotherActor.getSprite().getHeight() / 2));
+		return (this.getSprite().contains(anotherActor.getSprite().getX(), anotherActor.getSprite().getY())
+				|| this.getSprite().contains(anotherActor.getSprite().getX(),
+						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight() / 2)
+				|| this.getSprite().contains(anotherActor.getSprite().getX(),
+						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight())
+				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth() / 2,
+						anotherActor.getSprite().getY())
+				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth() / 2,
+						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight())
+				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
+						anotherActor.getSprite().getY())
+				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
+						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight() / 2)
+				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
+						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight()));
 	}
 
 	/**
@@ -76,13 +92,14 @@ public abstract class BaseActor implements Actor, Tick {
 
 		driver.add(sprite);
 	}
-	
+
 	@Override
-	public void tick(){}
+	public void tick() {
+	}
 
 	public void collision() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
