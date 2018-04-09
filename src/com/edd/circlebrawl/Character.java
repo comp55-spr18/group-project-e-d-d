@@ -29,6 +29,7 @@ public abstract class Character extends BaseActor {
 		setupSprite(sprite);
 		driver.remove(saw);
 		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), saw.getWidth()+modifyValue, saw.getHeight()+modifyValue);
+		saw.move(modifyValue, modifyValue);
 	}
 	public void modifyDefense(int modifyValue) {
 		defense += modifyValue; // TODO: Maybe insert defense limit?

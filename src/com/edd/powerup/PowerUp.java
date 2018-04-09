@@ -48,10 +48,16 @@ public class PowerUp extends Item {
 		switch(type) {
 			case SPEED:
 				consumer.modifySpeed(finalEfficacy);
+				System.out.println("Modify speed by "+finalEfficacy+"!");
+				break;
 			case STRENGTH:
 				consumer.modifyStrength(finalEfficacy);
+				System.out.println("Modify strength by "+finalEfficacy+"!");
+				break;
 			case ENDURANCE:
 				consumer.modifyDefense(finalEfficacy);
+				System.out.println("Modify defense by "+finalEfficacy+"!");
+				break;
 		}
 		activated = !activated;
 	}
@@ -71,7 +77,6 @@ public class PowerUp extends Item {
 				toggleEffect();
 				generator.addToRemoveList(this); // removing this powerup from ticklist
 			} else {
-				System.out.println(time);
 				time--;
 			}
 	}
