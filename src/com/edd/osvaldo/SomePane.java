@@ -41,6 +41,7 @@ public class SomePane extends GraphicsPane {
 	public void mousePressed(MouseEvent e) {
 		//para.setText("you need\nto click\non the eyes\nto go back");
 		program.player.mousePressed(e);
+		program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[4]);
 //		GObject obj = program.getElementAt(e.getX(), e.getY());
 //		if (obj == background) {
 //			program.switchToMenu();

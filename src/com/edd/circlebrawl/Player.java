@@ -24,7 +24,7 @@ public class Player extends Character implements ActionListener {
 	public int ATTACK_RING = 190;
 	private GOval ring;
 	private GLabel namePlate;
-	private Timer testTimer = new Timer(2000, this);
+	private Timer testTimer = new Timer(4000, this);
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;

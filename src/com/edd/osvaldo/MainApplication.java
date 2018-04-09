@@ -15,7 +15,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
 	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3" };
+	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
 	public final int TICKS_PER_SECOND = 60;
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
