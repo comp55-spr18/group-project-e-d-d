@@ -29,19 +29,17 @@ public class Obstacle extends BaseActor implements Tick {
 		int selectedImageFile = rand.nextInt(MAX_IMAGES) + 1;
 		switch (selectedImageFile) {
 		case 1:
-			return "cloud1.png";
+			return "redCrate.png";
 		case 2:
-			return "cloud2.png";
+			return "blueCrate.png";
 		case 3:
-			return "cloud3.png";
+			return "greenCrate.png";
 		case 4:
-			return "cloud4.png";
+			return "redCrateHorizontal.png";
 		case 5:
-			return "cloud5.png";
-		case 6:
-			return "airplane.png";
+			return "blueCrateHorizontal.png";
 		default:
-			return "cloud1.png";
+			return "greenCrateHorizontal.png";
 		}
 	}
 

@@ -65,6 +65,10 @@ public class Player extends Character implements ActionListener {
 		int n = rand.nextInt(8);
 		return c[n];
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public void move(double x, double y) {
 		sprite.move(x, y);

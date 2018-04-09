@@ -14,6 +14,7 @@ public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
 	private GButton rect;
+	private GButton rect2;
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
 	private GImage title = new GImage("com/edd/osvaldo/CircleBrawl.gif", program.WINDOW_WIDTH/2, program.WINDOW_HEIGHT/2);
 	
@@ -35,12 +36,16 @@ public class MenuPane extends GraphicsPane {
 		title.setLocation((program.WINDOW_WIDTH - title.getWidth())/2, program.WINDOW_HEIGHT/2 - 200);
 		rect = new GButton("Singleplayer", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2, 200, 100);
 		rect.setFillColor(Color.GREEN);
+		
+		rect2 = new GButton("Multiplayer", (program.WINDOW_WIDTH - 200) / 2, ((program.WINDOW_HEIGHT - 200) / 2) + 130, 200, 100);
+		rect2.setFillColor(Color.GREEN);
 	}
 
 	@Override
 	public void showContents() {
 		program.add(background);
 		program.add(rect);
+		program.add(rect2);
 		program.add(title);
 	}
 
@@ -49,6 +54,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(background);
 		program.remove(rect);
 		program.remove(title);
+		program.remove(rect2);
 	}
 
 	@Override
