@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import com.edd.osvaldo.MainApplication;
 
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GOval;
 
@@ -20,13 +21,17 @@ public class Player extends Character implements ActionListener {
 	private double xVelocity = 0;
 	private double yVelocity = 0;
 	private int keyI;
-	public int ATTACK_RING = 150;
+	public int ATTACK_RING = 190;
 	private GOval ring;
 	private GLabel namePlate;
 	private Timer testTimer = new Timer(2000, this);
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
+	GImage saw = new GImage("com/edd/circlebrawl/Buzzsaw2.gif");
+	
+	
+	
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		
@@ -40,6 +45,7 @@ public class Player extends Character implements ActionListener {
 		this.defense = 10; // TODO: Make global final variable for defaults
 		this.speed = 50; // TODO: Make global final variable for defaults
 		this.strength = 50; // TODO: Make global final variable for defaults
+		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
 		
 
 		// BELOW IS TEMP FOR DEMO
@@ -117,13 +123,13 @@ public class Player extends Character implements ActionListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		driver.add(ring);
+		driver.add(saw);
 		testTimer.start();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		driver.remove(ring);
+		driver.remove(saw);
 	}
 
 	public void tick() {
@@ -154,7 +160,7 @@ public class Player extends Character implements ActionListener {
 		this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();
 		this.collision();
-		ring.move(xVelocity, yVelocity);
+		saw.move(xVelocity, yVelocity);
 	}
 
 	public void bringToFront() {
