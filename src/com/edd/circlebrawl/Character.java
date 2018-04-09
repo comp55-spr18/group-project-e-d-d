@@ -2,6 +2,7 @@ package com.edd.circlebrawl;
 
 import com.edd.powerup.PowerUp;
 
+import acm.graphics.GImage;
 import acm.graphics.GOval;
 
 public abstract class Character extends BaseActor {
@@ -11,6 +12,8 @@ public abstract class Character extends BaseActor {
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
 	protected String name;
+	protected GImage saw = new GImage("com/edd/circlebrawl/Buzzsaw2.gif");
+	public int ATTACK_RING = 190;
 	
 	//modifiers
 	public void modifySize(int modifyValue) {
@@ -20,9 +23,12 @@ public abstract class Character extends BaseActor {
 		driver.remove(sprite);
 		GOval oldSprite = (GOval)sprite;
 		sprite = new GOval(sprite.getX()-modifyValue/2,sprite.getY()-modifyValue/2,sprite.getSize().getWidth()+modifyValue,sprite.getSize().getHeight()+modifyValue);
+		sprite.move(-oldSprite.getWidth() - sprite.getWidth(), oldSprite.getHeight());
 		((GOval)sprite).setFilled(true);
 		((GOval)sprite).setFillColor(oldSprite.getFillColor());
 		setupSprite(sprite);
+		driver.remove(saw);
+		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), saw.getWidth()+modifyValue, saw.getHeight()+modifyValue);
 	}
 	public void modifyDefense(int modifyValue) {
 		defense += modifyValue; // TODO: Maybe insert defense limit?
@@ -32,6 +38,9 @@ public abstract class Character extends BaseActor {
 	}
 	public void modifyStrength(int modifyValue) {
 		strength += modifyValue; //TODO: Maybe insert strength upper/lower limits?
+	}
+	
+	public void scaleSprite() {
 	}
 	
 	//getters

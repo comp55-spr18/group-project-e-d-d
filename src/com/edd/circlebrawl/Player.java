@@ -28,7 +28,7 @@ public class Player extends Character implements ActionListener {
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
-	GImage saw = new GImage("com/edd/circlebrawl/Buzzsaw2.gif");
+	//GImage saw = new GImage("com/edd/circlebrawl/Buzzsaw2.gif");
 	
 	
 	
