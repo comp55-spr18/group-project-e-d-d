@@ -28,8 +28,8 @@ public abstract class Character extends BaseActor {
 		((GOval)sprite).setFillColor(oldSprite.getFillColor());
 		setupSprite(sprite);
 		driver.remove(saw);
-		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), saw.getWidth()+modifyValue, saw.getHeight()+modifyValue);
-		saw.move(modifyValue, modifyValue);
+		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), (saw.getWidth()+modifyValue*1.5), saw.getHeight()+modifyValue*1.5);
+		saw.move(modifyValue/1.5, modifyValue/1.5);
 	}
 	public void modifyDefense(int modifyValue) {
 		defense += modifyValue; // TODO: Maybe insert defense limit?

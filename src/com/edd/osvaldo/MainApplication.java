@@ -16,7 +16,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_HEIGHT = 720;
 	public static final String MUSIC_FOLDER = "sounds";
 	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
-	public final int TICKS_PER_SECOND = 60;
+	public final int TICKS_PER_SECOND = 120;
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
@@ -42,7 +42,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		switchToMenu();
 		
 		long lastTime = System.nanoTime();
-		final double ticks = 60.0;
+		final double ticks = 120.0;
 		double ns = 1000000000 / ticks;
 		double delta = 0;
 		int updates = 0;

@@ -17,6 +17,7 @@ public class MenuPane extends GraphicsPane {
 	private GButton rect2;
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
 	private GImage title = new GImage("com/edd/osvaldo/CircleBrawl.gif", program.WINDOW_WIDTH/2, program.WINDOW_HEIGHT/2);
+	private GLabel sign = new GLabel("Under Construction?", ((program.WINDOW_WIDTH - 200) / 2) + 40, ((program.WINDOW_HEIGHT - 200) / 2) + 210);
 	
 	public MenuPane(MainApplication app) {
 		super();
@@ -38,7 +39,7 @@ public class MenuPane extends GraphicsPane {
 		rect.setFillColor(Color.GREEN);
 		
 		rect2 = new GButton("Multiplayer", (program.WINDOW_WIDTH - 200) / 2, ((program.WINDOW_HEIGHT - 200) / 2) + 130, 200, 100);
-		rect2.setFillColor(Color.GREEN);
+		rect2.setFillColor(Color.GRAY);
 	}
 
 	@Override
@@ -46,6 +47,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(background);
 		program.add(rect);
 		program.add(rect2);
+		program.add(sign);
 		program.add(title);
 	}
 
