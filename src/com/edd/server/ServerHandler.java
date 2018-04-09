@@ -124,8 +124,8 @@ public class ServerHandler extends Thread {
 		w.println(packet);
 	}
 	
-	public String buildPlayerPacket(String playerName, int x, int y) {
-		return "(" + playerName + "," + x + "," + y + ")";
+	public String buildPlayerPacket(String playerName, int x, int y, int color) {
+		return "(" + playerName + "," + x + "," + y + "," + color + ")";
 	}
 	
 	public void sendPlayerList(String playerName) {
@@ -134,18 +134,19 @@ public class ServerHandler extends Thread {
 			String name = entry.getKey().getPlayerName();
 			int x = entry.getKey().getPlayerX();
 			int y = entry.getKey().getPlayerY();
+			int color = entry.getKey().getPlayerColor();
 		    if(name.equals(playerName))
 		    		continue;
-		    allPlayers += buildPlayerPacket(name, x, y) + "%";
+		    allPlayers += buildPlayerPacket(name, x, y, color) + "%";
 		}
 		sendPlayerPacket("<playerlist>" + allPlayers + "</playerlist>", playerName);
 	}
 	
 	public void handleNewClient(String playerName) {
 		ServerPlayer p = getPlayerKey(playerName);
-		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY());
+		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY(), p.getPlayerColor());
 		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
-		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "</newclient>", playerName);
+		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "," + p.getPlayerColor() + "</newclient>", playerName);
 		sendPlayerList(playerName);
 	}
 	

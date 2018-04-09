@@ -25,6 +25,11 @@ import acm.graphics.GOval;
 
 // Driver Class
 public class MultiplayerSam_Test extends CircleBrawl implements Tick {
+	
+	// CHANGE NAME HERE
+	String myName = this.getSaltString();
+	//String myName = "Osvaldo";
+	// CHANGE NAME HERE
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
@@ -67,6 +72,18 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		}));
 	}
 	
+	public String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+    }
+	
 	class NetworkClient extends Thread{
 		
 		private String hostname;
@@ -77,6 +94,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		boolean client_initiated = false;
 		int myStartX = 0;
 		int myStartY = 0;
+		int myStartColor = 0;
 		PrintWriter out;
 		MultiplayerSam_Test world;
 		
@@ -149,6 +167,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    			String[] packet = string_between(userInput, "<newclient>", "</newclient>").split(",");
 		    			myStartX = Integer.parseInt(packet[1]);
 		    			myStartY = Integer.parseInt(packet[2]);
+		    			myStartColor = Integer.parseInt(packet[3]);
 		    			System.out.println("Now true");
 		    			this.client_initiated = true;
 		    		}
@@ -157,7 +176,8 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    			String name = packet[0];
 		    			int x = Integer.parseInt(packet[1]);
 		    			int y = Integer.parseInt(packet[2]);
-		    			Player p = new Player(name, x, y, world);
+		    			int color = Integer.parseInt(packet[3]);
+		    			Player p = new Player(name, x, y, color, world);
 		    			world.addPlayer(p);
 		    		}
 		    		if(parsePacket(userInput).equals("playerlist")) {
@@ -170,7 +190,8 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			    				String clientName = playerInfo[0];
 			    				int clientX = Integer.parseInt(playerInfo[1]);
 			    				int clientY = Integer.parseInt(playerInfo[2]);
-			    				Player NP = new Player(clientName, clientX, clientY, world);
+			    				int clientColor = Integer.parseInt(playerInfo[3]);
+			    				Player NP = new Player(clientName, clientX, clientY, clientColor, world);
 			    				System.out.println("adding player" + clientName);
 			    				characters.put(clientName, NP);
 			    				world.addPlayer(NP);
@@ -181,6 +202,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    			String toRemove = string_between(userInput, "<remove>", "</remove>");
 		    			Player tR = characters.get(toRemove);
 		    			tR.removePlayer();
+		    			tR.getNameLabel().setVisible(false); // TODO
 		    			System.out.println(tR.getX());
 		    		}
 		    		if(parsePacket(userInput).equals("move")) {
@@ -190,24 +212,13 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		    			double yVelocity = Double.parseDouble(packet[2]);
 		    			Player p = characters.get(clientName);
 		    			movePlayer(p, xVelocity, yVelocity);
+		    			p.getNameLabel().move(xVelocity, yVelocity);
 		    		}
 		    }
 		}
 		
-		public String getSaltString() {
-	        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-	        StringBuilder salt = new StringBuilder();
-	        Random rnd = new Random();
-	        while (salt.length() < 18) { // length of the random string.
-	            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-	            salt.append(SALTCHARS.charAt(index));
-	        }
-	        String saltStr = salt.toString();
-	        return saltStr;
-	    }
-		
 		public void sendJoin() {
-			this.clientName = getSaltString();
+			this.clientName = world.myName;
 			sendPacket(out, "<newclient>" + this.clientName + "</newclient>");
 		}
 		
@@ -242,7 +253,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			System.out.println("waiting");
 		} //wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
-		player = new Player(NC.myStartX, NC.myStartY, this);
+		player = new Player(NC.clientName, NC.myStartX, NC.myStartY, NC.myStartColor, this);
 
 		//ring = new GOval(player.x + 30, player.y + 30, 140, 140);
 		addKeyListeners();
@@ -345,35 +356,33 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		int LKP = lastKeyPressed;
 		if (keyW && y >= 0) {
 			yVelocity = -10;
-			System.out.println("Y: " + y);
 		}
 
 		else if (keyS && y + BALL_CIRC * 2 <= 768) {
 			yVelocity = 10;
-			System.out.println("Y: " + y);
 		} else
 			yVelocity = 0;
 
 		if (keyLEFT && x >= 0) {
 			xVelocity = -10;
-			System.out.println("X: " + x);
 		}
 
 		else if (keyRIGHT && x + BALL_CIRC * 2 <= 1024) {
 			xVelocity = 10;
-			System.out.println("X: " + x);
 		} else
 			xVelocity = 0;
 
 		player.move(xVelocity, yVelocity);
 		//ring.move(xVelocity, yVelocity);
+		player.getNameLabel().move(xVelocity, yVelocity);
 		if(xVelocity != 0.0 || yVelocity != 0.0) {
-			System.out.println("My Location: " + player.getX() + " " + player.getY());
 			NC.sendMove(xVelocity, yVelocity);
 		}
 
 		//RESOURCE_GEN.tick();
 		//POWERUP_GEN.tick();
-		player.tick();
+		//player.tick();
 	}
+	
+	
 }

@@ -6,12 +6,14 @@ public class ServerPlayer {
 	private String name;
 	private int x;
 	private int y;
+	private int color;
 	
 	public ServerPlayer(String name) {
 		Random rand = new Random();
 		this.name = name;
 		this.x = rand.nextInt(830 + 1 - 0) + 0;
 		this.y = rand.nextInt(571 + 1 - 0) + 0;
+		this.color = rand.nextInt(8);
 	}
 	
 	public int getPlayerX() {
@@ -20,6 +22,10 @@ public class ServerPlayer {
 	
 	public int getPlayerY() {
 		return y;
+	}
+	
+	public int getPlayerColor() {
+		return color;
 	}
 	
 	public void setPlayerX(int x) {

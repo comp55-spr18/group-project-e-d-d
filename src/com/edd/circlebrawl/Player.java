@@ -66,6 +66,30 @@ public class Player extends Character implements ActionListener {
 		driver.add(namePlate);
 	}
 	
+	public Player(String name, int x, int y, int color, MainApplication driver) {
+		//TODO Sam: Fix this class to allow for a versatile method
+		Random rand = new Random();
+		int n = rand.nextInt(8);
+		this.pColor = c[color];
+		this.x = x;
+		this.y = y;
+		this.driver = driver;
+		this.size = 100; // TODO: Make global final variable for defaults
+		this.defense = 10; // TODO: Make global final variable for defaults
+		this.speed = 50; // TODO: Make global final variable for defaults
+		this.strength = 50; // TODO: Make global final variable for defaults
+		this.name = name;
+		
+
+		// BELOW IS TEMP FOR DEMO
+		GOval localSprite = new GOval(x + size / 2, y + size / 2, size, size);
+		setupSprite(localSprite);
+		localSprite.setColor(pColor);
+		localSprite.setFilled(true);
+		namePlate = new GLabel(name, x + size / 2, y + size / 2);
+		driver.add(namePlate);
+	}
+	
 	public Color generateColor (){
 		Random rand = new Random();
 		int n = rand.nextInt(8);
