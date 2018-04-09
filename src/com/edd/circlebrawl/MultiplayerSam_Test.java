@@ -27,8 +27,8 @@ import acm.graphics.GOval;
 public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	
 	// CHANGE NAME HERE
-	String myName = this.getSaltString();
-	//String myName = "Osvaldo";
+	//String myName = this.getSaltString();
+	String myName = "Osvaldo";
 	// CHANGE NAME HERE
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
