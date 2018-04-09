@@ -69,6 +69,10 @@ public class Player extends Character implements ActionListener {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public GLabel getNameLabel() {
+		return namePlate;
+	}
 
 	public void move(double x, double y) {
 		sprite.move(x, y);

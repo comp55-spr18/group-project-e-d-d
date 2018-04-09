@@ -7,6 +7,8 @@ import com.edd.circlebrawl.Item;
 import com.edd.generator.BaseGenerator;
 import com.edd.osvaldo.MainApplication;
 
+import acm.graphics.GImage;
+
 public class PowerUp extends Item {
 
 	private int time;
@@ -25,6 +27,12 @@ public class PowerUp extends Item {
 		this.time = type.getTime();
 		this.generator = generator;
 		setupSprite("com/edd/powerup/"+type.getSpriteFile());
+		
+		if (type == type.SPEED)
+			((GImage) this.sprite).setBounds(x,y,80,80); 
+		if (type == type.STRENGTH)
+			((GImage) this.sprite).setBounds(x,y,90,100); 
+		
 	}
 	
 	@Override
