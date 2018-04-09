@@ -59,6 +59,12 @@ public class Player extends Character implements ActionListener {
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		driver.add(namePlate);
 	}
+	
+	public Color generateColor (){
+		Random rand = new Random();
+		int n = rand.nextInt(8);
+		return c[n];
+	}
 
 	public void move(double x, double y) {
 		sprite.move(x, y);
