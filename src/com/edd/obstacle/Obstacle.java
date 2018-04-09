@@ -7,6 +7,7 @@ import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Tick;
 import com.edd.generator.BaseGenerator;
 import com.edd.generator.ObstacleGenerator;
+import com.edd.osvaldo.MainApplication;
 
 public class Obstacle extends BaseActor implements Tick {
 	private final int MAX_IMAGES = 6; // number of images
@@ -14,7 +15,7 @@ public class Obstacle extends BaseActor implements Tick {
 	private String obstacleFile; // the filename for the obstacle image
 	protected BaseGenerator generator; // the generator generating this obstacle
 
-	public Obstacle(int x, int y, CircleBrawl driver, BaseGenerator generator) {
+	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator) {
 		this.x = x;
 		this.y = y;
 		this.driver = driver;

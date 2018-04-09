@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import com.edd.generator.BaseGenerator;
+import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GOval;
 
@@ -25,7 +26,7 @@ public class Resource extends Item {
 	 * @param multiple
 	 *            the multiplier for stat effects
 	 */
-	public Resource(int x, int y, CircleBrawl driver, int efficacy, int multiple, BaseGenerator generator) {
+	public Resource(int x, int y, MainApplication driver, int efficacy, int multiple, BaseGenerator generator) {
 		this.x = x;
 		this.y = y;
 		Random rand = new Random();

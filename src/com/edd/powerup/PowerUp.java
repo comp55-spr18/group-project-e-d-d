@@ -5,6 +5,7 @@ import com.edd.circlebrawl.Character;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
 import com.edd.generator.BaseGenerator;
+import com.edd.osvaldo.MainApplication;
 
 public class PowerUp extends Item {
 
@@ -14,7 +15,7 @@ public class PowerUp extends Item {
 	private Character consumer; // the one who consumes the powerup
 	private boolean activated = false;
 	
-	public PowerUp(int x, int y, CircleBrawl driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
+	public PowerUp(int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
 		this.x = x;
 		this.y = y;
 		this.driver = driver;

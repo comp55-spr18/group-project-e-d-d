@@ -90,10 +90,6 @@ public class CircleBrawl extends MainApplication implements Tick {
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
 	}
-	
-	public void mousePressed(MouseEvent e) {
-		player.mousePressed(e);
-	}
 
 	public void actionPerformed(ActionEvent e) {
 		player.actionPerformed(e);

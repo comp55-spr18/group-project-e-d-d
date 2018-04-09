@@ -3,12 +3,13 @@ package com.edd.generator;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.obstacle.Obstacle;
+import com.edd.osvaldo.MainApplication;
 
 import javafx.util.Pair;
 
 public class ObstacleGenerator extends BaseGenerator {
-	public ObstacleGenerator(CircleBrawl driver) {
-		this.driver = driver;
+	public ObstacleGenerator(MainApplication mainApplication) {
+		this.driver = mainApplication;
 
 		maxSpawns = 2;
 		spawnDelay = 5;

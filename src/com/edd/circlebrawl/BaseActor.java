@@ -1,11 +1,13 @@
 package com.edd.circlebrawl;
 
+import com.edd.osvaldo.MainApplication;
+
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
 public abstract class BaseActor implements Actor, Tick {
 	protected GObject sprite;
-	protected CircleBrawl driver;
+	protected MainApplication driver;
 	protected double x;
 	protected double y;
 
@@ -82,7 +84,7 @@ public abstract class BaseActor implements Actor, Tick {
 
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
 		driver.bringPlayersToFront();
-		driver.add(sprite);
+		//driver.add(sprite);
 	}
 
 	public void setupSprite(GObject sprite) {
@@ -90,7 +92,7 @@ public abstract class BaseActor implements Actor, Tick {
 
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
 
-		driver.add(sprite);
+		//driver.add(sprite);
 	}
 
 	@Override

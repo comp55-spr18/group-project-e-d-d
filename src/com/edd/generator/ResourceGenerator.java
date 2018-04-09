@@ -4,13 +4,14 @@ import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
 import com.edd.circlebrawl.Resource;
+import com.edd.osvaldo.MainApplication;
 
 import javafx.util.Pair;
 
 public class ResourceGenerator extends BaseGenerator {
 
-	public ResourceGenerator(CircleBrawl driver) {
-		this.driver = driver;
+	public ResourceGenerator(MainApplication mainApplication) {
+		this.driver = mainApplication;
 		
 		maxSpawns = 7;
 		spawnDelay = 3;

@@ -1,10 +1,26 @@
 package com.edd.osvaldo;
 
-public class MainApplication extends GraphicsApplication {
+import com.edd.circlebrawl.Player;
+import com.edd.circlebrawl.Tick;
+import com.edd.generator.ObstacleGenerator;
+import com.edd.generator.PowerUpGenerator;
+import com.edd.generator.ResourceGenerator;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import acm.graphics.GLabel;
+
+public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
 	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3" };
+	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3" };
+	public final int TICKS_PER_SECOND = 60;
+	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
+	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
+	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
+	Player player = new Player(WINDOW_WIDTH / 2 - 100, WINDOW_HEIGHT / 2 - 100, this);
 
 	private SomePane somePane;
 	private MenuPane menu;
@@ -21,6 +37,36 @@ public class MainApplication extends GraphicsApplication {
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
+		
+		long lastTime = System.nanoTime();
+		final double ticks = 60.0;
+		double ns = 1000000000 / ticks;
+		double delta = 0;
+		int updates = 0;
+		int frames = 0;
+		long timer = System.currentTimeMillis();
+
+		GLabel g = new GLabel("Ticks: " + ticks + "\nFrames: " + frames);
+		g.setLocation(WINDOW_WIDTH - g.getWidth() - 60, WINDOW_HEIGHT - g.getHeight());
+
+		while (true) {
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			if (delta >= 1) {
+				tick();
+				updates++;
+				delta--;
+			}
+			frames++;
+
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				g.setLabel("Ticks: " + ticks + "\nFrames: " + frames);
+				updates = 0;
+				frames = 0;
+			}
+		}
 	}
 
 	public void switchToMenu() {
@@ -30,12 +76,30 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToSome() {
-		playRandomSound();
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
+		audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
 		switchToScreen(somePane);
 	}
 
-	private void playRandomSound() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+	@Override
+	public void tick() {
+		// TODO Auto-generated method stub
+		player.tick();
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		player.keyPressed(e);
+	}
+
+	public void keyReleased(KeyEvent e) {
+		player.keyReleased(e);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		player.actionPerformed(e);
+	}
+
+	public void bringPlayersToFront() {
+		player.bringToFront();
 	}
 }

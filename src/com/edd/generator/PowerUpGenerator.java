@@ -6,6 +6,7 @@ import java.util.Random;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
+import com.edd.osvaldo.MainApplication;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
 
@@ -15,7 +16,7 @@ public class PowerUpGenerator extends BaseGenerator {
 	
 	private ArrayList<PowerUp> usedPowerUps; //a list of all powerups that have been consumed
 	
-	public PowerUpGenerator(CircleBrawl driver) {
+	public PowerUpGenerator(MainApplication driver) {
 		usedPowerUps = new ArrayList<PowerUp>();
 		
 		this.driver = driver;

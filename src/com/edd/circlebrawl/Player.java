@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.Timer;
 
+import com.edd.osvaldo.MainApplication;
+
 import acm.graphics.GOval;
 
 public class Player extends Character implements ActionListener {
@@ -20,10 +22,10 @@ public class Player extends Character implements ActionListener {
 	private GOval ring;
 	private Timer testTimer = new Timer(2000, this);
 
-	public Player(int x, int y, CircleBrawl driver) {
+	public Player(int x, int y, MainApplication mainApplication) {
 		this.x = x;
 		this.y = y;
-		this.driver = driver;
+		this.driver = mainApplication;
 		this.size = 100; // TODO: Make global final variable for defaults
 		this.defense = 10; // TODO: Make global final variable for defaults
 		this.speed = 50; // TODO: Make global final variable for defaults
@@ -84,15 +86,15 @@ public class Player extends Character implements ActionListener {
 		}
 	}
 
-	public void mousePressed(MouseEvent e) {
-		driver.add(ring);
-		testTimer.start();
-
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		driver.remove(ring);
-	}
+//	public void mousePressed(MouseEvent e) {
+//		driver.add(ring);
+//		testTimer.start();
+//
+//	}
+//
+//	public void actionPerformed(ActionEvent e) {
+//		driver.remove(ring);
+//	}
 
 	public void tick() {
 		double height = sprite.getHeight();
@@ -103,7 +105,7 @@ public class Player extends Character implements ActionListener {
 			yVelocity = -10;
 		}
 
-		else if (keyS && y + height * 1.5 + buffer <= driver.MAP_HEIGHT
+		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT
 				|| this.driver.OBSTACLE_GEN.collidesWith(this)) {
 			yVelocity = 10;
 		} else
@@ -113,7 +115,7 @@ public class Player extends Character implements ActionListener {
 			xVelocity = -10;
 		}
 
-		else if (keyD && x + width * 1.5 + buffer <= driver.MAP_WIDTH || this.driver.OBSTACLE_GEN.collidesWith(this)) {
+		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH || this.driver.OBSTACLE_GEN.collidesWith(this)) {
 			xVelocity = 10;
 		} else
 			xVelocity = 0;
@@ -121,16 +123,20 @@ public class Player extends Character implements ActionListener {
 		this.move(xVelocity, yVelocity);
 		this.bringToFront();
 		this.collision();
-		ring.move(xVelocity, yVelocity);
+		//ring.move(xVelocity, yVelocity);
 	}
 
 	public void bringToFront() {
-		driver.remove(sprite);
-		driver.add(sprite);
 	}
 
 	public void removePlayer() {
 		this.remove();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

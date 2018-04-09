@@ -2,6 +2,8 @@ package com.edd.osvaldo;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
+import com.edd.circlebrawl.Tick;
+
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
@@ -32,7 +34,7 @@ public class MenuPane extends GraphicsPane {
 //		title.setLocation((program.WINDOW_WIDTH- title.getWidth())/2, (program.WINDOW_HEIGHT/2) - 200);
 		title.setLocation((program.WINDOW_WIDTH - title.getWidth())/2, program.WINDOW_HEIGHT/2 - 200);
 		rect = new GButton("Singleplayer", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2, 200, 100);
-		rect.setFillColor(Color.RED);
+		rect.setFillColor(Color.GREEN);
 	}
 
 	@Override
@@ -44,6 +46,7 @@ public class MenuPane extends GraphicsPane {
 
 	@Override
 	public void hideContents() {
+		program.remove(background);
 		program.remove(rect);
 		program.remove(title);
 	}

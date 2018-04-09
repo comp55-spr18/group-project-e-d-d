@@ -7,6 +7,7 @@ import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
 import com.edd.circlebrawl.Tick;
+import com.edd.osvaldo.MainApplication;
 
 import javafx.util.Pair;
 
@@ -20,7 +21,7 @@ public abstract class BaseGenerator implements Tick{
 	
 	protected Random rand = new Random();
 	
-	protected CircleBrawl driver;
+	protected MainApplication driver;
 	protected ArrayList<BaseActor> actors = new ArrayList<BaseActor>();
 	protected ArrayList<BaseActor> actorsToRemove = new ArrayList<BaseActor>();
 	
@@ -52,7 +53,7 @@ public abstract class BaseGenerator implements Tick{
 	 * @return the generated location
 	 */
 	public Pair<Integer,Integer> generateLocation(int min, int maxOffset){
-		return new Pair<Integer,Integer>(rand.nextInt(driver.MAP_WIDTH-maxOffset)+min,rand.nextInt(driver.MAP_HEIGHT-maxOffset)+min);
+		return new Pair<Integer,Integer>(rand.nextInt(driver.WINDOW_WIDTH-maxOffset)+min,rand.nextInt(driver.WINDOW_HEIGHT-maxOffset)+min);
 	}
 	
 	/***
@@ -60,7 +61,7 @@ public abstract class BaseGenerator implements Tick{
 	 * @return the generated location
 	 */
 	public Pair<Integer,Integer> generateLocation(int minX, int maxOffsetX, int minY, int maxOffsetY){
-		return new Pair<Integer,Integer>(rand.nextInt(driver.MAP_WIDTH-maxOffsetX)+minX,rand.nextInt(driver.MAP_HEIGHT-maxOffsetY)+minY);
+		return new Pair<Integer,Integer>(rand.nextInt(driver.WINDOW_WIDTH-maxOffsetX)+minX,rand.nextInt(driver.WINDOW_HEIGHT-maxOffsetY)+minY);
 	}
 	
 	/***
