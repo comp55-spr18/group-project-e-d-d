@@ -18,7 +18,7 @@ public class SomePane extends GraphicsPane {
 
 	public SomePane(MainApplication app) {
 		this.program = app;
-		program.player = new Player(program.WINDOW_WIDTH / 2 - 100, program.WINDOW_HEIGHT / 2 - 100, program);
+		program.player = new Player("Mike", program.WINDOW_WIDTH / 2 - 100, program.WINDOW_HEIGHT / 2 - 100, program);
 		img = new GImage("robot head.jpg", 100, 100);
 		para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
 		para.setFont("Arial-24");
@@ -37,6 +37,7 @@ public class SomePane extends GraphicsPane {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		para.setText("you need\nto click\non the eyes\nto go back");
+		program.player.mousePressed(e);
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == img) {
 			program.switchToMenu();

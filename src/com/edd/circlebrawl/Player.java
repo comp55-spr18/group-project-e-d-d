@@ -5,11 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 import javax.swing.Timer;
 
 import com.edd.osvaldo.MainApplication;
 
+import acm.graphics.GLabel;
 import acm.graphics.GOval;
 
 public class Player extends Character implements ActionListener {
@@ -20,10 +22,17 @@ public class Player extends Character implements ActionListener {
 	private int keyI;
 	public int ATTACK_RING = 150;
 	private GOval ring;
+	private GLabel namePlate;
 	private Timer testTimer = new Timer(2000, this);
 	public boolean startTick = false;
+	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
+	private Color pColor;
 
 	public Player(int x, int y, MainApplication mainApplication) {
+		
+		Random rand = new Random();
+		int n = rand.nextInt(8);
+		this.pColor = c[n];
 		this.x = x;
 		this.y = y;
 		this.driver = mainApplication;
@@ -31,18 +40,24 @@ public class Player extends Character implements ActionListener {
 		this.defense = 10; // TODO: Make global final variable for defaults
 		this.speed = 50; // TODO: Make global final variable for defaults
 		this.strength = 50; // TODO: Make global final variable for defaults
+		
 
 		// BELOW IS TEMP FOR DEMO
 		GOval localSprite = new GOval(x + size / 2, y + size / 2, size, size);
 		setupSprite(localSprite);
-		localSprite.setColor(Color.PINK);
+		localSprite.setColor(pColor);
 		localSprite.setFilled(true);
 		ring = new GOval(this.getX() / 2, this.getY() / 2 + 30, 140, 140);
 	}
 
-	public Player(String name, int x, int y, CircleBrawl driver) {
+	public Player(String name, int x, int y, MainApplication driver) {
+		
 		this(x, y, driver);
 		this.name = name;
+		
+		//Nameplate
+		namePlate = new GLabel(name, x + size / 2, y + size / 2);
+		driver.add(namePlate);
 	}
 
 	public void move(double x, double y) {
@@ -87,15 +102,15 @@ public class Player extends Character implements ActionListener {
 		}
 	}
 
-//	public void mousePressed(MouseEvent e) {
-//		driver.add(ring);
-//		testTimer.start();
-//
-//	}
-//
-//	public void actionPerformed(ActionEvent e) {
-//		driver.remove(ring);
-//	}
+	public void mousePressed(MouseEvent e) {
+		driver.add(ring);
+		testTimer.start();
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		driver.remove(ring);
+	}
 
 	public void tick() {
 		double height = sprite.getHeight();
@@ -122,9 +137,10 @@ public class Player extends Character implements ActionListener {
 			xVelocity = 0;
 
 		this.move(xVelocity, yVelocity);
+		this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();
 		this.collision();
-		//ring.move(xVelocity, yVelocity);
+		ring.move(xVelocity, yVelocity);
 	}
 
 	public void bringToFront() {
@@ -134,12 +150,6 @@ public class Player extends Character implements ActionListener {
 
 	public void removePlayer() {
 		this.remove();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

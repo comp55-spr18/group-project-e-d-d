@@ -103,7 +103,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
 	}
-
+	
 	public void actionPerformed(ActionEvent e) {
 		player.actionPerformed(e);
 	}
