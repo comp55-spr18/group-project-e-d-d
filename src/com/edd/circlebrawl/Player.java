@@ -21,6 +21,7 @@ public class Player extends Character implements ActionListener {
 	public int ATTACK_RING = 150;
 	private GOval ring;
 	private Timer testTimer = new Timer(2000, this);
+	public boolean startTick = false;
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		this.x = x;
@@ -127,6 +128,8 @@ public class Player extends Character implements ActionListener {
 	}
 
 	public void bringToFront() {
+		driver.remove(sprite);
+		driver.add(sprite);
 	}
 
 	public void removePlayer() {

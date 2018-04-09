@@ -84,7 +84,7 @@ public abstract class BaseActor implements Actor, Tick {
 
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
 		driver.bringPlayersToFront();
-		//driver.add(sprite);
+		driver.add(sprite);
 	}
 
 	public void setupSprite(GObject sprite) {
@@ -92,7 +92,11 @@ public abstract class BaseActor implements Actor, Tick {
 
 		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
 
-		//driver.add(sprite);
+		driver.add(sprite);
+	}
+	
+	public void addSprite() {
+		driver.add(sprite);
 	}
 
 	@Override

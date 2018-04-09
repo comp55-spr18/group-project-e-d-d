@@ -20,13 +20,16 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
-	Player player = new Player(WINDOW_WIDTH / 2 - 100, WINDOW_HEIGHT / 2 - 100, this);
+	Player player;
+	
+	public boolean startTick = false;
 
 	private SomePane somePane;
 	private MenuPane menu;
 	private int count;
 
 	AudioPlayer audio = AudioPlayer.getInstance();
+	public boolean test = false;
 	
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -84,7 +87,13 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		player.tick();
+		if (test) {
+			OBSTACLE_GEN.tick();
+			RESOURCE_GEN.tick();
+			POWERUP_GEN.tick();
+			player.tick();
+		}
+			
 	}
 	
 	public void keyPressed(KeyEvent e) {
@@ -100,6 +109,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	}
 
 	public void bringPlayersToFront() {
-		player.bringToFront();
+		// TODO Auto-generated method stub
+		
 	}
 }
