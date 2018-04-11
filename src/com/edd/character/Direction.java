@@ -19,4 +19,12 @@ public enum Direction {
 	
 	public Rate getXRate(){ return xRate; }
 	public Rate getYRate(){ return yRate; }
+	
+	public static Direction getDirectionFromRates(Rate xRate, Rate yRate){
+		for(Direction direction : values()){
+			if(direction.xRate == xRate && direction.yRate == yRate)
+				return direction;
+		}
+		return null;
+	}
 }

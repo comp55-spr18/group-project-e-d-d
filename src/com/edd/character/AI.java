@@ -3,6 +3,8 @@ package com.edd.character;
 import java.awt.Color;
 import java.util.Random;
 
+import com.edd.circlebrawl.BaseActor;
+import com.edd.circlebrawl.Resource;
 import com.edd.generator.AIGenerator;
 import com.edd.osvaldo.MainApplication;
 
@@ -22,6 +24,13 @@ public class AI extends Character {
 	private int xVelocity;
 	private int yVelocity;
 	
+	/***
+	 * AI is an artificially intelligent character. Its goals include growing stronger and killing the player.
+	 * @param x
+	 * @param y
+	 * @param driver
+	 * @param generator
+	 */
 	public AI(int x, int y, MainApplication driver, AIGenerator generator) {
 		
 		rand = new Random();
@@ -38,25 +47,35 @@ public class AI extends Character {
 		setupSprite(localSprite);
 		localSprite.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		localSprite.setFilled(true);
+		
+		chooseNewRandomDirection(); // establishing initial direction
 	}
 	
 	@Override
 	public void tick(){
 		if(playerIsInDetectionRange()){
-			int xVel = driver.player.getX() > x ? speed : -speed;
-			int yVel = driver.player.getY() > y ? speed : -speed;
-			if(driver.player.getX() == x)
-				xVel = 0;
-			if(driver.player.getY() == y)
-				yVel = 0;
-			move(xVel, yVel);
+			chooseNewDirectionTowardActor(driver.player);
 		} else {
 			directionResetTicks++;
 			if(directionResetTicks >= DIRECTION_RESET_DELAY*driver.TICKS_PER_SECOND){
-				chooseNewDirection();
+				Resource nearestResource = getNearestResourceInRange();
+				if(nearestResource != null){
+					chooseNewDirectionTowardActor(nearestResource);
+				} else {
+					chooseNewRandomDirection();
+				}
 				directionResetTicks = 0;
 			}
-			move(xVelocity,yVelocity);
+		}
+		
+		if(direction == null){
+			System.out.println("WARNING: Having to use fail-safe random direction! Should never be called! Something's wrong?");
+			chooseNewRandomDirection();
+		}
+		
+		setVelocityFromDirection();
+		if(!move(xVelocity,yVelocity)){
+			chooseNewRandomDirection();
 		}
 	}
 	
@@ -64,10 +83,37 @@ public class AI extends Character {
 		return(Math.abs(driver.player.getX()-x) <= DETECTION_RANGE_X && Math.abs(driver.player.getY()-y) <= DETECTION_RANGE_Y);
 	}
 	
-	private void chooseNewDirection(){
+	private Resource getNearestResourceInRange(){
+		return null;
+	}
+	
+	private void chooseNewDirectionTowardActor(BaseActor actor){
+		Rate xRate = Rate.INCREASING;
+		Rate yRate = Rate.INCREASING;
+		
+		if(actor.getX() > x)
+			xRate = Rate.INCREASING;
+		if(actor.getX() < x)
+			xRate = Rate.DECREASING;
+		if(actor.getX() == x)
+			xRate = Rate.NEUTRAL;
+		
+		if(actor.getY() > y)
+			yRate = Rate.INCREASING;
+		if(actor.getY() < y)
+			yRate = Rate.DECREASING;
+		if(actor.getY() == y)
+			yRate = Rate.NEUTRAL;
+		
+		direction = Direction.getDirectionFromRates(xRate,yRate);
+	}
+	
+	private void chooseNewRandomDirection(){
 		Direction[] directions = Direction.values();
 		direction = directions[rand.nextInt(directions.length)];
-
+	}
+	
+	private void setVelocityFromDirection(){
 		// getting x velocity from x rate of change in direction
 		switch(direction.getXRate()){
 			case NEUTRAL:

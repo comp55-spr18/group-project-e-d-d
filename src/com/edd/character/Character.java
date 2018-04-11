@@ -51,12 +51,20 @@ public abstract class Character extends BaseActor {
 	public int getStrength() { return strength; }
 	public String getName() { return name; }
 	
-	public void move(double x, double y) {
+	/***
+	 * Moves the character. Also handles collision detection (or it will, at least).
+	 * @param x the x val to move the character
+	 * @param y the y val to move the character
+	 * @return if the movement was successful
+	 */
+	public boolean move(double x, double y) {
 		sprite.move(x,y);
 		this.x += x;
 		this.y += y;
+		return true;
 	}
 	
+	// Should not exist! Collision should be handled in move()!
 	public void collision(){
 		driver.POWERUP_GEN.checkCollision(this);
 		driver.RESOURCE_GEN.checkCollision(this);
