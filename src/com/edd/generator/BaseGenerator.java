@@ -33,12 +33,14 @@ public abstract class BaseGenerator implements Tick{
 			for(BaseActor actor : actorsToRemove){
 				remove(actor);
 			}
+			
 			actorsToRemove.clear();
-		}
-		currentTicks++;
-		if(currentTicks >= spawnDelay*driver.TICKS_PER_SECOND && actors.size() < maxSpawns) {
-			spawn();
-			currentTicks = 0;
+			
+			currentTicks++;
+			if(currentTicks >= spawnDelay*driver.TICKS_PER_SECOND && actors.size() < maxSpawns) {
+				spawn();
+				currentTicks = 0;
+			}
 		}
 	}
 	

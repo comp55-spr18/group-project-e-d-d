@@ -15,9 +15,11 @@ import javafx.util.Pair;
 public class PowerUpGenerator extends BaseGenerator {
 	
 	private ArrayList<PowerUp> usedPowerUps; //a list of all powerups that have been consumed
+	private ArrayList<PowerUp> usedPowerUpsToRemove; //a list of all powerups that have been consumed and need to be removed
 	
 	public PowerUpGenerator(MainApplication driver) {
 		usedPowerUps = new ArrayList<PowerUp>();
+		usedPowerUpsToRemove = new ArrayList<PowerUp>();
 		
 		this.driver = driver;
 		
@@ -62,6 +64,16 @@ public class PowerUpGenerator extends BaseGenerator {
 	}
 	
 	@Override
+	public void addToRemoveList(BaseActor actor){
+		if(actors.contains(actor)){
+			usedPowerUps.add((PowerUp)actor);
+			actorsToRemove.add(actor);
+		} else if(usedPowerUps.contains(actor)){
+			usedPowerUpsToRemove.add((PowerUp)actor);
+		}
+	}
+	
+	@Override
 	public void spawn() {
 		PowerUpType generatedType = generatePowerUpType(rand);
 		Pair<Integer,Integer> loc = generateLocation(50,150);
@@ -77,9 +89,17 @@ public class PowerUpGenerator extends BaseGenerator {
 		super.tick();
 		
 		if(activated) {
+
+			for(PowerUp powerUp : usedPowerUpsToRemove){
+				remove(powerUp);
+			}
+			
+			usedPowerUpsToRemove.clear();
+			
 			for(PowerUp powerUp : usedPowerUps) {
 				powerUp.tick();
 			}
+			
 		}
 	}
 }

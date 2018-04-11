@@ -3,9 +3,9 @@ package com.edd.powerup;
 import acm.graphics.GImage;
 
 public enum PowerUpType {
-	SPEED(1,"powerup_speed.png",10),
-	STRENGTH(1,"powerup_strength.png",10),
-	ENDURANCE(1,"powerup_endurance.png",10);
+	SPEED(1,"powerup_speed.png",4),
+	STRENGTH(1,"powerup_strength.png",4),
+	ENDURANCE(1,"powerup_endurance.png",4);
 	
 	// Portions work this way:
 	// Each PowerUpType gets a certain amount of "portions," and the higher number of portions one PowerUpType has, the higher likelihood it has of being generated.
