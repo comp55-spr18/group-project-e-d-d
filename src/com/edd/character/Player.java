@@ -17,6 +17,11 @@ import acm.graphics.GOval;
 
 public class Player extends Character implements ActionListener {
 
+	private final int BASE_SIZE = 100;
+	private final int BASE_DEFENSE = 10;
+	private final int BASE_SPEED = 20;
+	private final int BASE_STRENGTH = 50;
+	
 	private boolean keyW, keyS, keyA, keyD;
 	private double xVelocity = 0;
 	private double yVelocity = 0;
@@ -28,10 +33,6 @@ public class Player extends Character implements ActionListener {
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
-	//GImage saw = new GImage("com/edd/circlebrawl/Buzzsaw2.gif");
-	
-	
-	
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		
@@ -41,10 +42,10 @@ public class Player extends Character implements ActionListener {
 		this.x = x;
 		this.y = y;
 		this.driver = mainApplication;
-		this.size = 100; // TODO: Make global final variable for defaults
-		this.defense = 10; // TODO: Make global final variable for defaults
-		this.speed = 50; // TODO: Make global final variable for defaults
-		this.strength = 50; // TODO: Make global final variable for defaults
+		this.size = BASE_SIZE;
+		this.defense = BASE_DEFENSE;
+		this.speed = BASE_SPEED;
+		this.strength = BASE_STRENGTH;
 		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
 		
 
@@ -74,10 +75,10 @@ public class Player extends Character implements ActionListener {
 		this.x = x;
 		this.y = y;
 		this.driver = driver;
-		this.size = 100; // TODO: Make global final variable for defaults
-		this.defense = 10; // TODO: Make global final variable for defaults
-		this.speed = 50; // TODO: Make global final variable for defaults
-		this.strength = 50; // TODO: Make global final variable for defaults
+		this.size = BASE_SIZE;
+		this.defense = BASE_DEFENSE;
+		this.speed = BASE_SPEED;
+		this.strength = BASE_STRENGTH;
 		this.name = name;
 		
 
