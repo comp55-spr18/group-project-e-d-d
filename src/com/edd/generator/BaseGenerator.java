@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
 import com.edd.circlebrawl.Tick;
 import com.edd.osvaldo.MainApplication;

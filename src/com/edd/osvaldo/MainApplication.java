@@ -1,13 +1,14 @@
 package com.edd.osvaldo;
 
-import com.edd.circlebrawl.Player;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import com.edd.character.Player;
 import com.edd.circlebrawl.Tick;
+import com.edd.generator.AIGenerator;
 import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import acm.graphics.GLabel;
 
@@ -20,7 +21,9 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
-	Player player;
+	public final AIGenerator AI_GEN = new AIGenerator(this);
+	public final int AI_MAX = 3;
+	public Player player;
 	
 	public boolean startTick = false;
 
@@ -36,7 +39,6 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	}
 
 	public void run() {
-		System.out.println("Hello, world!");
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
@@ -91,6 +93,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			//OBSTACLE_GEN.tick();
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
+			AI_GEN.tick();
 			player.tick();
 		}
 			

@@ -1,6 +1,6 @@
-package com.edd.circlebrawl;
+package com.edd.character;
 
-import com.edd.powerup.PowerUp;
+import com.edd.circlebrawl.BaseActor;
 
 import acm.graphics.GImage;
 import acm.graphics.GOval;
@@ -12,7 +12,7 @@ public abstract class Character extends BaseActor {
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
 	protected String name;
-	protected GImage saw = new GImage("com/edd/circlebrawl/Buzzsaw2.gif");
+	protected GImage saw = new GImage("com/edd/character/Buzzsaw2.gif");
 	public int ATTACK_RING = 190;
 	
 	//modifiers

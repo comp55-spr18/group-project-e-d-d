@@ -1,4 +1,4 @@
-package com.edd.circlebrawl;
+package com.edd.character;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -104,12 +104,6 @@ public class Player extends Character implements ActionListener {
 		return namePlate;
 	}
 
-	public void move(double x, double y) {
-		sprite.move(x, y);
-		this.x += x;
-		this.y += y;
-	}
-
 	public void keyPressed(KeyEvent e) {
 		keyI = e.getKeyChar();
 		if (keyI == 'w') {
@@ -181,7 +175,8 @@ public class Player extends Character implements ActionListener {
 			xVelocity = 0;
 
 		this.move(xVelocity, yVelocity);
-		this.namePlate.move(xVelocity, yVelocity);
+		if(namePlate != null)
+			this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();
 		this.collision();
 		saw.move(xVelocity, yVelocity);

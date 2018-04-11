@@ -22,7 +22,7 @@ public class PowerUpGenerator extends BaseGenerator {
 		this.driver = driver;
 		
 		maxSpawns = 5;
-		spawnDelay = 3;
+		spawnDelay = 5;
 		
 		activated = true;
 	}

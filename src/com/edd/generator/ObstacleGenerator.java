@@ -8,11 +8,11 @@ import com.edd.osvaldo.MainApplication;
 import javafx.util.Pair;
 
 public class ObstacleGenerator extends BaseGenerator {
-	public ObstacleGenerator(MainApplication mainApplication) {
-		this.driver = mainApplication;
+	public ObstacleGenerator(MainApplication driver) {
+		this.driver = driver;
 
 		maxSpawns = 2;
-		spawnDelay = 5;
+		spawnDelay = 0; // all spawn immediately
 
 		activated = true;
 	}

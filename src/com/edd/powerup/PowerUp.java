@@ -1,7 +1,7 @@
 package com.edd.powerup;
 
+import com.edd.character.Character;
 import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.Character;
 import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
 import com.edd.generator.BaseGenerator;

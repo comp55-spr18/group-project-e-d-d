@@ -3,6 +3,7 @@ package com.edd.circlebrawl;
 import java.awt.Color;
 import java.util.Random;
 
+import com.edd.character.Character;
 import com.edd.generator.BaseGenerator;
 import com.edd.osvaldo.MainApplication;
 

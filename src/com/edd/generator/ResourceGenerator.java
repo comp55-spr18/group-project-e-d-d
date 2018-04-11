@@ -13,8 +13,8 @@ public class ResourceGenerator extends BaseGenerator {
 	public ResourceGenerator(MainApplication mainApplication) {
 		this.driver = mainApplication;
 		
-		maxSpawns = 7;
-		spawnDelay = 3;
+		maxSpawns = 9;
+		spawnDelay = 2;
 		
 		activated = true;
 	}

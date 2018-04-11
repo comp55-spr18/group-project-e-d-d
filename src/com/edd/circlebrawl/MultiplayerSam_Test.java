@@ -9,19 +9,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.Timer;
 
+import com.edd.character.Player;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GLabel;
-import acm.graphics.GOval;
 
 // Driver Class
 public class MultiplayerSam_Test extends CircleBrawl implements Tick {

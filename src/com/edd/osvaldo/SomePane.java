@@ -2,11 +2,10 @@ package com.edd.osvaldo;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-import com.edd.circlebrawl.Player;
-import com.edd.circlebrawl.Tick;
+import com.edd.character.AI;
+import com.edd.character.Player;
 
 import acm.graphics.GImage;
-import acm.graphics.GObject;
 
 
 public class SomePane extends GraphicsPane {
