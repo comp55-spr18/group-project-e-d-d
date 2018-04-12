@@ -47,6 +47,7 @@ public class SomePane extends GraphicsPane {
 		//para.setText("you need\nto click\non the eyes\nto go back");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		
+		//mute button interaction
 		if (obj == muteButton && !soundPaused) {
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = true;

@@ -71,7 +71,8 @@ public class MenuPane extends GraphicsPane {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-		
+
+		//mute button interaction
 		if (obj == muteButton && !soundPaused) {
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
 			soundPaused = true;
