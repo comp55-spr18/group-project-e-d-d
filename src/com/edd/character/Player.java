@@ -190,8 +190,8 @@ public class Player extends Character implements ActionListener {
 			xVelocity = 0;
 		if(!moveSuccess.yCollides)
 			yVelocity = 0;
-		System.out.println(xVelocity+"_"+yVelocity);
-		cam.translate(xVelocity, yVelocity);
+
+		cam.translate(-xVelocity, -yVelocity);
 		if(namePlate != null)
 			this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();

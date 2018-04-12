@@ -86,7 +86,6 @@ public abstract class CollisionUtil {
 	}
 	
 	private static boolean westCheck(int x1b, int x1e, int x2b, int x2e){
-		System.out.println(x1b+" <= "+x2e+" && "+x1b+" >= "+x2b);
 		return x1b <= x2e && x1b >= x2b;
 	}
 	

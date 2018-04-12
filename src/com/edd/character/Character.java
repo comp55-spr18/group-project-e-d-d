@@ -85,7 +85,8 @@ public abstract class Character extends BaseActor {
 	 * @param y the y val to move the character
 	 */
 	public void move(int x, int y) {
-		sprite.move(x,y);
+		if(!(this instanceof Player))
+			sprite.move(x,y);
 		this.x += x;
 		this.y += y;
 		constructCollisionBox();

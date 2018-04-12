@@ -56,20 +56,27 @@ public class Camera implements Tick{
 	//up the elements of the screen. The only things that won't be moving are the player's 
 	//attack ring, the player, and the buttons the screen may or may not have.
 	public void translate(double velX, double velY) {
-		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();)
-			if (it.next() == player.sprite || it.next() == player.getSawSprite()){
+		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();){
+			GObject next = it.next();
+			if (next == player.sprite || next == player.getSawSprite()){
 				continue;
 			}
-		
-			// TEMPORARILY COMMENTED OUT THE LINES BELOW; THEY NEED EDITING TO WORK WITH COLLISION - Zach
-		
-			//else
-				//it.next().move(velX, velY);
+			else
+				next.move(velX, velY);
+		}
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
+		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();){
+
+			GObject next = it.next();
+			if (next == player.sprite || next == player.getSawSprite()){
+				continue;
+			} else {
+				//next.move(velX, velY);
+			}
+		}
 		
 	}
 	
