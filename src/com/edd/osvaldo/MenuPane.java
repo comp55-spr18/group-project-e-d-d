@@ -15,9 +15,11 @@ public class MenuPane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	private GButton rect;
 	private GButton rect2;
+	private GButton muteButton;
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
 	private GImage title = new GImage("com/edd/osvaldo/CircleBrawl.gif", program.WINDOW_WIDTH/2, program.WINDOW_HEIGHT/2);
 	private GLabel sign = new GLabel("Under Construction?", ((program.WINDOW_WIDTH - 200) / 2) + 40, ((program.WINDOW_HEIGHT - 200) / 2) + 210);
+	private boolean soundPaused = false;
 	
 	public MenuPane(MainApplication app) {
 		super();
@@ -38,6 +40,10 @@ public class MenuPane extends GraphicsPane {
 		rect = new GButton("Singleplayer", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2, 200, 100);
 		rect.setFillColor(Color.GREEN);
 		
+		//the mute button GButton
+		muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
+		muteButton.setFillColor(Color.GREEN);
+		
 		rect2 = new GButton("Multiplayer", (program.WINDOW_WIDTH - 200) / 2, ((program.WINDOW_HEIGHT - 200) / 2) + 130, 200, 100);
 		rect2.setFillColor(Color.GRAY);
 	}
@@ -49,6 +55,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(rect2);
 		program.add(sign);
 		program.add(title);
+		program.add(muteButton);
 	}
 
 	@Override
@@ -57,13 +64,28 @@ public class MenuPane extends GraphicsPane {
 		program.remove(rect);
 		program.remove(title);
 		program.remove(rect2);
+		program.remove(muteButton);
+		program.remove(sign);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
+		
+		if (obj == muteButton && !soundPaused) {
+			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
+			soundPaused = true;
+			muteButton.setFillColor(Color.GRAY);
+		}
+		else {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
+			soundPaused = false;
+			muteButton.setFillColor(Color.GREEN);
+		}	
+		
 		if (obj == rect) {
 			program.test = true;
+			program.audio.stopSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
 			program.switchToSome();
 		}
 	}
