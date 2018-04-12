@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import com.edd.circlebrawl.Camera;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
@@ -33,6 +34,7 @@ public class Player extends Character implements ActionListener {
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
+	Camera cam;
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		
@@ -47,6 +49,7 @@ public class Player extends Character implements ActionListener {
 		this.speed = BASE_SPEED;
 		this.strength = BASE_STRENGTH;
 		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
+		cam = new Camera(0, 0, this, mainApplication);
 		
 
 		// BELOW IS TEMP FOR DEMO
@@ -158,31 +161,44 @@ public class Player extends Character implements ActionListener {
 
 		if (keyW && y + height / 2 - buffer >= 0 || this.driver.OBSTACLE_GEN.collidesWith(this)) {
 			yVelocity = -10;
+			cam.translate(xVelocity, yVelocity);
 		}
 
 		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT
 				|| this.driver.OBSTACLE_GEN.collidesWith(this)) {
 			yVelocity = 10;
-		} else
+			cam.translate(xVelocity, yVelocity);
+		} else {
 			yVelocity = 0;
+			cam.translate(xVelocity, yVelocity);
+		}
+			
 
 		if (keyA && x + width / 2 - buffer >= 0 || this.driver.OBSTACLE_GEN.collidesWith(this)) {
 			xVelocity = -10;
+			cam.translate(xVelocity, yVelocity);
 		}
 
 		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH || this.driver.OBSTACLE_GEN.collidesWith(this)) {
 			xVelocity = 10;
-		} else
+			cam.translate(xVelocity, yVelocity);
+		} else {
 			xVelocity = 0;
+			cam.translate(xVelocity, yVelocity);
+		}
+			
 
-		this.move(xVelocity, yVelocity);
+		//this.move(xVelocity, yVelocity);
 		if(namePlate != null)
 			this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();
 		this.collision();
-		saw.move(xVelocity, yVelocity);
+		//saw.move(xVelocity, yVelocity);
 	}
 
+	public GImage getSawSprite() {
+		return this.saw;
+	}
 	public void bringToFront() {
 		driver.remove(sprite);
 		driver.add(sprite);
