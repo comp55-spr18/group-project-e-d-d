@@ -9,9 +9,11 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import com.edd.circlebrawl.Camera;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.osvaldo.MainApplication;
 
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GOval;
 
@@ -33,6 +35,7 @@ public class Player extends Character implements ActionListener {
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
+	Camera cam;
 
 	public Player(int x, int y, MainApplication mainApplication) {
 
@@ -44,6 +47,7 @@ public class Player extends Character implements ActionListener {
 		this.pColor = c[n];
 
 		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
+		cam = new Camera(0, 0, this, mainApplication);
 		
 
 		// BELOW IS TEMP FOR DEMO
@@ -160,22 +164,29 @@ public class Player extends Character implements ActionListener {
 
 		if (keyW && y + height / 2 - buffer >= 0) {
 			yVelocity = -speed;
+			cam.translate(xVelocity, yVelocity);
 		}
 
 		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT) {
 			yVelocity = speed;
-		} else
+			cam.translate(xVelocity, yVelocity);
+		} else {
 			yVelocity = 0;
-
+			cam.translate(xVelocity, yVelocity);
+		}
+			
 		if (keyA && x + width / 2 - buffer >= 0) {
 			xVelocity = -speed;
+			cam.translate(xVelocity, yVelocity);
 		}
-
 		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH) {
 			xVelocity = speed;
-		} else
+			cam.translate(xVelocity, yVelocity);
+		} else {
 			xVelocity = 0;
-
+			cam.translate(xVelocity, yVelocity);
+		}
+			
 		this.attemptMove(xVelocity, yVelocity);
 		if(namePlate != null)
 			this.namePlate.move(xVelocity, yVelocity);
@@ -183,6 +194,9 @@ public class Player extends Character implements ActionListener {
 		saw.move(xVelocity, yVelocity);
 	}
 
+	public GImage getSawSprite() {
+		return this.saw;
+	}
 	public void bringToFront() {
 		driver.remove(sprite);
 		driver.add(sprite);
