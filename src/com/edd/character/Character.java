@@ -1,5 +1,9 @@
 package com.edd.character;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
 import com.edd.circlebrawl.BaseActor;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionBox;
@@ -16,37 +20,33 @@ public abstract class Character extends BaseActor {
 	protected int defense; // how much damage this Character can take
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
-	protected String name;
 	protected GImage saw = new GImage("com/edd/character/Buzzsaw2.gif");
 	public int ATTACK_RING = 190;
 	
-	protected void basicCharacterConstructor(BaseCollisionEngine engine, int size, int defense, int speed, int strength, String name){
+	protected void basicCharacterConstructor(BaseCollisionEngine engine, int size, int defense, int speed, int strength, Color color){
 		this.collisionEngine = engine;
 		this.size = size;
 		this.defense = defense;
 		this.speed = speed;
 		this.strength = strength;
-		this.name = name;
+
+		this.sprite = new GOval(x, y, size, size);
+		((GOval)sprite).setColor(color);
+		((GOval)sprite).setFilled(true);
+
+		// temp
+		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
+		
+		setupSprite(sprite);
 	}
 	
 	//modifiers
 	public void modifySize(int modifyValue) {
-		size += modifyValue; // TODO: Implement proper size changes, include death detection!
-		
-		// stuff below is temporary to demonstrate resource effects
-		driver.remove(sprite);
-		GOval oldSprite = (GOval)sprite;
-		sprite = new GOval(sprite.getX()-modifyValue/2,sprite.getY()-modifyValue/2,sprite.getSize().getWidth()+modifyValue,sprite.getSize().getHeight()+modifyValue);
-		sprite.move(-oldSprite.getWidth() - sprite.getWidth(), oldSprite.getHeight());
-		((GOval)sprite).setFilled(true);
-		((GOval)sprite).setFillColor(oldSprite.getFillColor());
-		setupSprite(sprite);
-		driver.remove(saw);
-		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), (saw.getWidth()+modifyValue*1.5), saw.getHeight()+modifyValue*1.5);
-		saw.move(modifyValue/1.5, modifyValue/1.5);
+		size += modifyValue; // TODO: Include death detection!
+		resize(modifyValue);
 	}
 	public void modifyDefense(int modifyValue) {
-		defense += modifyValue; // TODO: Maybe insert defense limit?
+		defense += modifyValue; // TODO: Maybe insert defense upper/lower limits?
 	}
 	public void modifySpeed(int modifyValue) {
 		speed += modifyValue; //TODO: Maybe insert speed upper/lower limits?
@@ -58,12 +58,31 @@ public abstract class Character extends BaseActor {
 	public void scaleSprite() {
 	}
 	
+	private void resize(int modifyValue){
+		driver.remove(sprite);
+		
+		GOval oldSprite = (GOval)sprite;
+
+		sprite = new GOval(sprite.getX(),sprite.getY(),getWidth()+modifyValue,getHeight()+modifyValue);
+
+		((GOval)sprite).setFilled(true);
+		((GOval)sprite).setFillColor(oldSprite.getFillColor());
+		
+		driver.add(sprite);
+		
+		//driver.remove(saw);
+		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), (saw.getWidth()+modifyValue*1.5), saw.getHeight()+modifyValue*1.5);
+		saw.move(modifyValue/1.5, modifyValue/1.5);
+		
+		constructCollisionBox();
+	}
+	
 	//getters
 	public int getSize() { return size; }
 	public int getDefense() { return defense; }
 	public int getSpeed() { return speed; }
 	public int getStrength() { return strength; }
-	public String getName() { return name; }
+	public GImage getSawSprite() { return saw; }
 
 	
 	/***
@@ -89,6 +108,9 @@ public abstract class Character extends BaseActor {
 			sprite.move(x,y);
 		this.x += x;
 		this.y += y;
+		
+		saw.move(x, y);
+		
 		constructCollisionBox();
 	}
 	

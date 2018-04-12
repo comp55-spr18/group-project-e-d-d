@@ -29,70 +29,65 @@ public class Player extends Character implements ActionListener {
 	private double xVelocity = 0;
 	private double yVelocity = 0;
 	private int keyI;
-	public int ATTACK_RING = 190;
-	private GOval ring;
 	private GLabel namePlate;
 	private Timer testTimer = new Timer(4000, this);
 	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
-	Camera cam;
+	private Camera cam;
+	protected String name;
 
 	public Player(int x, int y, MainApplication mainApplication) {
 
-		basicPreConstructor(x,y,driver);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,"");
-		
 		Random rand = new Random();
 		int n = rand.nextInt(8);
 		this.pColor = c[n];
-
-		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
-		cam = new Camera(0, 0, this, mainApplication);
 		
+		basicPreConstructor(x,y,driver);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
 
-		// BELOW IS TEMP FOR DEMO
-		this.sprite = new GOval(x + size / 2, y + size / 2, size, size);
-		((GOval)sprite).setColor(pColor);
-		((GOval)sprite).setFilled(true);
-		ring = new GOval(this.getX() / 2, this.getY() / 2 + 30, 140, 140);
+		this.name = "";
+		
+		cam = new Camera(0, 0, this, mainApplication);
 		
 		basicPostConstructor();
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
 
+		Random rand = new Random();
+		int n = rand.nextInt(8);
+		this.pColor = c[n];
+		
 		basicPreConstructor(x,y,driver);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,name);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
 		
 		//Nameplate
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		driver.add(namePlate);
 		cam = new Camera(0, 0, this, driver);
+		this.name = name;
 
 		// BELOW IS TEMP FOR DEMO
-		sprite = new GOval(x + size / 2, y + size / 2, size, size);
-		((GOval)sprite).setColor(pColor);
-		((GOval)sprite).setFilled(true);
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		
 		basicPostConstructor();
 	}
 	
 	public Player(String name, int x, int y, int color, MainApplication driver) {
-		
-		basicPreConstructor(x,y,driver);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,name);
-		
-		//TODO Sam: Fix this class to allow for a versatile method
+
 		Random rand = new Random();
 		int n = rand.nextInt(8);
+		this.pColor = c[n];
+		
+		basicPreConstructor(x,y,driver);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
+		
+		//TODO Sam: Fix this class to allow for a versatile method
 		cam = new Camera(0, 0, this, driver);
+		this.name = name;
 
 		// BELOW IS TEMP FOR DEMO
-		sprite = new GOval(x + size / 2, y + size / 2, size, size);
-		((GOval)sprite).setColor(pColor);
-		((GOval)sprite).setFilled(true);
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		
 		driver.add(namePlate);
@@ -105,10 +100,10 @@ public class Player extends Character implements ActionListener {
 		int n = rand.nextInt(8);
 		return c[n];
 	}
+
+	public String getName() { return name; }
 	
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 	
 	public GLabel getNameLabel() {
 		return namePlate;
@@ -193,14 +188,10 @@ public class Player extends Character implements ActionListener {
 
 		cam.translate(-xVelocity, -yVelocity);
 		if(namePlate != null)
-			this.namePlate.move(xVelocity, yVelocity);
-		this.bringToFront();
-		saw.move(xVelocity, yVelocity);
+			namePlate.move(xVelocity, yVelocity);
+		bringToFront();
 	}
 
-	public GImage getSawSprite() {
-		return this.saw;
-	}
 	public void bringToFront() {
 		driver.remove(sprite);
 		driver.add(sprite);

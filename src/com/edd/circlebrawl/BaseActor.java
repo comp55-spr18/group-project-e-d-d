@@ -1,6 +1,7 @@
 package com.edd.circlebrawl;
 
 import com.edd.collision.CollisionBox;
+import com.edd.collision.CollisionUtil;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
@@ -72,7 +73,7 @@ public abstract class BaseActor implements Actor, Tick {
 		// return (this.getSprite().contains(anotherActor.getX() +
 		// anotherActor.getSprite().getWidth() / 2,
 		// anotherActor.getY() + anotherActor.getSprite().getHeight() / 2));
-		return (this.getSprite().contains(anotherActor.getSprite().getX(), anotherActor.getSprite().getY())
+		/*return (this.getSprite().contains(anotherActor.getSprite().getX(), anotherActor.getSprite().getY())
 				|| this.getSprite().contains(anotherActor.getSprite().getX(),
 						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight() / 2)
 				|| this.getSprite().contains(anotherActor.getSprite().getX(),
@@ -86,7 +87,8 @@ public abstract class BaseActor implements Actor, Tick {
 				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
 						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight() / 2)
 				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
-						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight()));
+						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight()));*/
+		return CollisionUtil.overlaps(this, anotherActor);
 	}
 
 	/**

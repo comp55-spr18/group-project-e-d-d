@@ -37,12 +37,7 @@ public class AI extends Character {
 		rand = new Random();
 		
 		basicPreConstructor(x,y,driver);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),80+rand.nextInt(31),10,5,50,"");
-		
-		
-		sprite = new GOval(x + size / 2, y + size / 2, size, size);
-		((GOval)sprite).setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
-		((GOval)sprite).setFilled(true);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),80+rand.nextInt(31),10,5,50,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		
 		chooseNewRandomDirection(); // establishing initial direction
 		

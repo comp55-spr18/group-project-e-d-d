@@ -132,14 +132,4 @@ public abstract class BaseGenerator implements Tick{
 	
 	public ArrayList<BaseActor> getActors(){ return actors; }
 	
-	public void checkCollision(BaseActor anotherActor){
-		for(BaseActor actor : actors){
-			if(actor instanceof Item){
-				((Item)actor).collisionCheck(anotherActor);
-			} else {
-				actor.collidesWith(anotherActor);
-			}
-		}
-	}
-	
 }

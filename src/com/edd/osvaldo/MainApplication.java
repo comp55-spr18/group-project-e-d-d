@@ -91,8 +91,8 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		// TODO Auto-generated method stub
 		if (test) {
 			OBSTACLE_GEN.tick();
-			//RESOURCE_GEN.tick();
-			//POWERUP_GEN.tick();
+			RESOURCE_GEN.tick();
+			POWERUP_GEN.tick();
 			//AI_GEN.tick();
 			player.tick();
 		}

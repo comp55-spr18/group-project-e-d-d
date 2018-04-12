@@ -43,16 +43,6 @@ public class PowerUpGenerator extends BaseGenerator {
 	}
 	
 	@Override
-	public void checkCollision(BaseActor anotherActor){
-		for(BaseActor actor : actors){
-			if(((Item)actor).collisionCheck(anotherActor)){
-				usedPowerUps.add((PowerUp)actor);
-				addToRemoveList(actor);
-			}
-		}
-	}
-	
-	@Override
 	protected boolean remove(BaseActor actor){
 		if(super.remove(actor) == true)
 			return true;
