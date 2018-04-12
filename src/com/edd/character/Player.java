@@ -11,12 +11,11 @@ import javax.swing.Timer;
 
 import com.edd.circlebrawl.Camera;
 import com.edd.collision.CollisionResult;
+import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.osvaldo.MainApplication;
 
-import acm.graphics.GImage;
 import acm.graphics.GLabel;
-import acm.graphics.GOval;
 
 public class Player extends Character implements ActionListener {
 
@@ -54,7 +53,7 @@ public class Player extends Character implements ActionListener {
 	public Player(String name, int x, int y, int color, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
 		basicPlayerConstructor(name, c[color]);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
+		basicCharacterConstructor(new MultiPlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
 		basicPostConstructor();
 	}
 	
