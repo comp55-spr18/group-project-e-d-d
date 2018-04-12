@@ -67,6 +67,7 @@ public class Player extends Character implements ActionListener {
 		//Nameplate
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		driver.add(namePlate);
+		cam = new Camera(0, 0, this, driver);
 
 		// BELOW IS TEMP FOR DEMO
 		sprite = new GOval(x + size / 2, y + size / 2, size, size);
@@ -85,6 +86,7 @@ public class Player extends Character implements ActionListener {
 		//TODO Sam: Fix this class to allow for a versatile method
 		Random rand = new Random();
 		int n = rand.nextInt(8);
+		cam = new Camera(0, 0, this, driver);
 
 		// BELOW IS TEMP FOR DEMO
 		sprite = new GOval(x + size / 2, y + size / 2, size, size);
