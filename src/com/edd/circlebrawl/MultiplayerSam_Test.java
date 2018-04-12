@@ -274,7 +274,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	public void run() {
 		NC.sendJoin();
 		while(!NC.getClientInitiated()) {
-			System.out.println("waiting");
+			System.out.print("");
 		} //wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.clientName, NC.myStartX, NC.myStartY, NC.myStartColor, this);
@@ -324,6 +324,10 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		Player p2 = characters.get(p.getName());
 		characters.get(p.getName()).setX(p2.getX());
 		characters.get(p.getName()).setY(p2.getY());
+	}
+	
+	public void bringPlayersToFront() {
+		player.bringToFront();
 	}
 
 	public void keyPressed(KeyEvent e) {
