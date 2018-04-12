@@ -6,10 +6,10 @@ import com.edd.circlebrawl.BaseActor;
 
 public abstract class CollisionUtil {
 	
-	public static OverlapPair overlaps(BaseActor moving, BaseActor resting, int x, int y){
+	public static CollisionResult overlaps(BaseActor moving, BaseActor resting, int x, int y){
 
 		if(moving == resting) // if the two actors are the same
-			return new OverlapPair(false,false);
+			return new CollisionResult(false,false);
 		
 		Direction direction = Direction.getDirectionFromVelocity(x,y);
 		Rate xRate = Rate.getRateFromVelocity(x);
@@ -33,7 +33,7 @@ public abstract class CollisionUtil {
 
 		if(direction == Direction.NEUTRAL){
 			boolean overlaps = inRange(x1b,x1e,x2b,x2e) && inRange(y1b,y1e,y2b,y2e);
-			return new OverlapPair(overlaps,overlaps);
+			return new CollisionResult(overlaps,overlaps);
 		}
 
 		if(inRange(y1b-y,y1e-y,y2b,y2e))
@@ -62,11 +62,11 @@ public abstract class CollisionUtil {
 					break;
 		}
 		
-		return new OverlapPair(xOverlap,yOverlap);
+		return new CollisionResult(xOverlap,yOverlap);
 	}
 	
 	public static boolean overlaps(BaseActor first, BaseActor second){
-		return overlaps(first, second, 0, 0).xOverlaps; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
+		return overlaps(first, second, 0, 0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
 	}
 	
 	private static boolean inRange(int t1b, int t1e, int t2b, int t2e){

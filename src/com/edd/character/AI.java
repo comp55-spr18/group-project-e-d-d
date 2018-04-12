@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.Resource;
+import com.edd.collision.CollisionResult;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.generator.AIGenerator;
 import com.edd.osvaldo.MainApplication;
@@ -70,7 +71,8 @@ public class AI extends Character {
 		}
 		
 		setVelocityFromDirection();
-		if(!attemptMove(xVelocity,yVelocity)){
+		CollisionResult result = attemptMove(xVelocity,yVelocity);
+		if(!result.xCollides && !result.yCollides){
 			chooseNewRandomDirection();
 		}
 	}

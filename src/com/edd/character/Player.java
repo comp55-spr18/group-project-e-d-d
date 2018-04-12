@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import com.edd.circlebrawl.Camera;
+import com.edd.collision.CollisionResult;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.osvaldo.MainApplication;
 
@@ -166,30 +167,31 @@ public class Player extends Character implements ActionListener {
 
 		if (keyW && y + height / 2 - buffer >= 0) {
 			yVelocity = -speed;
-			cam.translate(xVelocity, yVelocity);
 		}
 
 		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT) {
 			yVelocity = speed;
-			cam.translate(xVelocity, yVelocity);
 		} else {
 			yVelocity = 0;
-			cam.translate(xVelocity, yVelocity);
 		}
 			
 		if (keyA && x + width / 2 - buffer >= 0) {
 			xVelocity = -speed;
-			cam.translate(xVelocity, yVelocity);
 		}
 		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH) {
 			xVelocity = speed;
-			cam.translate(xVelocity, yVelocity);
 		} else {
 			xVelocity = 0;
-			cam.translate(xVelocity, yVelocity);
 		}
-			
-		this.attemptMove(xVelocity, yVelocity);
+
+		CollisionResult moveSuccess = attemptMove(xVelocity, yVelocity);
+		
+		if(!moveSuccess.xCollides)
+			xVelocity = 0;
+		if(!moveSuccess.yCollides)
+			yVelocity = 0;
+		System.out.println(xVelocity+"_"+yVelocity);
+		cam.translate(xVelocity, yVelocity);
 		if(namePlate != null)
 			this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();

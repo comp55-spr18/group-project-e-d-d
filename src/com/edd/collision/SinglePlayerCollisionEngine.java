@@ -14,12 +14,12 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
-	protected OverlapPair collidesWithObstacles(int x, int y) {
+	protected CollisionResult collidesWithObstacles(int x, int y) {
 		return collidesWithActors(driver.OBSTACLE_GEN.getActors(),x,y);
 	}
 
 	@Override
-	protected OverlapPair collidesWithOtherCharacters(int x, int y) {
+	protected CollisionResult collidesWithOtherCharacters(int x, int y) {
 		return collidesWithActors(driver.AI_GEN.getActors(),x,y).merge(CollisionUtil.overlaps(character,driver.player,x,y));
 	}
 

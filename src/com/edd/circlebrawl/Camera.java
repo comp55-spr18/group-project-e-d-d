@@ -60,8 +60,11 @@ public class Camera implements Tick{
 			if (it.next() == player.sprite || it.next() == player.getSawSprite()){
 				continue;
 			}
-			else
-				it.next().move(velX, velY);
+		
+			// TEMPORARILY COMMENTED OUT THE LINES BELOW; THEY NEED EDITING TO WORK WITH COLLISION - Zach
+		
+			//else
+				//it.next().move(velX, velY);
 	}
 
 	@Override

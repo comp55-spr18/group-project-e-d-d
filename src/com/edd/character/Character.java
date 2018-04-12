@@ -3,6 +3,7 @@ package com.edd.character;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionBox;
+import com.edd.collision.CollisionResult;
 
 import acm.graphics.GImage;
 import acm.graphics.GOval;
@@ -71,10 +72,10 @@ public abstract class Character extends BaseActor {
 	 * @param y the y val to move the character
 	 * @return if the movement was successful
 	 */
-	public boolean attemptMove(int x, int y){
+	public CollisionResult attemptMove(int x, int y){
 		return collisionEngine.move(x, y);
 	}
-	public boolean attemptMove(double x, double y){
+	public CollisionResult attemptMove(double x, double y){
 		return collisionEngine.move((int)x, (int)y); // just to work better with other code
 	}
 	

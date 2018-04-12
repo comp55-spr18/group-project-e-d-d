@@ -12,15 +12,15 @@ public abstract class BaseCollisionEngine {
 	protected Character character;
 	protected MainApplication driver;
 	
-	public boolean move(int x, int y) {
+	public CollisionResult move(int x, int y) {
 		
 		ArrayList<PowerUp> powerUps = collidesWithPowerUps(x,y);
 		
-		OverlapPair obstacleOverlap = collidesWithObstacles(x,y);
-		OverlapPair characterOverlap = collidesWithOtherCharacters(x,y);
+		CollisionResult obstacleOverlap = collidesWithObstacles(x,y);
+		CollisionResult characterOverlap = collidesWithOtherCharacters(x,y);
 		
-		boolean xOverlaps = obstacleOverlap.xOverlaps || characterOverlap.xOverlaps;
-		boolean yOverlaps = obstacleOverlap.yOverlaps || characterOverlap.yOverlaps;
+		boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides;
+		boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides;
 
 		if(powerUps != null && !powerUps.isEmpty())
 			for(PowerUp powerUp : powerUps)
@@ -33,30 +33,30 @@ public abstract class BaseCollisionEngine {
 		
 		if(x != 0 || y != 0){
 			character.move(x,y);
-			return true;
+			return new CollisionResult(x!=0,y!=0);
 		}
 		
-		return false;
+		return new CollisionResult(false,false);
 	}
 	
-	protected abstract OverlapPair collidesWithObstacles(int x, int y);
+	protected abstract CollisionResult collidesWithObstacles(int x, int y);
 	
-	protected abstract OverlapPair collidesWithOtherCharacters(int x, int y);
+	protected abstract CollisionResult collidesWithOtherCharacters(int x, int y);
 	
 	protected abstract ArrayList<PowerUp> collidesWithPowerUps(int x, int y);
 	
-	protected OverlapPair collidesWithActors(ArrayList<BaseActor> actors, int x, int y) {
+	protected CollisionResult collidesWithActors(ArrayList<BaseActor> actors, int x, int y) {
 		boolean xOverlaps = false;
 		boolean yOverlaps = false;
 		
 		for(BaseActor actor : actors){
-			OverlapPair overlaps = CollisionUtil.overlaps(character, actor, x, y);
-			if(overlaps.xOverlaps)
+			CollisionResult overlaps = CollisionUtil.overlaps(character, actor, x, y);
+			if(overlaps.xCollides)
 				xOverlaps = true;
-			if(overlaps.yOverlaps)
+			if(overlaps.yCollides)
 				yOverlaps = true;
 		}
 		
-		return new OverlapPair(xOverlaps,yOverlaps);
+		return new CollisionResult(xOverlaps,yOverlaps);
 	}
 }
