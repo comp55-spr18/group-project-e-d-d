@@ -36,8 +36,6 @@ public abstract class Character extends BaseActor {
 
 		// temp
 		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
-		
-		setupSprite(sprite);
 	}
 	
 	//modifiers

@@ -38,61 +38,37 @@ public class Player extends Character implements ActionListener {
 	protected String name;
 
 	public Player(int x, int y, MainApplication mainApplication) {
-
-		Random rand = new Random();
-		int n = rand.nextInt(8);
-		this.pColor = c[n];
-		
 		basicPreConstructor(x,y,driver);
+		basicPlayerConstructor(name);
 		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-
-		this.name = "";
-		
-		cam = new Camera(0, 0, this, mainApplication);
-		
 		basicPostConstructor();
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
-
-		Random rand = new Random();
-		int n = rand.nextInt(8);
-		this.pColor = c[n];
-		
 		basicPreConstructor(x,y,driver);
+		basicPlayerConstructor(name);
 		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-		
-		//Nameplate
-		namePlate = new GLabel(name, x + size / 2, y + size / 2);
-		driver.add(namePlate);
-		cam = new Camera(0, 0, this, driver);
-		this.name = name;
-
-		// BELOW IS TEMP FOR DEMO
-		namePlate = new GLabel(name, x + size / 2, y + size / 2);
-		
 		basicPostConstructor();
 	}
 	
 	public Player(String name, int x, int y, int color, MainApplication driver) {
-
-		Random rand = new Random();
-		int n = rand.nextInt(8);
-		this.pColor = c[n];
-		
 		basicPreConstructor(x,y,driver);
+		basicPlayerConstructor(name, c[color]);
 		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-		
-		//TODO Sam: Fix this class to allow for a versatile method
-		cam = new Camera(0, 0, this, driver);
-		this.name = name;
-
-		// BELOW IS TEMP FOR DEMO
-		namePlate = new GLabel(name, x + size / 2, y + size / 2);
-		
-		driver.add(namePlate);
-		
 		basicPostConstructor();
+	}
+	
+	protected void basicPlayerConstructor(String name, Color color){
+		this.name = name;
+		cam = new Camera(0, 0, this, driver);
+		this.pColor = color;
+		namePlate = new GLabel(name, x + size / 2, y + size / 2);
+		driver.add(namePlate);
+	}
+
+	protected void basicPlayerConstructor(String name){
+		Random rand = new Random();
+		basicPlayerConstructor(name,c[rand.nextInt(c.length)]);
 	}
 	
 	public Color generateColor (){
