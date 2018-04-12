@@ -77,7 +77,7 @@ public class MenuPane extends GraphicsPane {
 			soundPaused = true;
 			muteButton.setFillColor(Color.GRAY);
 		}
-		else {
+		else if (obj == muteButton && soundPaused){
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
