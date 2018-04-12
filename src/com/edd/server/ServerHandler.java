@@ -3,6 +3,8 @@ package com.edd.server;
 import java.net.*;
 import java.util.Arrays;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.io.*;
 
 public class ServerHandler extends Thread {
@@ -15,6 +17,8 @@ public class ServerHandler extends Thread {
 		super("ServerHandler");
 		this.socket = socket;
 		this.SL = SL;
+		Timer timer = new Timer();
+		timer.schedule(new Generation(this), 0, 5000);
 	}
 	
 	public String string_between(String input, String left, String right){
@@ -24,6 +28,7 @@ public class ServerHandler extends Thread {
 	}
 
 	public void run() {
+		System.out.println("listening");
 		try {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -142,12 +147,23 @@ public class ServerHandler extends Thread {
 		sendPlayerPacket("<playerlist>" + allPlayers + "</playerlist>", playerName);
 	}
 	
+	public void sendPowerUpList(String playerName) {
+		String allPowerups = "";
+		for (Entry<String, ServerPowerUp> entry : SL.powerups.entrySet()) {
+			String ID = entry.getKey();
+			ServerPowerUp SPU = entry.getValue();
+			allPowerups += SPU.generatePacket() + "%";
+		}
+		sendPlayerPacket("<powerup>" + allPowerups + "</powerup>");
+	}
+	
 	public void handleNewClient(String playerName) {
 		ServerPlayer p = getPlayerKey(playerName);
 		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY(), p.getPlayerColor());
 		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
 		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "," + p.getPlayerColor() + "</newclient>", playerName);
 		sendPlayerList(playerName);
+		sendPowerUpList(playerName);
 	}
 	
 	public void handlePlayerRemove(String playerName) {
@@ -163,4 +179,27 @@ public class ServerHandler extends Thread {
 		sp.setPlayerY(newY);
 		System.out.println("Player:" + sp.getPlayerX() + ", " + sp.getPlayerY());
 	}
+	
+	public void populatePowerups() {
+		int maxPowerups = 5;
+		if(this.SL.powerups.size() >= maxPowerups)
+			return;
+		while(this.SL.powerups.size() <= maxPowerups) {
+			ServerPowerUp SPU = new ServerPowerUp();
+			SL.powerups.put(SPU.getID(), SPU);
+		}
+		
+	}
+	
+	class Generation extends TimerTask {
+		ServerHandler SH;
+		public Generation(ServerHandler SH) {
+			this.SH = SH;
+		}
+	    public void run() {
+	       SH.populatePowerups();
+	    }
+	}
+
+	
 }

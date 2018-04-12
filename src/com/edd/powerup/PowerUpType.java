@@ -34,4 +34,14 @@ public enum PowerUpType {
 		return totalPortions;
 	}
 	
+	
+	public static PowerUpType stringToEnum(String name) {
+		if(name.equalsIgnoreCase("speed"))
+			return PowerUpType.SPEED;
+		if(name.equalsIgnoreCase("strength"))
+			return PowerUpType.STRENGTH;
+		if(name.equalsIgnoreCase("endurance"))
+			return PowerUpType.ENDURANCE;
+		return null;
+	}
 }

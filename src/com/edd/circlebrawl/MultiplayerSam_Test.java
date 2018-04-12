@@ -17,6 +17,8 @@ import javax.swing.Timer;
 import com.edd.character.Player;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
+import com.edd.powerup.PowerUp;
+import com.edd.powerup.PowerUpType;
 
 import acm.graphics.GLabel;
 
@@ -29,6 +31,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	// CHANGE NAME HERE
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
+	public final HashMap<String, PowerUp> powerups = new HashMap<String, PowerUp>();
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final int MAP_WIDTH = 1024;
@@ -80,6 +83,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
         String saltStr = salt.toString();
         return saltStr;
     }
+
 	
 	class NetworkClient extends Thread{
 		
@@ -151,6 +155,9 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			if(p.contains("move")) {
 				return "move";
 			}
+			if(p.contains("powerup")) {
+				return "powerup";
+			}
 			return "";
 		}
 		
@@ -192,6 +199,26 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 			    				System.out.println("adding player" + clientName);
 			    				characters.put(clientName, NP);
 			    				world.addPlayer(NP);
+			    			}
+		    			}
+		    		}
+		    		if(parsePacket(userInput).equals("powerup")) {
+		    			String packet = string_between(userInput, "<powerup>", "</powerup>");
+		    			if(!packet.isEmpty()) {
+		    				String[] pArray = packet.split("%");
+			    			for(String p : pArray) {
+			    				System.out.println(p);
+			    				String[] powerUpInfo = string_between(p, "(", ")").split(",");
+			    				String powerUpID = powerUpInfo[0];
+			    				int efficacy = Integer.parseInt(powerUpInfo[1]);
+			    				int multiple = Integer.parseInt(powerUpInfo[2]);
+			    				int x = Integer.parseInt(powerUpInfo[3]);
+			    				int y = Integer.parseInt(powerUpInfo[4]);
+			    				String type = powerUpInfo[5];
+			    				PowerUpType PUT = PowerUpType.stringToEnum(type);
+			    				PowerUp PU = new PowerUp(x, y, world, efficacy, multiple, PowerUpType.stringToEnum(type), null);
+			    				System.out.println("adding powerup" + powerUpID);
+			    				powerups.put(powerUpID, PU);
 			    			}
 		    			}
 		    		}

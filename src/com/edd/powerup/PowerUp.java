@@ -31,8 +31,7 @@ public class PowerUp extends Item {
 		if (type == type.SPEED)
 			((GImage) this.sprite).setBounds(x,y,80,80); 
 		if (type == type.STRENGTH)
-			((GImage) this.sprite).setBounds(x,y,90,100); 
-		
+			((GImage) this.sprite).setBounds(x,y,90,100);
 	}
 	
 	@Override

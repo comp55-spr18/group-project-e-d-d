@@ -1,11 +1,14 @@
 package com.edd.server;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.io.*;
  
 public class ServerListener {
 	HashMap<ServerPlayer, PrintWriter> clients = new HashMap<ServerPlayer, PrintWriter>();
+	HashMap<String, ServerPowerUp> powerups = new HashMap<String, ServerPowerUp>();
     public void listen() throws IOException {
  
         int portNumber = 9991; // temp port. will fix this later
