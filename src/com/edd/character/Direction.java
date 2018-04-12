@@ -5,9 +5,11 @@ public enum Direction {
 	NORTH(Rate.NEUTRAL,Rate.INCREASING),
 	NORTH_EAST(Rate.INCREASING,Rate.INCREASING),
 	WEST(Rate.DECREASING,Rate.NEUTRAL),
+	EAST(Rate.INCREASING,Rate.NEUTRAL),
 	SOUTH_WEST(Rate.DECREASING,Rate.DECREASING),
 	SOUTH(Rate.NEUTRAL,Rate.DECREASING),
-	SOUTH_EAST(Rate.INCREASING,Rate.DECREASING);
+	SOUTH_EAST(Rate.INCREASING,Rate.DECREASING),
+	NEUTRAL(Rate.NEUTRAL,Rate.NEUTRAL);
 
 	private Rate xRate;
 	private Rate yRate;
@@ -26,5 +28,11 @@ public enum Direction {
 				return direction;
 		}
 		return null;
+	}
+	
+	public static Direction getDirectionFromVelocity(int xVel, int yVel){
+		Rate xRate = Rate.getRateFromVelocity(xVel);
+		Rate yRate = Rate.getRateFromVelocity(yVel*-1); // multiply by -1 because decreasing is north in Java
+		return getDirectionFromRates(xRate, yRate);
 	}
 }

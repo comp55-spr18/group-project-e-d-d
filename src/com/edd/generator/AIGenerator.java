@@ -11,8 +11,8 @@ public class AIGenerator extends BaseGenerator {
 	public AIGenerator(MainApplication driver) {
 		this.driver = driver;
 
-		maxSpawns = driver.AI_MAX;
-		spawnDelay = 10;
+		maxSpawns = 1;//driver.AI_MAX;
+		spawnDelay = 0;
 		
 		activated = true;
 	}

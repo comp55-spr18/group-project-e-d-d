@@ -9,9 +9,9 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.osvaldo.MainApplication;
 
-import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GOval;
 
@@ -19,7 +19,7 @@ public class Player extends Character implements ActionListener {
 
 	private final int BASE_SIZE = 100;
 	private final int BASE_DEFENSE = 10;
-	private final int BASE_SPEED = 20;
+	private final int BASE_SPEED = 5;
 	private final int BASE_STRENGTH = 50;
 	
 	private boolean keyW, keyS, keyA, keyD;
@@ -35,60 +35,62 @@ public class Player extends Character implements ActionListener {
 	private Color pColor;
 
 	public Player(int x, int y, MainApplication mainApplication) {
+
+		basicPreConstructor(x,y,driver);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,"");
 		
 		Random rand = new Random();
 		int n = rand.nextInt(8);
 		this.pColor = c[n];
-		this.x = x;
-		this.y = y;
-		this.driver = mainApplication;
-		this.size = BASE_SIZE;
-		this.defense = BASE_DEFENSE;
-		this.speed = BASE_SPEED;
-		this.strength = BASE_STRENGTH;
+
 		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
 		
 
 		// BELOW IS TEMP FOR DEMO
-		GOval localSprite = new GOval(x + size / 2, y + size / 2, size, size);
-		setupSprite(localSprite);
-		localSprite.setColor(pColor);
-		localSprite.setFilled(true);
+		this.sprite = new GOval(x + size / 2, y + size / 2, size, size);
+		((GOval)sprite).setColor(pColor);
+		((GOval)sprite).setFilled(true);
 		ring = new GOval(this.getX() / 2, this.getY() / 2 + 30, 140, 140);
+		
+		basicPostConstructor();
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
-		
-		this(x, y, driver);
-		this.name = name;
+
+		basicPreConstructor(x,y,driver);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,name);
 		
 		//Nameplate
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		driver.add(namePlate);
+
+		// BELOW IS TEMP FOR DEMO
+		sprite = new GOval(x + size / 2, y + size / 2, size, size);
+		((GOval)sprite).setColor(pColor);
+		((GOval)sprite).setFilled(true);
+		namePlate = new GLabel(name, x + size / 2, y + size / 2);
+		
+		basicPostConstructor();
 	}
 	
 	public Player(String name, int x, int y, int color, MainApplication driver) {
+		
+		basicPreConstructor(x,y,driver);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,name);
+		
 		//TODO Sam: Fix this class to allow for a versatile method
 		Random rand = new Random();
 		int n = rand.nextInt(8);
-		this.pColor = c[color];
-		this.x = x;
-		this.y = y;
-		this.driver = driver;
-		this.size = BASE_SIZE;
-		this.defense = BASE_DEFENSE;
-		this.speed = BASE_SPEED;
-		this.strength = BASE_STRENGTH;
-		this.name = name;
-		
 
 		// BELOW IS TEMP FOR DEMO
-		GOval localSprite = new GOval(x + size / 2, y + size / 2, size, size);
-		setupSprite(localSprite);
-		localSprite.setColor(pColor);
-		localSprite.setFilled(true);
+		sprite = new GOval(x + size / 2, y + size / 2, size, size);
+		((GOval)sprite).setColor(pColor);
+		((GOval)sprite).setFilled(true);
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
+		
 		driver.add(namePlate);
+		
+		basicPostConstructor();
 	}
 	
 	public Color generateColor (){
@@ -156,30 +158,28 @@ public class Player extends Character implements ActionListener {
 		double width = sprite.getWidth();
 		int buffer = 10;
 
-		if (keyW && y + height / 2 - buffer >= 0 || this.driver.OBSTACLE_GEN.collidesWith(this)) {
-			yVelocity = -10;
+		if (keyW && y + height / 2 - buffer >= 0) {
+			yVelocity = -speed;
 		}
 
-		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT
-				|| this.driver.OBSTACLE_GEN.collidesWith(this)) {
-			yVelocity = 10;
+		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT) {
+			yVelocity = speed;
 		} else
 			yVelocity = 0;
 
-		if (keyA && x + width / 2 - buffer >= 0 || this.driver.OBSTACLE_GEN.collidesWith(this)) {
-			xVelocity = -10;
+		if (keyA && x + width / 2 - buffer >= 0) {
+			xVelocity = -speed;
 		}
 
-		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH || this.driver.OBSTACLE_GEN.collidesWith(this)) {
-			xVelocity = 10;
+		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH) {
+			xVelocity = speed;
 		} else
 			xVelocity = 0;
 
-		this.move(xVelocity, yVelocity);
+		this.attemptMove(xVelocity, yVelocity);
 		if(namePlate != null)
 			this.namePlate.move(xVelocity, yVelocity);
 		this.bringToFront();
-		this.collision();
 		saw.move(xVelocity, yVelocity);
 	}
 

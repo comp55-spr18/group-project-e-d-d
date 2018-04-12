@@ -28,17 +28,20 @@ public class Resource extends Item {
 	 *            the multiplier for stat effects
 	 */
 	public Resource(int x, int y, MainApplication driver, int efficacy, int multiple, BaseGenerator generator) {
-		this.x = x;
-		this.y = y;
+
+		basicPreConstructor(x,y,driver);
+		
 		Random rand = new Random();
 		sprite = new GOval(x, y, efficacy * multiple * 2, efficacy * multiple * 2);
 		((GOval) sprite).setFilled(true);
 		((GOval) sprite).setFillColor(new Color(rand.nextInt(200)+25, rand.nextInt(200)+25, rand.nextInt(200)+25));
-		this.driver = driver;
+
 		this.efficacy = efficacy;
 		this.multiple = multiple;
 		this.generator = generator;
-		setupSprite(sprite);
+
+		basicPostConstructor();
+		
 	}
 	/**
 	 * Activates the side effects of the item. Specifically, consumer's size.

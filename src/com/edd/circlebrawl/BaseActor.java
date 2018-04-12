@@ -1,5 +1,6 @@
 package com.edd.circlebrawl;
 
+import com.edd.collision.CollisionBox;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
@@ -10,7 +11,26 @@ public abstract class BaseActor implements Actor, Tick {
 	protected MainApplication driver;
 	protected double x;
 	protected double y;
+	protected CollisionBox collisionBox;
 
+	public void basicPreConstructor(int x, int y, MainApplication driver){
+		this.x = x;
+		this.y = y;
+		this.driver = driver;
+	}
+	
+	public void basicPostConstructor(){
+		if(sprite != null){
+			setupSprite(sprite);
+			constructCollisionBox();
+		}
+	}
+	
+	public void basicPostConstructor(String spriteFile){
+		setupSprite(spriteFile);
+		constructCollisionBox();
+	}
+	
 	// Setters for sprite
 	public void setX(double x) {
 		this.x = x;
@@ -35,6 +55,10 @@ public abstract class BaseActor implements Actor, Tick {
 
 	public GObject getSprite() {
 		return this.sprite;
+	}
+	
+	public CollisionBox getCollisionBox() {
+		return collisionBox;
 	}
 
 	/**
@@ -82,7 +106,7 @@ public abstract class BaseActor implements Actor, Tick {
 	public void setupSprite(String spriteFile) {
 		sprite = new GImage(spriteFile);
 
-		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
+		sprite.setLocation(x, y);
 		driver.bringPlayersToFront();
 		driver.add(sprite);
 	}
@@ -90,7 +114,7 @@ public abstract class BaseActor implements Actor, Tick {
 	public void setupSprite(GObject sprite) {
 		this.sprite = sprite;
 
-		sprite.setLocation(x + sprite.getWidth() / 2, y + sprite.getHeight() / 2);
+		sprite.setLocation(x, y);
 
 		driver.add(sprite);
 	}
@@ -102,10 +126,17 @@ public abstract class BaseActor implements Actor, Tick {
 	@Override
 	public void tick() {
 	}
-
-	public void collision() {
-		// TODO Auto-generated method stub
-
+	
+	public double getWidth(){
+		return sprite.getWidth();
+	}
+	
+	public double getHeight(){
+		return sprite.getHeight();
+	}
+	
+	public void constructCollisionBox(){
+		collisionBox = new CollisionBox((int)x,(int)y,(int)(x+getWidth()),(int)(y+getHeight()));
 	}
 
 }

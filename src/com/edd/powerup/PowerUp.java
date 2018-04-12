@@ -18,20 +18,16 @@ public class PowerUp extends Item {
 	private boolean activated = false;
 	
 	public PowerUp(int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
-		this.x = x;
-		this.y = y;
-		this.driver = driver;
+
+		basicPreConstructor(x,y,driver);
+		
 		this.efficacy = efficacy;
 		this.multiple = multiple;
 		this.type = type;
 		this.time = type.getTime();
 		this.generator = generator;
-		setupSprite("com/edd/powerup/"+type.getSpriteFile());
-		
-		if (type == type.SPEED)
-			((GImage) this.sprite).setBounds(x,y,80,80); 
-		if (type == type.STRENGTH)
-			((GImage) this.sprite).setBounds(x,y,90,100);
+
+		basicPostConstructor("com/edd/powerup/"+type.getSpriteFile());
 	}
 	
 	@Override

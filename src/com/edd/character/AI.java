@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.Resource;
+import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.generator.AIGenerator;
 import com.edd.osvaldo.MainApplication;
 
@@ -32,23 +33,18 @@ public class AI extends Character {
 	 * @param generator
 	 */
 	public AI(int x, int y, MainApplication driver, AIGenerator generator) {
+		basicPreConstructor(x,y,driver);
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),80+rand.nextInt(31),10,5,50,"");
 		
 		rand = new Random();
 		
-		this.x = x;
-		this.y = y;
-		this.size = 80+rand.nextInt(31);
-		this.defense = 10;
-		this.speed = 5;
-		this.strength = 50;
-		this.driver = driver;
-		
-		GOval localSprite = new GOval(x + size / 2, y + size / 2, size, size);
-		setupSprite(localSprite);
-		localSprite.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
-		localSprite.setFilled(true);
+		sprite = new GOval(x + size / 2, y + size / 2, size, size);
+		((GOval)sprite).setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+		((GOval)sprite).setFilled(true);
 		
 		chooseNewRandomDirection(); // establishing initial direction
+		
+		basicPostConstructor();
 	}
 	
 	@Override
@@ -74,7 +70,7 @@ public class AI extends Character {
 		}
 		
 		setVelocityFromDirection();
-		if(!move(xVelocity,yVelocity)){
+		if(!attemptMove(xVelocity,yVelocity)){
 			chooseNewRandomDirection();
 		}
 	}
