@@ -13,15 +13,32 @@ import acm.graphics.GOval;
 
 public abstract class Character extends BaseActor {
 
+	// ALL NUMBERS BELOW CAN BE CHANGED AT WILL
+	
+	protected final int MAX_SIZE = 300;
+	protected final int MAX_DEFENSE = 50;
+	protected final int MAX_SPEED = 15;
+	protected final int MAX_STRENGTH = 100;
+	
+	protected final int MIN_SIZE = 30; // death below this point
+	protected final int MIN_DEFENSE = -50;
+	protected final int MIN_SPEED = 1;
+	protected final int MIN_STRENGTH = 10; 
+	
+	// ALL NUMBERS ABOVE CAN BE CHANGED AT WILL
+	
 	protected BaseCollisionEngine collisionEngine;
 	
 	protected int size; // how large this Character is; also indicative of health
 	protected int defense; // how much damage this Character can take
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
+	
 	protected GImage saw = new GImage("com/edd/character/Buzzsaw2.gif");
 	protected ArrayList<AttackOrb> attackOrbs;
 	protected ArrayList<AttackOrb> attackOrbRemovalList;
+	
+	protected boolean dead = false;
 	
 	public int ATTACK_RING = 190;
 	
@@ -43,8 +60,13 @@ public abstract class Character extends BaseActor {
 	}
 	
 	//modifiers
-	public void modifySize(int modifyValue) {
-		size += modifyValue; // TODO: Include death detection!
+	public int modifySize(int modifyValue) {
+		if(size+modifyValue > MAX_SIZE)
+			modifyValue = MAX_SIZE-size;
+		if(size+modifyValue < MIN_SIZE)
+			onDeath();
+		
+		size += modifyValue;
 		resize(modifyValue);
 
 		// making AttackOrbs' size scale
@@ -53,26 +75,49 @@ public abstract class Character extends BaseActor {
 			attackOrb.modifySize(attackOrbModifyValue);
 			attackOrb.move(modifyValue/2, -attackOrbModifyValue);
 		}
+		
+		return modifyValue;
 	}
 	
-	public void modifyDefense(int modifyValue) {
-		defense += modifyValue; // TODO: Maybe insert defense upper/lower limits?
+	public int modifyDefense(int modifyValue) {
+		if(defense+modifyValue > MAX_DEFENSE)
+			modifyValue = MAX_DEFENSE-defense;
+		if(defense+modifyValue < MIN_DEFENSE)
+			modifyValue = -(defense-MIN_DEFENSE);
+		
+		defense += modifyValue;
+		
+		return modifyValue;
 	}
 	
-	public void modifySpeed(int modifyValue) {
-		speed += modifyValue; //TODO: Maybe insert speed upper/lower limits?
+	public int modifySpeed(int modifyValue) {
+		if(speed+modifyValue > MAX_SPEED)
+			modifyValue = MAX_SPEED-speed;
+		if(speed+modifyValue < MIN_SPEED)
+			modifyValue = -(speed-MIN_SPEED);
+		
+		speed += modifyValue;
 		
 		// making AttackOrbs' s scale
 		for(AttackOrb attackOrb : attackOrbs)
 			attackOrb.modifySpeed((int)(modifyValue*AttackOrb.PERCENT_OF_CHARACTER));
+		
+		return modifyValue;
 	}
 	
-	public void modifyStrength(int modifyValue) {
-		strength += modifyValue; //TODO: Maybe insert strength upper/lower limits?
+	public int modifyStrength(int modifyValue) {
+		if(strength+modifyValue > MAX_STRENGTH)
+			modifyValue = MAX_STRENGTH-strength;
+		if(strength+modifyValue < MIN_STRENGTH)
+			modifyValue = -(strength-MIN_STRENGTH);
+		
+		strength += modifyValue;
 		
 		// making AttackOrbs' strength scale
 		for(AttackOrb attackOrb : attackOrbs)
 			attackOrb.modifyStrength((int)(modifyValue*AttackOrb.PERCENT_OF_CHARACTER));
+		
+		return modifyValue;
 	}
 	
 	public void scaleSprite() {
@@ -107,6 +152,23 @@ public abstract class Character extends BaseActor {
 	public ArrayList<AttackOrb> getAttackOrbs(){ return attackOrbs; }
 	public AttackOrb spawnAttackOrb(){ return new AttackOrb(this,driver); }
 	public void despawnAttackOrb(AttackOrb attackOrbToRemove){ attackOrbRemovalList.add(attackOrbToRemove); }
+	
+	public void onDeath(){
+		dead = true;
+		remove();
+		
+		for(AttackOrb attackOrb : attackOrbs){
+			attackOrbs.remove(attackOrb);
+			attackOrb.remove();
+		}
+		
+		if(this instanceof AI){
+			driver.AI_GEN.addToRemoveList(this);
+		}
+		if(this instanceof Player){
+			// TODO: Respawn logic.
+		}
+	}
 	
 	/***
 	 * Attempts to move the character. Also handles collision detection.
@@ -166,13 +228,15 @@ public abstract class Character extends BaseActor {
 	
 	@Override
 	public void tick(){
-		for(AttackOrb attackOrb : attackOrbs)
-			attackOrb.tick();
-		for(AttackOrb attackOrb : attackOrbRemovalList){
-			attackOrbs.remove(attackOrb);
-			attackOrb.remove();
+		if(!dead){
+			for(AttackOrb attackOrb : attackOrbs)
+				attackOrb.tick();
+			for(AttackOrb attackOrb : attackOrbRemovalList){
+				attackOrbs.remove(attackOrb);
+				attackOrb.remove();
+			}
+			attackOrbRemovalList.clear();
 		}
-		attackOrbRemovalList.clear();
 	}
 	
 	@Override

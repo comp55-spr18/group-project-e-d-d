@@ -127,7 +127,17 @@ public abstract class BaseGenerator implements Tick{
 	 * @return the randomized efficacy.
 	 */
 	protected int getRandomEfficacy(int min, int max) {
-		return rand.nextInt(max-min+1)+min; // Efficacy is between min and max.
+		int total = Math.abs(max-min);
+		if(total < 1)
+			return 0; // wtf?n
+		for(int i=0;i<5;i++){
+			for(int j=min;j<=max;j++){
+				if(rand.nextInt(total) == 0){
+					return j;
+				}
+			}
+		}
+		return max; // failsafe
 	}
 	
 	public ArrayList<BaseActor> getActors(){ return actors; }

@@ -11,7 +11,7 @@ public class ObstacleGenerator extends BaseGenerator {
 	public ObstacleGenerator(MainApplication driver) {
 		this.driver = driver;
 
-		maxSpawns = 1;
+		maxSpawns = 2;
 		spawnDelay = 0; // all spawn immediately
 
 		activated = true;

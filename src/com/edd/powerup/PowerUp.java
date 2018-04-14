@@ -41,15 +41,18 @@ public class PowerUp extends Item {
 		int finalEfficacy = activated ? getFinalEfficacy()*-1 : getFinalEfficacy();
 		switch(type) {
 			case SPEED:
-				consumer.modifySpeed(finalEfficacy);
+			case CORRUPTED_SPEED:
+				efficacy = consumer.modifySpeed(finalEfficacy);
 				System.out.println("Modify speed by "+finalEfficacy+"!");
 				break;
 			case STRENGTH:
-				consumer.modifyStrength(finalEfficacy);
+			case CORRUPTED_STRENGTH:
+				efficacy = consumer.modifyStrength(finalEfficacy);
 				System.out.println("Modify strength by "+finalEfficacy+"!");
 				break;
 			case ENDURANCE:
-				consumer.modifyDefense(finalEfficacy);
+			case CORRUPTED_ENDURANCE:
+				efficacy = consumer.modifyDefense(finalEfficacy);
 				System.out.println("Modify defense by "+finalEfficacy+"!");
 				break;
 			case ATTACK_ORB:
