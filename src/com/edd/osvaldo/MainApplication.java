@@ -12,6 +12,7 @@ import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
 
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 
 public class MainApplication extends GraphicsApplication implements Tick {
@@ -44,6 +45,10 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		add(new GImage("com/edd/osvaldo/brick4.jpg"));
+		GImage loading = new GImage("com/edd/osvaldo/CircleBrawlLoading.gif");
+		loading = new GImage("com/edd/osvaldo/CircleBrawlLoading.gif", (WINDOW_WIDTH - loading.getWidth())/2, (WINDOW_WIDTH - loading.getHeight()*5)/2);
+		add(loading);
 	}
 
 	public void run() {
