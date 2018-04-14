@@ -32,7 +32,7 @@ public class Resource extends Item {
 		basicPreConstructor(x,y,driver);
 		
 		Random rand = new Random();
-		sprite = new GOval(x, y, efficacy * multiple * 2, efficacy * multiple * 2);
+		sprite = new GOval(x, y, efficacy * multiple * 4, efficacy * multiple * 4);
 		((GOval) sprite).setFilled(true);
 		((GOval) sprite).setFillColor(new Color(rand.nextInt(200)+25, rand.nextInt(200)+25, rand.nextInt(200)+25));
 

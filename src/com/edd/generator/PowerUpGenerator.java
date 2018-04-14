@@ -74,7 +74,7 @@ public class PowerUpGenerator extends BaseGenerator {
 	public void spawn() {
 		PowerUpType generatedType = generatePowerUpType(rand);
 		Pair<Integer,Integer> loc = generateLocation(50,150);
-		actors.add(new PowerUp(loc.getKey(),loc.getValue(),driver,getRandomEfficacy(10,20),1,generatedType,this));
+		actors.add(new PowerUp(loc.getKey(),loc.getValue(),driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType,this));
 	}
 	
 	@Override

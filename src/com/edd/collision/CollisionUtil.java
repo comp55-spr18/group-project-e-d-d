@@ -70,7 +70,7 @@ public abstract class CollisionUtil {
 	}
 	
 	private static boolean inRange(int t1b, int t1e, int t2b, int t2e){
-		return (t1b >= t2b && t1b <= t2e) || (t1e >= t2b && t1e <= t2e);
+		return (t1b >= t2b && t1b <= t2e) || (t1e >= t2b && t1e <= t2e) || (t2b >= t1b && t2b <= t1e) || (t2e >= t1b && t2e <= t1e);
 	}
 	
 	private static boolean northCheck(int y1b, int y1e, int y2b, int y2e){
