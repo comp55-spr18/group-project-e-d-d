@@ -144,7 +144,7 @@ public class Player extends Character implements ActionListener {
 			yVelocity = -speed;
 		}
 
-		else if (keyS && y <= driver.WINDOW_HEIGHT + height*2 + height/2) {
+		else if (keyS && y + height <= MainApplication.MAP_HEIGHT) {
 			yVelocity = speed;
 		} else {
 			yVelocity = 0;
@@ -154,7 +154,7 @@ public class Player extends Character implements ActionListener {
 			xVelocity = -speed;
 		}
 		//If you're wondering why or how this works... Me too.
-		else if (keyD && x + buffer <= driver.WINDOW_WIDTH*1.5 - width*1.5 + width - width/2) {
+		else if (keyD && x + buffer <= MainApplication.MAP_WIDTH - width*1.5 + width - width/2) {
 			xVelocity = speed;
 		} else {
 			xVelocity = 0;

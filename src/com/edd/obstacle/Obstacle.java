@@ -23,6 +23,16 @@ public class Obstacle extends BaseActor implements Tick {
 		
 		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
 	}
+	
+	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator, String obstacleFile) {
+		basicPreConstructor(x,y,driver);
+
+		this.driver = driver;
+		this.generator = generator;
+		this.obstacleFile = obstacleFile;
+		
+		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
+	}
 
 	public String randomObstacle() {
 		Random rand = new Random();
@@ -46,16 +56,6 @@ public class Obstacle extends BaseActor implements Tick {
 	public String getObstacleFile() {
 		return obstacleFile;
 	}
-
-	// TODO: THIS SHOULD BE collidesWith() NOT COLLISIONCHECK.. I think
-	
-	// public boolean collisionCheck(BaseActor anotherActor) {
-	// if (anotherActor.collidesWith(this)) {
-	// // Return true flag of stop Character from moving here
-	// return true;
-	// }
-	// return false;
-	// }
 
 	@Override
 	public void tick() {

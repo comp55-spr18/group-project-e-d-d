@@ -54,7 +54,7 @@ public abstract class BaseGenerator implements Tick{
 	 * @return the generated location
 	 */
 	public Pair<Integer,Integer> generateLocation(int min, int maxOffset){
-		return new Pair<Integer,Integer>(rand.nextInt(driver.WINDOW_WIDTH-maxOffset)+min,rand.nextInt(driver.WINDOW_HEIGHT-maxOffset)+min);
+		return new Pair<Integer,Integer>(rand.nextInt(MainApplication.MAP_WIDTH-maxOffset)+min,rand.nextInt(MainApplication.MAP_HEIGHT-maxOffset)+min);
 	}
 	
 	/***
@@ -62,7 +62,7 @@ public abstract class BaseGenerator implements Tick{
 	 * @return the generated location
 	 */
 	public Pair<Integer,Integer> generateLocation(int minX, int maxOffsetX, int minY, int maxOffsetY){
-		return new Pair<Integer,Integer>(rand.nextInt(driver.WINDOW_WIDTH-maxOffsetX)+minX,rand.nextInt(driver.WINDOW_HEIGHT-maxOffsetY)+minY);
+		return new Pair<Integer,Integer>(rand.nextInt(MainApplication.MAP_WIDTH-maxOffsetX)+minX,rand.nextInt(MainApplication.MAP_HEIGHT-maxOffsetY)+minY);
 	}
 	
 	/***

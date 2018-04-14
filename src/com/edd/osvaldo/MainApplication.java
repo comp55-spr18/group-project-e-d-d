@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import com.edd.character.Player;
 import com.edd.circlebrawl.Tick;
 import com.edd.generator.AIGenerator;
+import com.edd.generator.BoundaryGenerator;
 import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
@@ -15,12 +16,17 @@ import acm.graphics.GLabel;
 public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
+	public static final int MAP_WIDTH = 1920; // temp
+	public static final int MAP_HEIGHT = 1080; // temp
 	public static final String MUSIC_FOLDER = "sounds";
 	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
 	public final int TICKS_PER_SECOND = 120;
+	
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
 	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
+	public final BoundaryGenerator BOUNDARY_GEN = new BoundaryGenerator(this);
+	
 	public final AIGenerator AI_GEN = new AIGenerator(this);
 	public final int AI_MAX = 3;
 	public Player player;
@@ -93,6 +99,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			OBSTACLE_GEN.tick();
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
+			//BOUNDARY_GEN.spawn();
 			//AI_GEN.tick();
 			player.tick();
 		}
