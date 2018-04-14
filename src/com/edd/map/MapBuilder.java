@@ -50,7 +50,7 @@ public abstract class MapBuilder {
 			System.out.println("Error reading map: "+mapFile+" -- ID value is not number?");
 		}
 		
-		return new Map(map,TILE_WIDTH,TILE_HEIGHT);
+		return new Map(map,TILE_WIDTH,TILE_HEIGHT,getTileFromID(baselineID));
 	}
 	
 	private static GImage layerImages(GImage primaryImage, GImage baseImage){
