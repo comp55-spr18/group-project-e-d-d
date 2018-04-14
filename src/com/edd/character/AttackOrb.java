@@ -27,8 +27,8 @@ public class AttackOrb extends Character {
 		this.owner = owner;
 		this.owner.attackOrbs.add(this);
 		
-		basicPreConstructor((int)(owner.getSprite().getX()+owner.getWidth()/2),(int)(owner.getSprite().getY()-owner.getHeight()),driver);
-		basicCharacterConstructor(null,(int)(owner.getSize()*PERCENT_OF_CHARACTER),(int)(owner.getSpeed()*PERCENT_OF_CHARACTER),5,
+		basicPreConstructor((int)(owner.getSprite().getX()+owner.getWidth()/2),(int)(owner.getSprite().getY()-owner.getHeight()/2),driver);
+		basicCharacterConstructor(null,(int)(owner.getSize()*PERCENT_OF_CHARACTER),0,5,
 									(int)(owner.getStrength()*PERCENT_OF_CHARACTER),new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		basicPostConstructor();
 	}
@@ -50,8 +50,8 @@ public class AttackOrb extends Character {
 		}
 		
 		// move logic
-		currentAngle -= owner.size/100;
-		movePolar(speed,currentAngle);
+		currentAngle -= (360/driver.TICKS_PER_SECOND);
+		movePolar((int)((2*Math.PI*owner.size)/driver.TICKS_PER_SECOND),currentAngle);  // I HATE YOU MATH --Zach
 	}
 	
 }
