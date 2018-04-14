@@ -14,4 +14,9 @@ public class CollisionResult {
 		return new CollisionResult(xCollides || other.xCollides, yCollides || other.yCollides);
 	}
 	
+	@Override
+	public String toString(){
+		return "CollisionResult: xCollides="+xCollides+", yCollides="+yCollides;
+	}
+	
 }

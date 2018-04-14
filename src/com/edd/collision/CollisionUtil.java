@@ -35,7 +35,7 @@ public abstract class CollisionUtil {
 			boolean overlaps = inRange(x1b,x1e,x2b,x2e) && inRange(y1b,y1e,y2b,y2e);
 			return new CollisionResult(overlaps,overlaps);
 		}
-
+		
 		if(inRange(y1b-y,y1e-y,y2b,y2e))
 			switch(xRate){
 				case INCREASING:

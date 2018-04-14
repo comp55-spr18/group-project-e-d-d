@@ -19,8 +19,8 @@ public abstract class BaseCollisionEngine {
 			Character character = (Character)actor;
 			ArrayList<Item> items = collidesWithItems(x,y);
 			CollisionResult obstacleOverlap = collidesWithObstacles(x,y);
-			CollisionResult characterOverlap = collidesWithOtherCharacters(x,y);
-			
+			CollisionResult characterOverlap = collidesWithCharacters(x,y);
+
 			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides;
 			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides;
 	
@@ -34,14 +34,14 @@ public abstract class BaseCollisionEngine {
 				x = 0;
 			if(yOverlaps)
 				y = 0;
-			
+
 			if(x != 0 || y != 0){
 				moveActor(x,y);
-				return new CollisionResult(x==0,y==0); // TODO: Test logic
+				return new CollisionResult(x==0,y==0);
 			}
 		}
 		
-		return new CollisionResult(false,false);
+		return new CollisionResult(true,true); // do not move!
 	}
 
 	// handles actual movement
@@ -51,7 +51,7 @@ public abstract class BaseCollisionEngine {
 	protected abstract CollisionResult collidesWithObstacles(int x, int y);
 
 	// when implementing, set return to call collidesWithActors() and pass in the proper list
-	protected abstract CollisionResult collidesWithOtherCharacters(int x, int y);
+	protected abstract CollisionResult collidesWithCharacters(int x, int y);
 	
 	// when implementing, set return to call collidesWithItems() and pass in the proper lists
 	protected abstract ArrayList<Item> collidesWithItems(int x, int y);
@@ -81,11 +81,11 @@ public abstract class BaseCollisionEngine {
 		return false;
 	}
 	
-	protected CollisionResult collidesWithActors(ArrayList<BaseActor> actors, int x, int y) {
+	protected CollisionResult collidesWithActors(ArrayList<BaseActor> otherActors, int x, int y) {
 		boolean xOverlaps = false;
 		boolean yOverlaps = false;
 		
-		for(BaseActor otherActor : actors){
+		for(BaseActor otherActor : otherActors){
 			CollisionResult overlaps = CollisionUtil.overlaps(actor, otherActor, x, y);
 			if(overlaps.xCollides)
 				xOverlaps = true;
@@ -93,8 +93,7 @@ public abstract class BaseCollisionEngine {
 				yOverlaps = true;
 		}
 
-		return new CollisionResult(false,false);
-		//return new CollisionResult(xOverlaps,yOverlaps);
+		return new CollisionResult(xOverlaps,yOverlaps);
 	}
 	
 	protected ArrayList<Item> collidesWithItems(ArrayList<BaseActor> powerUps, ArrayList<BaseActor> items, int x, int y){

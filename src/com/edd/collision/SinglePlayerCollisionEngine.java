@@ -27,7 +27,7 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 	}
 
 	@Override
-	protected CollisionResult collidesWithOtherCharacters(int x, int y) {
+	protected CollisionResult collidesWithCharacters(int x, int y) {
 		return collidesWithActors(driver.AI_GEN.getActors(),x,y).merge(CollisionUtil.overlaps(actor,driver.player,x,y));
 	}
 
