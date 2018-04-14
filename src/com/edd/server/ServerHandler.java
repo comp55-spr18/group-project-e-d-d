@@ -188,7 +188,16 @@ public class ServerHandler extends Thread {
 			ServerPowerUp SPU = new ServerPowerUp();
 			SL.powerups.put(SPU.getID(), SPU);
 		}
-		
+	}
+	
+	public void populateResources() {
+		int maxResources = 18;
+		if(this.SL.resources.size() >= maxResources)
+			return;
+		while(this.SL.resources.size() <= maxResources) {
+			ServerResource SR = new ServerResource();
+			SL.resources.put(SR.getID(), SR);
+		}
 	}
 	
 	class Generation extends TimerTask {
@@ -198,6 +207,7 @@ public class ServerHandler extends Thread {
 		}
 	    public void run() {
 	       SH.populatePowerups();
+	       SH.populateResources();
 	    }
 	}
 

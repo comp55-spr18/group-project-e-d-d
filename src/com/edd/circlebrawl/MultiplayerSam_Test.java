@@ -15,6 +15,7 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import com.edd.character.Player;
+import com.edd.collision.CollisionResult;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
 import com.edd.osvaldo.MainApplication;
@@ -33,8 +34,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final HashMap<String, PowerUp> powerups = new HashMap<String, PowerUp>();
-	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(GameType.MULTIPLAYER,this);
-	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(GameType.MULTIPLAYER,this);
+	public final HashMap<String, Resource> resources = new HashMap<String, Resource>();
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
@@ -223,6 +223,26 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			    			}
 		    			}
 		    		}
+//		    		if(parsePacket(userInput).equals("resource")) {
+//		    			String packet = string_between(userInput, "<resource>", "</resource>");
+//		    			if(!packet.isEmpty()) {
+//		    				String[] pArray = packet.split("%");
+//			    			for(String p : pArray) {
+//			    				System.out.println(p);
+//			    				String[] resourceInfo = string_between(p, "(", ")").split(",");
+//			    				String resourceID = powerUpInfo[0];
+//			    				int efficacy = Integer.parseInt(powerUpInfo[1]);
+//			    				int multiple = Integer.parseInt(powerUpInfo[2]);
+//			    				int x = Integer.parseInt(powerUpInfo[3]);
+//			    				int y = Integer.parseInt(powerUpInfo[4]);
+//			    				String type = powerUpInfo[5];
+//			    				PowerUpType PUT = PowerUpType.stringToEnum(type);
+//			    				PowerUp PU = new PowerUp(x, y, world, efficacy, multiple, PowerUpType.stringToEnum(type), null);
+//			    				System.out.println("adding powerup" + powerUpID);
+//			    				powerups.put(powerUpID, PU);
+//			    			}
+//		    			}
+//		    		}
 		    		if(parsePacket(userInput).equals("remove")) {
 		    			String toRemove = string_between(userInput, "<remove>", "</remove>");
 		    			Player tR = characters.get(toRemove);
@@ -400,14 +420,21 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			xVelocity = 10;
 		} else
 			xVelocity = 0;
-
-		player.attemptMove((int)xVelocity, (int)yVelocity);
-		//ring.move(xVelocity, yVelocity);
-		player.getNameLabel().move(xVelocity, yVelocity);
-		if(xVelocity != 0.0 || yVelocity != 0.0) {
+		
+		CollisionResult cr = player.attemptMove((int)xVelocity, (int)yVelocity);
+		if(cr.xCollides) {
+			xVelocity = 0;
+		}
+		if(cr.yCollides) {
+			yVelocity = 0;
+		}
+		if(xVelocity != 0 || xVelocity != 0) {
+			player.moveMulti((int)xVelocity, (int)yVelocity);
 			NC.sendMove(xVelocity, yVelocity);
 		}
-
+		
+		
+		//player.getNameLabel().move(xVelocity, yVelocity);
 		//RESOURCE_GEN.tick();
 		//POWERUP_GEN.tick();
 		//player.tick();

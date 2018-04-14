@@ -208,6 +208,18 @@ public abstract class Character extends BaseActor {
 	}
 	
 	/***
+	 * Moves the character.
+	 * @param x the x val to move the character (including saw and attack orbs)
+	 * @param y the y val to move the character (including saw and attack orbs)
+	 */
+	public void moveMulti(int x, int y) {
+		
+		move(x,y);
+		
+		sprite.move(x, y);
+	}
+	
+	/***
 	 * Moves the character in a polar direction.
 	 * @param distance the distance to move the character
 	 * @param angle the angle to move the character
