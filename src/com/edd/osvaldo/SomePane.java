@@ -15,7 +15,7 @@ import acm.graphics.GObject;
 public class SomePane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
-	private Map map = MapBuilder.buildMap();
+	private Map map = MapBuilder.buildMap("com/edd/map/map_baseline.csv",20,20,2);
 	
 	private GImage background = map.createImage();
 	private GParagraph para;
