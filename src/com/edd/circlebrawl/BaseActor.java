@@ -29,6 +29,8 @@ public abstract class BaseActor implements Actor, Tick {
 	
 	public void basicPostConstructor(String spriteFile){
 		setupSprite(spriteFile);
+		if(driver.player != null)
+			sprite.move(driver.player.getCam().getTotalTranslationX(),driver.player.getCam().getTotalTranslationY());
 		constructCollisionBox();
 	}
 	
