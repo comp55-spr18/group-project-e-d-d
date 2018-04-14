@@ -17,7 +17,6 @@ public abstract class BaseCollisionEngine {
 	public CollisionResult move(int x, int y) {
 		
 		ArrayList<Item> items = collidesWithItems(x,y);
-		
 		CollisionResult obstacleOverlap = collidesWithObstacles(x,y);
 		CollisionResult characterOverlap = collidesWithOtherCharacters(x,y);
 		

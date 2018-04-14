@@ -40,5 +40,8 @@ public interface Actor {
 	public double getWidth();
 	public double getHeight();
 	
-	public void constructCollisionBox();
+	public void constructCollisionBox();	
+	
+	public int getTranslationX();
+	public int getTranslationY();
 }

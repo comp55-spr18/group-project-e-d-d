@@ -1,5 +1,7 @@
 package com.edd.circlebrawl;
 
+import com.edd.character.AttackOrb;
+import com.edd.character.Player;
 import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionUtil;
 import com.edd.osvaldo.MainApplication;
@@ -23,15 +25,25 @@ public abstract class BaseActor implements Actor, Tick {
 	public void basicPostConstructor(){
 		if(sprite != null){
 			setupSprite(sprite);
+			applyTranslation();
 			constructCollisionBox();
 		}
 	}
 	
 	public void basicPostConstructor(String spriteFile){
 		setupSprite(spriteFile);
+		applyTranslation();
+		constructCollisionBox();
+	}
+	
+	private void applyTranslation(){
+		if(this instanceof AttackOrb){
+			AttackOrb attackOrb = (AttackOrb)this;
+			if(attackOrb.getOwner() instanceof Player)
+				return;
+		}
 		if(driver.player != null)
 			sprite.move(driver.player.getCam().getTotalTranslationX(),driver.player.getCam().getTotalTranslationY());
-		constructCollisionBox();
 	}
 	
 	// Setters for sprite
@@ -72,24 +84,6 @@ public abstract class BaseActor implements Actor, Tick {
 	 * @return true/false indicating if the two Actors are intersecting
 	 */
 	public boolean collidesWith(BaseActor anotherActor) {
-		// return (this.getSprite().contains(anotherActor.getX() +
-		// anotherActor.getSprite().getWidth() / 2,
-		// anotherActor.getY() + anotherActor.getSprite().getHeight() / 2));
-		/*return (this.getSprite().contains(anotherActor.getSprite().getX(), anotherActor.getSprite().getY())
-				|| this.getSprite().contains(anotherActor.getSprite().getX(),
-						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight() / 2)
-				|| this.getSprite().contains(anotherActor.getSprite().getX(),
-						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight())
-				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth() / 2,
-						anotherActor.getSprite().getY())
-				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth() / 2,
-						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight())
-				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
-						anotherActor.getSprite().getY())
-				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
-						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight() / 2)
-				|| this.getSprite().contains(anotherActor.getSprite().getX() + anotherActor.getSprite().getWidth(),
-						anotherActor.getSprite().getY() + anotherActor.getSprite().getHeight()));*/
 		return CollisionUtil.overlaps(this, anotherActor);
 	}
 
@@ -143,4 +137,11 @@ public abstract class BaseActor implements Actor, Tick {
 		collisionBox = new CollisionBox((int)x,(int)y,(int)(x+getWidth()),(int)(y+getHeight()));
 	}
 
+	public int getTranslationX(){
+		return (int)(x - sprite.getX());
+	}
+	
+	public int getTranslationY(){
+		return (int)(y - sprite.getY());
+	}
 }
