@@ -1,13 +1,11 @@
 package com.edd.powerup;
 
+import com.edd.character.AttackOrb;
 import com.edd.character.Character;
 import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.CircleBrawl;
 import com.edd.circlebrawl.Item;
 import com.edd.generator.BaseGenerator;
 import com.edd.osvaldo.MainApplication;
-
-import acm.graphics.GImage;
 
 public class PowerUp extends Item {
 
@@ -16,6 +14,7 @@ public class PowerUp extends Item {
 	private PowerUpType type; // the type of the PowerUp
 	private Character consumer; // the one who consumes the powerup
 	private boolean activated = false;
+	private AttackOrb attackOrb;
 	
 	public PowerUp(int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
 
@@ -53,6 +52,15 @@ public class PowerUp extends Item {
 				consumer.modifyDefense(finalEfficacy);
 				System.out.println("Modify defense by "+finalEfficacy+"!");
 				break;
+			case ATTACK_ORB:
+				if(!activated){
+					attackOrb = consumer.spawnAttackOrb();
+					System.out.println("Spawned attack orb!");
+				} else {
+					consumer.despawnAttackOrb(attackOrb);
+					System.out.println("Despawned attack orb!");
+				}
+				break;
 		}
 		activated = !activated;
 	}
@@ -67,13 +75,14 @@ public class PowerUp extends Item {
 	}
 	
 	public void secondPassed() {
-		if(activated)
+		if(activated){
 			if(time <= 0) {
 				toggleEffect();
 				generator.addToRemoveList(this); // removing this powerup from ticklist
 			} else {
 				time--;
 			}
+		}
 	}
 
 }

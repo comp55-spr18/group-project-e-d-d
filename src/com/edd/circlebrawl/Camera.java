@@ -14,7 +14,8 @@ public class Camera implements Tick{
 	private double instanceX, instanceY;
 	private Player player;
 	private MainApplication app;
-	
+	private int totalTranslationX = 0;
+	private int totalTranslationY = 0;
 	
 	public Camera(double instanceX, double instanceY, Player player, MainApplication app){
 		this.instanceX = instanceX;
@@ -48,7 +49,8 @@ public class Camera implements Tick{
 		return instanceY;
 	}
 	
-	
+	public int getTotalTranslationX(){ return totalTranslationX; }
+	public int getTotalTranslationY(){ return totalTranslationY; }
 	
 	//this is the function that's going to move everything on the screen according to the direction
 	//that the player is controlling with WASD.
@@ -56,6 +58,8 @@ public class Camera implements Tick{
 	//up the elements of the screen. The only things that won't be moving are the player's 
 	//attack ring, the player, and the buttons the screen may or may not have.
 	public void translate(double velX, double velY) {
+		totalTranslationX += velX;
+		totalTranslationY += velY;
 		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();){
 			GObject next = it.next();
 			if (next == player.sprite || next == player.getSawSprite()){

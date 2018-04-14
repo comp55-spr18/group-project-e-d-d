@@ -46,6 +46,9 @@ public class AI extends Character {
 	
 	@Override
 	public void tick(){
+		
+		super.tick();
+		
 		if(playerIsInDetectionRange()){
 			chooseNewDirectionTowardActor(driver.player);
 		} else {

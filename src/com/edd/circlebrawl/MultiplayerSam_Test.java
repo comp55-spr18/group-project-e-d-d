@@ -320,7 +320,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 	}
 	
 	public void movePlayer(Player p, double xVelocity, double yVelocity) {
-		characters.get(p.getName()).attemptMove(xVelocity, yVelocity);
+		characters.get(p.getName()).attemptMove((int)xVelocity, (int)yVelocity);
 		Player p2 = characters.get(p.getName());
 		characters.get(p.getName()).setX(p2.getX());
 		characters.get(p.getName()).setY(p2.getY());
@@ -400,7 +400,7 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 		} else
 			xVelocity = 0;
 
-		player.attemptMove(xVelocity, yVelocity);
+		player.attemptMove((int)xVelocity, (int)yVelocity);
 		//ring.move(xVelocity, yVelocity);
 		player.getNameLabel().move(xVelocity, yVelocity);
 		if(xVelocity != 0.0 || yVelocity != 0.0) {
