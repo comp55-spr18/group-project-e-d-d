@@ -153,6 +153,7 @@ public class Player extends Character implements ActionListener {
 		if (keyA && x - buffer >= 0) {
 			xVelocity = -speed;
 		}
+		//If you're wondering why or how this works... Me too.
 		else if (keyD && x + buffer <= driver.WINDOW_WIDTH*1.5 - width*1.5 + width - width/2) {
 			xVelocity = speed;
 		} else {
