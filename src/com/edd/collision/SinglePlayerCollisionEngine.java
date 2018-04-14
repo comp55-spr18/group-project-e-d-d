@@ -17,6 +17,11 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
+	public void moveActor(int x, int y){
+		((Character)actor).move(x,y);
+	}
+	
+	@Override
 	protected CollisionResult collidesWithObstacles(int x, int y) {
 		return collidesWithActors(driver.OBSTACLE_GEN.getActors(),x,y);
 	}

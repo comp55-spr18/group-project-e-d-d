@@ -215,7 +215,7 @@ public abstract class Character extends BaseActor {
 	public void movePolar(int distance, double angle) {
 		
 		int xChange = 0, yChange = 0;
-		
+		// TODO: Implement xChange and yChange
 		if(!(this instanceof Player))
 			sprite.movePolar(distance,angle);
 		this.x += xChange;
