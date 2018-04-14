@@ -2,8 +2,8 @@ package com.edd.collision;
 
 public class CollisionResult {
 
-	public boolean xCollides;
-	public boolean yCollides;
+	public boolean xCollides; // if the x axis collides with something
+	public boolean yCollides; // if the y axis collides with something
 	
 	public CollisionResult(boolean xCollides, boolean yCollides){
 		this.xCollides = xCollides;

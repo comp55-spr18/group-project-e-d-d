@@ -42,6 +42,13 @@ public class PowerUpGenerator extends BaseGenerator {
 		return null; // This should never be reached
 	}
 	
+	public void use(PowerUp powerUp){
+		if(actors.contains(powerUp)){
+			actors.remove(powerUp);
+			usedPowerUps.add(powerUp);
+		}
+	}
+	
 	@Override
 	protected boolean remove(BaseActor actor){
 		if(super.remove(actor) == true)

@@ -1,8 +1,5 @@
 package com.edd.generator;
 
-import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.CircleBrawl;
-import com.edd.circlebrawl.Item;
 import com.edd.circlebrawl.Resource;
 import com.edd.osvaldo.MainApplication;
 

@@ -24,7 +24,7 @@ public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 
 	@Override
 	protected CollisionResult collidesWithOtherCharacters(int x, int y) {
-		ArrayList<BaseActor> multiplayerCharacters = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of characters (Players & AI) 
+		ArrayList<BaseActor> multiplayerCharacters = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of characters (Players & AI)
 		return collidesWithActors(multiplayerCharacters,x,y).merge(CollisionUtil.overlaps(character,driver.player,x,y));
 	}
 

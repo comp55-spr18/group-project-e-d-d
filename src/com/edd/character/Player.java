@@ -83,6 +83,8 @@ public class Player extends Character implements ActionListener {
 	public GLabel getNameLabel() {
 		return namePlate;
 	}
+	
+	public Camera getCam(){ return cam; }
 
 	public void keyPressed(KeyEvent e) {
 		keyI = e.getKeyChar();
@@ -131,6 +133,9 @@ public class Player extends Character implements ActionListener {
 	}
 
 	public void tick() {
+		
+		super.tick();
+		
 		double height = sprite.getHeight();
 		double width = sprite.getWidth();
 		int buffer = 10;
@@ -154,7 +159,7 @@ public class Player extends Character implements ActionListener {
 			xVelocity = 0;
 		}
 
-		CollisionResult moveSuccess = attemptMove(xVelocity, yVelocity);
+		CollisionResult moveSuccess = attemptMove((int)xVelocity, (int)yVelocity);
 		
 		if(!moveSuccess.xCollides)
 			xVelocity = 0;

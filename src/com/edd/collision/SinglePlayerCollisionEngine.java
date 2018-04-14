@@ -34,7 +34,7 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 	@Override
 	protected void cleanUpItem(Item item){
 		if(item instanceof PowerUp)
-			driver.POWERUP_GEN.addToRemoveList(item);
+			driver.POWERUP_GEN.use((PowerUp)item);
 		if(item instanceof Resource)
 			driver.RESOURCE_GEN.addToRemoveList(item);
 	}
