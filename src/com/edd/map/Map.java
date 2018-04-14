@@ -11,6 +11,8 @@ public class Map {
 	private GImage[][] map;
 	
 	public Map(GImage[][] map, int tileWidth, int tileHeight){
+		this.tileWidth = tileWidth;
+		this.tileHeight = tileHeight;
 		this.map = map;
 	}
 	

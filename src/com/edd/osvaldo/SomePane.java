@@ -4,16 +4,20 @@ import java.awt.event.MouseEvent;
 
 import com.edd.character.AI;
 import com.edd.character.Player;
+import com.edd.map.Map;
+import com.edd.map.MapBuilder;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
 
+
 public class SomePane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
+	private Map map = MapBuilder.buildMap();
 	
-	private GImage background;
+	private GImage background = map.createImage();
 	private GParagraph para;
 	GButton muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
 	private boolean soundPaused = false;
@@ -24,7 +28,6 @@ public class SomePane extends GraphicsPane {
 		program.player = new Player("Mike", program.WINDOW_WIDTH / 2 - 100, program.WINDOW_HEIGHT / 2 - 100, program);
 		muteButton.setFillColor(Color.GREEN);
 		
-		background = new GImage("com/edd/osvaldo/game_background.png");
 		program.player.getNameLabel().setColor(Color.WHITE);
 	}
 

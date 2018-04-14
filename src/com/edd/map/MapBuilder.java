@@ -1,5 +1,6 @@
 package com.edd.map;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -13,7 +14,7 @@ public abstract class MapBuilder {
 	public static final int MAX_COLS = 60;
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
-	public static final GImage TILE_SET = new GImage("spritesheetscomplete.png");
+	public static final GImage TILE_SET = new GImage("com/edd/map/spritesheetscomplete.png");
 	
 	public static Map buildMap(){
 		Random rand = new Random();
@@ -32,6 +33,9 @@ public abstract class MapBuilder {
 	
 	private static GImage getTile(int row, int col){
 		BufferedImage tileSet = new BufferedImage((int)TILE_SET.getWidth(),(int)TILE_SET.getHeight(),BufferedImage.TYPE_INT_RGB);
+		Graphics g = tileSet.createGraphics();
+		g.drawImage(TILE_SET.getImage(), 0, 0, null);
+		g.dispose();
 		return new GImage(tileSet.getSubimage(row*TILE_WIDTH, col*TILE_WIDTH, TILE_WIDTH, TILE_HEIGHT));
 	}
 	
