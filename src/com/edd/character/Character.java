@@ -35,7 +35,7 @@ public abstract class Character extends BaseActor {
 		((GOval)sprite).setFilled(true);
 
 		// temp
-		saw.setBounds((driver.WINDOW_WIDTH/2) - ATTACK_RING/2, (driver.WINDOW_HEIGHT/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
+		saw.setBounds(((driver.WINDOW_WIDTH - sprite.getWidth()) /2) - ATTACK_RING/2, ((driver.WINDOW_HEIGHT - sprite.getHeight())/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
 	}
 	
 	//modifiers
@@ -69,8 +69,8 @@ public abstract class Character extends BaseActor {
 		driver.add(sprite);
 		
 		//driver.remove(saw);
-		saw.setBounds((saw.getX()-modifyValue/2), (saw.getY()-modifyValue/2), (saw.getWidth()+modifyValue*1.5), saw.getHeight()+modifyValue*1.5);
-		saw.move(modifyValue/1.5, modifyValue/1.5);
+		//saw.setBounds(x - sprite.getWidth() * 2, y, (saw.getWidth()+modifyValue*1.5), saw.getHeight()+modifyValue*1.5);
+		//saw.move(modifyValue/1.5, modifyValue/1.5);
 		
 		constructCollisionBox();
 	}
@@ -107,7 +107,7 @@ public abstract class Character extends BaseActor {
 		this.x += x;
 		this.y += y;
 		
-		saw.move(x, y);
+		//saw.move(x, y);
 		
 		constructCollisionBox();
 	}
