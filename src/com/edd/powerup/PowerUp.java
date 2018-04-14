@@ -3,6 +3,7 @@ package com.edd.powerup;
 import com.edd.character.AttackOrb;
 import com.edd.character.Character;
 import com.edd.circlebrawl.BaseActor;
+import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Item;
 import com.edd.generator.BaseGenerator;
 import com.edd.osvaldo.MainApplication;
@@ -16,16 +17,21 @@ public class PowerUp extends Item {
 	private boolean activated = false;
 	private AttackOrb attackOrb;
 	
+	public PowerUp(GameType gameType, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
+		basicPreConstructor(gameType,driver);
+		basicItemConstructor(efficacy,multiple,generator);
+		basicPowerUpConstructor(type);
+	}
+	
 	public PowerUp(int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
-
-		basicPreConstructor(x,y,driver);
-		
-		this.efficacy = efficacy;
-		this.multiple = multiple;
+		basicPreConstructor(gameType,driver);
+		basicItemConstructor(efficacy,multiple,generator);
+		basicPowerUpConstructor(type);
+	}
+	
+	private void basicPowerUpConstructor(PowerUpType type){
 		this.type = type;
 		this.time = type.getTime();
-		this.generator = generator;
-
 		basicPostConstructor("com/edd/powerup/"+type.getSpriteFile());
 	}
 	
@@ -41,16 +47,19 @@ public class PowerUp extends Item {
 		int finalEfficacy = activated ? getFinalEfficacy()*-1 : getFinalEfficacy();
 		switch(type) {
 			case SPEED:
+			case EVIL_SPEED:
 			case CORRUPTED_SPEED:
 				efficacy = consumer.modifySpeed(finalEfficacy);
 				System.out.println("Modify speed by "+finalEfficacy+"!");
 				break;
 			case STRENGTH:
+			case EVIL_STRENGTH:
 			case CORRUPTED_STRENGTH:
 				efficacy = consumer.modifyStrength(finalEfficacy);
 				System.out.println("Modify strength by "+finalEfficacy+"!");
 				break;
 			case ENDURANCE:
+			case EVIL_ENDURANCE:
 			case CORRUPTED_ENDURANCE:
 				efficacy = consumer.modifyDefense(finalEfficacy);
 				System.out.println("Modify defense by "+finalEfficacy+"!");

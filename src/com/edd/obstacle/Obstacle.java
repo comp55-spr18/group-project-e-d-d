@@ -3,8 +3,8 @@ package com.edd.obstacle;
 import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
+import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Tick;
-import com.edd.collision.CollisionBox;
 import com.edd.generator.BaseGenerator;
 import com.edd.osvaldo.MainApplication;
 
@@ -14,23 +14,29 @@ public class Obstacle extends BaseActor implements Tick {
 	private String obstacleFile; // the filename for the obstacle image
 	protected BaseGenerator generator; // the generator generating this obstacle
 
+	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator) {
+		basicPreConstructor(gameType,driver);
+		basicObstacleConstructor(generator,randomObstacle());
+	}
+	
+	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator, String obstacleFile) {
+		basicPreConstructor(gameType,driver);
+		basicObstacleConstructor(generator,obstacleFile);
+	}
+	
 	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator) {
 		basicPreConstructor(x,y,driver);
-
-		this.driver = driver;
-		this.generator = generator;
-		this.obstacleFile = randomObstacle();
-		
-		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
+		basicObstacleConstructor(generator,randomObstacle());
 	}
 	
 	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator, String obstacleFile) {
 		basicPreConstructor(x,y,driver);
-
-		this.driver = driver;
+		basicObstacleConstructor(generator,obstacleFile);
+	}
+	
+	private void basicObstacleConstructor(BaseGenerator generator, String obstacleFile){
 		this.generator = generator;
 		this.obstacleFile = obstacleFile;
-		
 		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
 	}
 

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import com.edd.character.Player;
+import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Tick;
 import com.edd.generator.AIGenerator;
 import com.edd.generator.BoundaryGenerator;
@@ -22,12 +23,12 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
 	public final int TICKS_PER_SECOND = 120;
 	
-	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
-	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
-	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(this);
+	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(GameType.SINGLEPLAYER,this);
+	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(GameType.SINGLEPLAYER,this);
+	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(GameType.SINGLEPLAYER,this);
 	public final BoundaryGenerator BOUNDARY_GEN = new BoundaryGenerator(this);
 	
-	public final AIGenerator AI_GEN = new AIGenerator(this);
+	public final AIGenerator AI_GEN = new AIGenerator(GameType.SINGLEPLAYER,this);
 	public final int AI_MAX = 3;
 	public Player player;
 	

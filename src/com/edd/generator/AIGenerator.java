@@ -1,14 +1,14 @@
 package com.edd.generator;
 
 import com.edd.character.AI;
+import com.edd.circlebrawl.GameType;
 import com.edd.osvaldo.MainApplication;
-
-import javafx.util.Pair;
 
 public class AIGenerator extends BaseGenerator {
 
 
-	public AIGenerator(MainApplication driver) {
+	public AIGenerator(GameType gameType, MainApplication driver) {
+		this.gameType = gameType;
 		this.driver = driver;
 
 		maxSpawns = 1;//driver.AI_MAX;
@@ -20,8 +20,7 @@ public class AIGenerator extends BaseGenerator {
 	
 	@Override
 	public void spawn() {
-		Pair<Integer, Integer> loc = generateLocation(0, 200);
-		actors.add(new AI(loc.getKey(), loc.getValue(), driver, this));
+		actors.add(new AI(gameType, driver, this));
 	}
 
 }

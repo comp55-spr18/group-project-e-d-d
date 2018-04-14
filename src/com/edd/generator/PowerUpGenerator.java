@@ -4,23 +4,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.CircleBrawl;
-import com.edd.circlebrawl.Item;
+import com.edd.circlebrawl.GameType;
 import com.edd.osvaldo.MainApplication;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
-
-import javafx.util.Pair;
 
 public class PowerUpGenerator extends BaseGenerator {
 	
 	private ArrayList<PowerUp> usedPowerUps; //a list of all powerups that have been consumed
 	private ArrayList<PowerUp> usedPowerUpsToRemove; //a list of all powerups that have been consumed and need to be removed
 	
-	public PowerUpGenerator(MainApplication driver) {
+	public PowerUpGenerator(GameType gameType, MainApplication driver) {
 		usedPowerUps = new ArrayList<PowerUp>();
 		usedPowerUpsToRemove = new ArrayList<PowerUp>();
 		
+		this.gameType = gameType;
 		this.driver = driver;
 		
 		maxSpawns = 10;
@@ -73,8 +71,7 @@ public class PowerUpGenerator extends BaseGenerator {
 	@Override
 	public void spawn() {
 		PowerUpType generatedType = generatePowerUpType(rand);
-		Pair<Integer,Integer> loc = generateLocation(50,150);
-		actors.add(new PowerUp(loc.getKey(),loc.getValue(),driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType,this));
+		actors.add(new PowerUp(gameType,driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType,this));
 	}
 	
 	@Override

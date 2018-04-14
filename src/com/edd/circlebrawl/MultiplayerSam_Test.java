@@ -17,13 +17,14 @@ import javax.swing.Timer;
 import com.edd.character.Player;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
+import com.edd.osvaldo.MainApplication;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
 
 import acm.graphics.GLabel;
 
 // Driver Class
-public class MultiplayerSam_Test extends CircleBrawl implements Tick {
+public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
@@ -32,8 +33,8 @@ public class MultiplayerSam_Test extends CircleBrawl implements Tick {
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final HashMap<String, PowerUp> powerups = new HashMap<String, PowerUp>();
-	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(this);
-	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(this);
+	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(GameType.MULTIPLAYER,this);
+	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(GameType.MULTIPLAYER,this);
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;

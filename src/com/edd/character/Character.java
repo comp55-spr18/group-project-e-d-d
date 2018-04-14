@@ -57,6 +57,8 @@ public abstract class Character extends BaseActor {
 		
 		// temp
 		saw.setBounds(((driver.WINDOW_WIDTH - sprite.getWidth()) /2) - ATTACK_RING/2, ((driver.WINDOW_HEIGHT - sprite.getHeight())/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
+		
+		basicPostConstructor();
 	}
 	
 	//modifiers
@@ -148,6 +150,7 @@ public abstract class Character extends BaseActor {
 	public int getSpeed() { return speed; }
 	public int getStrength() { return strength; }
 	public GImage getSawSprite() { return saw; }
+	public BaseCollisionEngine getCollisionEngine(){ return collisionEngine; }
 	
 	public ArrayList<AttackOrb> getAttackOrbs(){ return attackOrbs; }
 	public AttackOrb spawnAttackOrb(){ return new AttackOrb(this,driver); }

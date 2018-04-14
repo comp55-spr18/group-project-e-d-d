@@ -10,6 +10,8 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import com.edd.circlebrawl.Camera;
+import com.edd.circlebrawl.GameType;
+import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionResult;
 import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
@@ -38,36 +40,47 @@ public class Player extends Character implements ActionListener {
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(name);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-		basicPostConstructor();
+		basicPlayerConstructor("", new SinglePlayerCollisionEngine(this,driver));
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(name);
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-		basicPostConstructor();
+		basicPlayerConstructor(name, new SinglePlayerCollisionEngine(this,driver));
 	}
 	
 	public Player(String name, int x, int y, int color, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(name, c[color]);
-		basicCharacterConstructor(new MultiPlayerCollisionEngine(this,driver),BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-		basicPostConstructor();
+		basicPlayerConstructor(name, c[color],new MultiPlayerCollisionEngine(this,driver));
 	}
 	
-	protected void basicPlayerConstructor(String name, Color color){
+	public Player(GameType gameType, MainApplication mainApplication) {
+		basicPreConstructor(gameType,driver);
+		basicPlayerConstructor("", new SinglePlayerCollisionEngine(this,driver));
+	}
+	
+	public Player(String name, GameType gameType, MainApplication driver) {
+		basicPreConstructor(gameType,driver);
+		basicPlayerConstructor(name, new SinglePlayerCollisionEngine(this,driver));
+	}
+	
+	public Player(String name, GameType gameType, int color, MainApplication driver) {
+		basicPreConstructor(gameType,driver);
+		basicPlayerConstructor(name, c[color],new MultiPlayerCollisionEngine(this,driver));
+	}
+	
+	protected void basicPlayerConstructor(String name, Color color, BaseCollisionEngine collisionEngine){
 		this.name = name;
 		cam = new Camera(0, 0, this, driver);
 		this.pColor = color;
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		driver.add(namePlate);
+		
+		basicCharacterConstructor(collisionEngine,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
 	}
 
-	protected void basicPlayerConstructor(String name){
+	protected void basicPlayerConstructor(String name, BaseCollisionEngine collisionEngine){
 		Random rand = new Random();
-		basicPlayerConstructor(name,c[rand.nextInt(c.length)]);
+		basicPlayerConstructor(name,c[rand.nextInt(c.length)],collisionEngine);
 	}
 	
 	public Color generateColor (){
@@ -162,9 +175,9 @@ public class Player extends Character implements ActionListener {
 
 		CollisionResult moveSuccess = attemptMove((int)xVelocity, (int)yVelocity);
 		
-		if(!moveSuccess.xCollides)
+		if(moveSuccess.xCollides)
 			xVelocity = 0;
-		if(!moveSuccess.yCollides)
+		if(moveSuccess.yCollides)
 			yVelocity = 0;
 
 		cam.translate(-xVelocity, -yVelocity);

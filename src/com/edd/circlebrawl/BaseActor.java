@@ -1,9 +1,15 @@
 package com.edd.circlebrawl;
 
+import java.util.Random;
+
 import com.edd.character.AttackOrb;
+import com.edd.character.Character;
 import com.edd.character.Player;
+import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionUtil;
+import com.edd.collision.MultiPlayerCollisionEngine;
+import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
@@ -14,6 +20,7 @@ public abstract class BaseActor implements Actor, Tick {
 	protected MainApplication driver;
 	protected double x;
 	protected double y;
+	protected GameType gameType;
 	protected CollisionBox collisionBox;
 
 	public void basicPreConstructor(int x, int y, MainApplication driver){
@@ -22,8 +29,16 @@ public abstract class BaseActor implements Actor, Tick {
 		this.driver = driver;
 	}
 	
+	// use this for auto generation of location
+	public void basicPreConstructor(GameType gameType, MainApplication driver){
+		this.gameType = gameType;
+		this.driver = driver;
+	}
+	
 	public void basicPostConstructor(){
 		if(sprite != null){
+			if(gameType != null)
+				setRandomLocation();
 			setupSprite(sprite);
 			applyTranslation();
 			constructCollisionBox();
@@ -31,7 +46,10 @@ public abstract class BaseActor implements Actor, Tick {
 	}
 	
 	public void basicPostConstructor(String spriteFile){
-		setupSprite(spriteFile);
+		sprite = new GImage(spriteFile);
+		if(gameType != null)
+			setRandomLocation();
+		setupSprite(sprite);
 		applyTranslation();
 		constructCollisionBox();
 	}
@@ -94,21 +112,6 @@ public abstract class BaseActor implements Actor, Tick {
 		driver.remove(sprite);
 	};
 
-	/**
-	 * Initializes a GImage objec, specifically the sprite
-	 * 
-	 * @param anotherActor
-	 *            the Actor that we want to check if intersects current Actor
-	 * @return true/false indicating if the two Actors are intersecting
-	 */
-	public void setupSprite(String spriteFile) {
-		sprite = new GImage(spriteFile);
-
-		sprite.setLocation(x, y);
-		driver.bringPlayersToFront();
-		driver.add(sprite);
-	}
-
 	public void setupSprite(GObject sprite) {
 		this.sprite = sprite;
 
@@ -143,5 +146,35 @@ public abstract class BaseActor implements Actor, Tick {
 	
 	public int getTranslationY(){
 		return (int)(y - sprite.getY());
+	}
+	
+	public void setRandomLocation(){
+		Random rand = new Random();
+		int minX = 0;
+		int minY = 0;
+		int maxX = MainApplication.MAP_WIDTH-(int)getWidth();
+		int maxY = MainApplication.MAP_HEIGHT-(int)getHeight();
+		
+		BaseCollisionEngine tempEngine = null;
+		
+		if(this instanceof Character){
+			tempEngine = ((Character)this).getCollisionEngine();
+		} else {
+			switch(gameType){
+				case SINGLEPLAYER:
+					tempEngine = new SinglePlayerCollisionEngine(this,driver);
+					break;
+				case MULTIPLAYER:
+					tempEngine = new MultiPlayerCollisionEngine(this,driver);
+					break;
+			}
+		}
+
+		constructCollisionBox();
+		while(tempEngine.collidesWithAnything()){
+			setX(rand.nextInt(maxX-minX+1)+minX);
+			setY(rand.nextInt(maxY-minY+1)+minY);
+			constructCollisionBox();
+		}
 	}
 }

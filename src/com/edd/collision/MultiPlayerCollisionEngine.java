@@ -11,8 +11,8 @@ import com.edd.powerup.PowerUp;
 
 public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 
-	public MultiPlayerCollisionEngine(Character character, MainApplication driver){
-		this.character = character;
+	public MultiPlayerCollisionEngine(BaseActor actor, MainApplication driver){
+		this.actor = actor;
 		this.driver = driver;
 	}
 	
@@ -25,7 +25,7 @@ public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 	@Override
 	protected CollisionResult collidesWithOtherCharacters(int x, int y) {
 		ArrayList<BaseActor> multiplayerCharacters = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of characters (Players & AI)
-		return collidesWithActors(multiplayerCharacters,x,y).merge(CollisionUtil.overlaps(character,driver.player,x,y));
+		return collidesWithActors(multiplayerCharacters,x,y);
 	}
 
 	@Override
@@ -33,6 +33,16 @@ public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 		ArrayList<BaseActor> multiplayerPowerUps = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of PowerUps
 		ArrayList<BaseActor> multiplayerResources = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of Resources
 		return super.collidesWithItems(multiplayerPowerUps,multiplayerResources,x,y);
+	}
+	
+	@Override
+	public boolean collidesWithAnything(){
+		ArrayList<BaseActor> multiplayerPowerUps = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of PowerUps
+		ArrayList<BaseActor> multiplayerResources = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of Resources
+		ArrayList<BaseActor> multiplayerAIs = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of AIs
+		ArrayList<BaseActor> multiplayerObstacles = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of obstacles 
+		ArrayList<BaseActor> multiplayerPlayers = new ArrayList<BaseActor>(); // TODO: Sam, make this actual list of players
+		return collidesWithAnything(multiplayerPowerUps,multiplayerResources,multiplayerAIs,multiplayerObstacles,multiplayerPlayers);
 	}
 	
 	@Override

@@ -8,6 +8,12 @@ public abstract class Item extends BaseActor implements Tick {
 	protected int efficacy; // the strength of the item
 	protected BaseGenerator generator; // the generator generating this item
 
+	protected void basicItemConstructor(int efficacy, int multiple, BaseGenerator generator){
+		this.efficacy = efficacy;
+		this.multiple = multiple;
+		this.generator = generator;
+	}
+	
 	/**
 	 * Removes all instance sof the item and triggers the activation
 	 * 

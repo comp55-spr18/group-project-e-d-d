@@ -15,6 +15,7 @@ import acm.graphics.GObject;
 public interface Actor {
 	
 	public void basicPreConstructor(int x, int y, MainApplication driver); // ALWAYS CALL IN BEGINNING OF CONSTRUCTORS
+	public void basicPreConstructor(GameType gameType, MainApplication driver); // ALWAYS CALL IN BEGINNING OF CONSTRUCTORS
 	public void basicPostConstructor(); // ALWAYS CALL IN END OF CONSTRUCTORS
 	public void basicPostConstructor(String spriteFile); // ALWAYS CALL IN END OF CONSTRUCTORS
 	
@@ -33,8 +34,7 @@ public interface Actor {
 	public boolean collidesWith(BaseActor anotherActor);
 
 	public void remove();
-
-	public void setupSprite(String spriteFile);
+	
 	public void setupSprite(GObject sprite);
 	
 	public double getWidth();
@@ -44,4 +44,6 @@ public interface Actor {
 	
 	public int getTranslationX();
 	public int getTranslationY();
+	
+	public void setRandomLocation();
 }

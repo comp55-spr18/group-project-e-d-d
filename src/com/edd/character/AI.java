@@ -4,13 +4,12 @@ import java.awt.Color;
 import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
+import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Resource;
 import com.edd.collision.CollisionResult;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.generator.AIGenerator;
 import com.edd.osvaldo.MainApplication;
-
-import acm.graphics.GOval;
 
 public class AI extends Character {
 
@@ -28,20 +27,31 @@ public class AI extends Character {
 	
 	/***
 	 * AI is an artificially intelligent character. Its goals include growing stronger and killing the player.
-	 * @param x
-	 * @param y
-	 * @param driver
-	 * @param generator
+	 * @param x the x for the AI to start at
+	 * @param y the y for the AI to start at
+	 * @param driver the main driver of the game
+	 * @param generator the thing generating the AI
 	 */
 	public AI(int x, int y, MainApplication driver, AIGenerator generator) {
-		rand = new Random();
-		
 		basicPreConstructor(x,y,driver);
+		basicAIConstructor(driver,generator);
+	}
+	/***
+	 * AI is an artificially intelligent character. Its goals include growing stronger and killing the player.
+	 * @param gameType the type of game (SinglePlayer/MultiPlayer)
+	 * @param driver the main driver of the game
+	 * @param generator the thing generating the AI
+	 */
+	public AI(GameType gameType, MainApplication driver, AIGenerator generator) {
+		basicPreConstructor(gameType,driver);
+		basicAIConstructor(driver,generator);
+	}
+	
+	private void basicAIConstructor(MainApplication driver, AIGenerator generator){
+		rand = new Random();
 		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),80+rand.nextInt(31),10,5,50,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		
 		chooseNewRandomDirection(); // establishing initial direction
-		
-		basicPostConstructor();
 	}
 	
 	@Override

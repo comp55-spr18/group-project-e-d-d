@@ -1,14 +1,14 @@
 package com.edd.generator;
 
 import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.CircleBrawl;
+import com.edd.circlebrawl.GameType;
 import com.edd.obstacle.Obstacle;
 import com.edd.osvaldo.MainApplication;
 
-import javafx.util.Pair;
-
 public class ObstacleGenerator extends BaseGenerator {
-	public ObstacleGenerator(MainApplication driver) {
+	
+	public ObstacleGenerator(GameType gameType, MainApplication driver) {
+		this.gameType = gameType;
 		this.driver = driver;
 
 		maxSpawns = 2;
@@ -19,8 +19,7 @@ public class ObstacleGenerator extends BaseGenerator {
 
 	@Override
 	public void spawn() {
-		Pair<Integer, Integer> loc = generateLocation(0, 200);
-		actors.add(new Obstacle(loc.getKey(), loc.getValue(), driver, this));
+		actors.add(new Obstacle(gameType, driver, this));
 	}
 
 	public boolean collidesWith(BaseActor anotherActor) {

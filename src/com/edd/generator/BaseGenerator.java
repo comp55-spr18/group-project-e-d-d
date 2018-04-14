@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
-import com.edd.circlebrawl.Item;
+import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Tick;
 import com.edd.osvaldo.MainApplication;
-
-import javafx.util.Pair;
 
 public abstract class BaseGenerator implements Tick{
 
@@ -18,6 +16,7 @@ public abstract class BaseGenerator implements Tick{
 	protected int currentTicks; //current ticks, used to count spawn timer
 	protected boolean activated; //if true, continue functions; if false, stop all functions
 	
+	protected GameType gameType;
 	protected Random rand = new Random();
 	
 	protected MainApplication driver;
@@ -48,22 +47,6 @@ public abstract class BaseGenerator implements Tick{
 	 * Spawns the actor. Dependent on subclasses.
 	 */
 	public abstract void spawn();
-	
-	/***
-	 * Generates a random location for the actor to spawn.
-	 * @return the generated location
-	 */
-	public Pair<Integer,Integer> generateLocation(int min, int maxOffset){
-		return new Pair<Integer,Integer>(rand.nextInt(MainApplication.MAP_WIDTH-maxOffset)+min,rand.nextInt(MainApplication.MAP_HEIGHT-maxOffset)+min);
-	}
-	
-	/***
-	 * Generates a random location for the actor to spawn.
-	 * @return the generated location
-	 */
-	public Pair<Integer,Integer> generateLocation(int minX, int maxOffsetX, int minY, int maxOffsetY){
-		return new Pair<Integer,Integer>(rand.nextInt(MainApplication.MAP_WIDTH-maxOffsetX)+minX,rand.nextInt(MainApplication.MAP_HEIGHT-maxOffsetY)+minY);
-	}
 	
 	/***
 	 * Adds an actor to the list of actors pending removal.

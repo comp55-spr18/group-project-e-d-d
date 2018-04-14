@@ -11,8 +11,8 @@ import com.edd.powerup.PowerUp;
 
 public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 
-	public SinglePlayerCollisionEngine(Character character, MainApplication driver){
-		this.character = character;
+	public SinglePlayerCollisionEngine(BaseActor actor, MainApplication driver){
+		this.actor = actor;
 		this.driver = driver;
 	}
 	
@@ -23,12 +23,19 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 
 	@Override
 	protected CollisionResult collidesWithOtherCharacters(int x, int y) {
-		return collidesWithActors(driver.AI_GEN.getActors(),x,y).merge(CollisionUtil.overlaps(character,driver.player,x,y));
+		return collidesWithActors(driver.AI_GEN.getActors(),x,y).merge(CollisionUtil.overlaps(actor,driver.player,x,y));
 	}
 
 	@Override
 	protected ArrayList<Item> collidesWithItems(int x, int y) {
 		return super.collidesWithItems(driver.POWERUP_GEN.getActors(),driver.RESOURCE_GEN.getActors(),x,y);
+	}
+	
+	@Override
+	public boolean collidesWithAnything(){
+		ArrayList<BaseActor> players = new ArrayList<BaseActor>();
+		players.add(driver.player);
+		return collidesWithAnything(driver.POWERUP_GEN.getActors(),driver.RESOURCE_GEN.getActors(),driver.AI_GEN.getActors(),driver.OBSTACLE_GEN.getActors(),players);
 	}
 	
 	@Override

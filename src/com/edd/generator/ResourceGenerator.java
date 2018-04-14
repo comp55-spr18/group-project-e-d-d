@@ -1,13 +1,13 @@
 package com.edd.generator;
 
+import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Resource;
 import com.edd.osvaldo.MainApplication;
 
-import javafx.util.Pair;
-
 public class ResourceGenerator extends BaseGenerator {
 
-	public ResourceGenerator(MainApplication mainApplication) {
+	public ResourceGenerator(GameType gameType, MainApplication mainApplication) {
+		this.gameType = gameType;
 		this.driver = mainApplication;
 		
 		maxSpawns = 18;
@@ -18,10 +18,8 @@ public class ResourceGenerator extends BaseGenerator {
 	
 	@Override
 	public void spawn() {
-		Pair<Integer,Integer> loc1 = generateLocation(50,150);
-		actors.add(new Resource(loc1.getKey(),loc1.getValue(),driver,getRandomEfficacy(2,3),1,this));
-		Pair<Integer,Integer> loc2 = generateLocation(50,150);
-		actors.add(new Resource(loc2.getKey(),loc2.getValue(),driver,getRandomEfficacy(2,3),1,this));
+		actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1,this));
+		actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1,this));
 	}
 
 }
