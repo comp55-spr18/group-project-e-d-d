@@ -33,6 +33,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public Player player;
 	
 	public boolean startTick = false;
+	
 
 	private SomePane somePane;
 	private MenuPane menu;
