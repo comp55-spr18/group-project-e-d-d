@@ -36,7 +36,7 @@ public abstract class BaseCollisionEngine {
 				y = 0;
 			
 			if(x != 0 || y != 0){
-				character.move(x,y);
+				moveActor(x,y);
 				return new CollisionResult(x==0,y==0); // TODO: Test logic
 			}
 		}
@@ -44,6 +44,9 @@ public abstract class BaseCollisionEngine {
 		return new CollisionResult(false,false);
 	}
 
+	// handles actual movement
+	protected abstract void moveActor(int x, int y);
+	
 	// when implementing, set return to call collidesWithActors() and pass in the proper list
 	protected abstract CollisionResult collidesWithObstacles(int x, int y);
 

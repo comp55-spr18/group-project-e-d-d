@@ -17,6 +17,11 @@ public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
+	public void moveActor(int x, int y){
+		((Character)actor).moveMulti(x,y);
+	}
+	
+	@Override
 	protected CollisionResult collidesWithObstacles(int x, int y) {
 		ArrayList<BaseActor> multiplayerObstacles = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of obstacles 
 		return collidesWithActors(multiplayerObstacles,x,y);
