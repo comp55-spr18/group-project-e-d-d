@@ -17,8 +17,8 @@ import acm.graphics.GLabel;
 public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
-	public static final int MAP_WIDTH = 1920; // temp
-	public static final int MAP_HEIGHT = 1080; // temp
+	public static final int MAP_WIDTH = 16000; // temp
+	public static final int MAP_HEIGHT = 16000; // temp
 	public static final String MUSIC_FOLDER = "sounds";
 	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
 	public final int TICKS_PER_SECOND = 120;
