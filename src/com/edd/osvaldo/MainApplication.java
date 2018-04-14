@@ -75,14 +75,14 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	}
 
 	public void switchToMenu() {
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
+		//audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
 		count++;
 		switchToScreen(menu);
 	}
 
 	public void switchToSome() {
-		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
+		//audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
+		//audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
 		switchToScreen(somePane);
 	}
 

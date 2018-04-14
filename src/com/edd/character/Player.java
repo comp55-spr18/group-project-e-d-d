@@ -140,20 +140,20 @@ public class Player extends Character implements ActionListener {
 		double width = sprite.getWidth();
 		int buffer = 10;
 
-		if (keyW && y + height / 2 - buffer >= 0) {
+		if (keyW && y - buffer >= 0) {
 			yVelocity = -speed;
 		}
 
-		else if (keyS && y + height * 1.5 + buffer <= driver.WINDOW_HEIGHT) {
+		else if (keyS && y <= driver.WINDOW_HEIGHT + height*2 + height/2) {
 			yVelocity = speed;
 		} else {
 			yVelocity = 0;
 		}
 			
-		if (keyA && x + width / 2 - buffer >= 0) {
+		if (keyA && x - buffer >= 0) {
 			xVelocity = -speed;
 		}
-		else if (keyD && x + width * 1.5 + buffer <= driver.WINDOW_WIDTH) {
+		else if (keyD && x + buffer <= driver.WINDOW_WIDTH*1.5 - width*1.5 + width - width/2) {
 			xVelocity = speed;
 		} else {
 			xVelocity = 0;
