@@ -34,7 +34,6 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	
 	public boolean startTick = false;
 	
-	//blah
 
 	private SomePane somePane;
 	private MenuPane menu;
