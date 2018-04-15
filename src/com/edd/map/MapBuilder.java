@@ -16,10 +16,10 @@ public abstract class MapBuilder {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
-	public static final int TILES_IN_MAP_X = 400;
-	public static final int TILES_IN_MAP_Y = 400;
-	public static final int TILE_BUFFER_X = 50;
-	public static final int TILE_BUFFER_Y = 50;
+	public static final int TILES_IN_MAP_X = 50;
+	public static final int TILES_IN_MAP_Y = 50;
+	public static final int TILE_BUFFER_X = 5;
+	public static final int TILE_BUFFER_Y = 5;
 	
 	public static final int ROWS_IN_SET = (int)TILE_SET.getWidth()/TILE_WIDTH;
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
@@ -113,7 +113,6 @@ public abstract class MapBuilder {
 	}
 
 	private static GImage getTile(int row, int col){
-		System.out.println("" + row + " " +  col);
 		BufferedImage tileSet = new BufferedImage((int)TILE_SET.getWidth(),(int)TILE_SET.getHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics g = tileSet.createGraphics();
 		g.drawImage(TILE_SET.getImage(), 0, 0, null);
