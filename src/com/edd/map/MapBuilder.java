@@ -18,8 +18,8 @@ public abstract class MapBuilder {
 	
 	public static final int TILES_IN_MAP_X = 50;
 	public static final int TILES_IN_MAP_Y = 50;
-	public static final int TILE_BUFFER_X = 5;
-	public static final int TILE_BUFFER_Y = 5;
+	public static final int TILE_BUFFER_X = 10;
+	public static final int TILE_BUFFER_Y = 10;
 	
 	public static final int ROWS_IN_SET = (int)TILE_SET.getWidth()/TILE_WIDTH;
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
@@ -82,7 +82,6 @@ public abstract class MapBuilder {
 			
 			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(",");
-				System.out.println(elements.length);
 				for(int col=0;col<elements.length;col++){
 					int id = Integer.parseInt(elements[col]);
 					tileImages.put(id, getTile(row,col));
