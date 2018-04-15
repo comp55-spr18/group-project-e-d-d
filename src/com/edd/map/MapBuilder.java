@@ -45,7 +45,10 @@ public abstract class MapBuilder {
 					int id = Integer.parseInt(elements[col]);
 					GImage baseImage = tileImages.get(baselineID);
 					GImage primaryImage = tileImages.get(id);
-					map[col][row] = layerImages(primaryImage, baseImage);
+					if(primaryImage != null && baseImage != null)
+						map[col][row] = layerImages(primaryImage, baseImage);
+					else
+						map[col][row] = tileImages.get(baselineID);
 				}
 				row++;
 			}
