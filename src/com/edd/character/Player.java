@@ -69,13 +69,14 @@ public class Player extends Character implements ActionListener {
 	}
 	
 	protected void basicPlayerConstructor(String name, Color color, BaseCollisionEngine collisionEngine){
+		basicCharacterConstructor(collisionEngine,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
+		
 		this.name = name;
-		cam = new Camera(0, 0, this, driver);
+		cam = new Camera(-(int)x+MainApplication.WINDOW_WIDTH/2-(int)getWidth()/2, -(int)y+MainApplication.WINDOW_HEIGHT/2-(int)getHeight()/2, this, driver);
 		this.pColor = color;
 		namePlate = new GLabel(name, x + size / 2, y + size / 2);
 		driver.add(namePlate);
-		
-		basicCharacterConstructor(collisionEngine,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
+		sprite.setLocation(MainApplication.WINDOW_WIDTH/2-getWidth()/2,MainApplication.WINDOW_HEIGHT/2-getHeight()/2);
 	}
 
 	protected void basicPlayerConstructor(String name, BaseCollisionEngine collisionEngine){
@@ -148,30 +149,15 @@ public class Player extends Character implements ActionListener {
 	public void tick() {
 		
 		super.tick();
-		
-		double height = sprite.getHeight();
-		double width = sprite.getWidth();
-		int buffer = 10;
 
-		if (keyW && y - buffer >= 0) {
+		if(keyW)
 			yVelocity = -speed;
-		}
-
-		else if (keyS && y + height <= MainApplication.MAP_HEIGHT) {
+		if(keyS)
 			yVelocity = speed;
-		} else {
-			yVelocity = 0;
-		}
-			
-		if (keyA && x - buffer >= 0) {
+		if(keyA)
 			xVelocity = -speed;
-		}
-		//If you're wondering why or how this works... Me too.
-		else if (keyD && x + buffer <= MainApplication.MAP_WIDTH - width*1.5 + width - width/2) {
+		if(keyD)
 			xVelocity = speed;
-		} else {
-			xVelocity = 0;
-		}
 
 		CollisionResult moveSuccess = attemptMove((int)xVelocity, (int)yVelocity);
 		
@@ -187,8 +173,7 @@ public class Player extends Character implements ActionListener {
 	}
 
 	public void bringToFront() {
-		driver.remove(sprite);
-		driver.add(sprite);
+		sprite.sendToFront();
 	}
 
 	public void removePlayer() {

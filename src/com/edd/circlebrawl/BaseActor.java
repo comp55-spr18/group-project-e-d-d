@@ -10,6 +10,7 @@ import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionUtil;
 import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
+import com.edd.map.MapBuilder;
 import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
@@ -150,10 +151,10 @@ public abstract class BaseActor implements Actor, Tick {
 	
 	public void setRandomLocation(){
 		Random rand = new Random();
-		int minX = 0;
-		int minY = 0;
-		int maxX = MainApplication.MAP_WIDTH-(int)getWidth();
-		int maxY = MainApplication.MAP_HEIGHT-(int)getHeight();
+		int minX = MapBuilder.TILE_BUFFER_X*MapBuilder.TILE_WIDTH;;
+		int minY = MapBuilder.TILE_BUFFER_Y*MapBuilder.TILE_HEIGHT;;
+		int maxX = MainApplication.MAP_WIDTH-(int)getWidth()-MapBuilder.TILE_BUFFER_X*MapBuilder.TILE_WIDTH;
+		int maxY = MainApplication.MAP_HEIGHT-(int)getHeight()-MapBuilder.TILE_BUFFER_Y*MapBuilder.TILE_HEIGHT;
 		
 		BaseCollisionEngine tempEngine = null;
 		

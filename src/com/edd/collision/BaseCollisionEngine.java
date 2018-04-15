@@ -18,11 +18,12 @@ public abstract class BaseCollisionEngine {
 		if(actor instanceof Character){
 			Character character = (Character)actor;
 			ArrayList<Item> items = collidesWithItems(x,y);
+			CollisionResult boundaryOverlap = collidesWithBoundaries(x,y);
 			CollisionResult obstacleOverlap = collidesWithObstacles(x,y);
 			CollisionResult characterOverlap = collidesWithCharacters(x,y);
 
-			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides;
-			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides;
+			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides || boundaryOverlap.xCollides;
+			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides || boundaryOverlap.yCollides;
 	
 			if(items != null && !items.isEmpty())
 				for(Item item : items){
@@ -46,6 +47,9 @@ public abstract class BaseCollisionEngine {
 
 	// handles actual movement
 	protected abstract void moveActor(int x, int y);
+	
+	// when implementing, set return to call collidesWithActors() and pass in the proper list
+	protected abstract CollisionResult collidesWithBoundaries(int x, int y);
 	
 	// when implementing, set return to call collidesWithActors() and pass in the proper list
 	protected abstract CollisionResult collidesWithObstacles(int x, int y);

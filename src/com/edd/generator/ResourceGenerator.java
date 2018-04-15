@@ -10,7 +10,7 @@ public class ResourceGenerator extends BaseGenerator {
 		this.gameType = gameType;
 		this.driver = mainApplication;
 		
-		maxSpawns = 18;
+		maxSpawns = 250;
 		spawnDelay = 1;
 		
 		activated = true;
@@ -18,8 +18,8 @@ public class ResourceGenerator extends BaseGenerator {
 	
 	@Override
 	public void spawn() {
-		actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1,this));
-		actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1,this));
+		for(int i=0;i<10;i++)
+			actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1,this));
 	}
 
 }

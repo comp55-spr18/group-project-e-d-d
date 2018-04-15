@@ -17,9 +17,9 @@ public class Camera implements Tick{
 	private int totalTranslationX = 0;
 	private int totalTranslationY = 0;
 	
-	public Camera(double instanceX, double instanceY, Player player, MainApplication app){
-		this.instanceX = instanceX;
-		this.instanceY = instanceY;
+	public Camera(int totalTranslationX, int totalTranslationY, Player player, MainApplication app){
+		this.totalTranslationX = totalTranslationX;
+		this.totalTranslationY = totalTranslationY;
 		this.player = player;
 		this.app = app;
 	}

@@ -22,6 +22,11 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
+	protected CollisionResult collidesWithBoundaries(int x, int y){
+		return collidesWithActors(driver.BOUNDARY_GEN.getActors(),x,y);
+	}
+	
+	@Override
 	protected CollisionResult collidesWithObstacles(int x, int y) {
 		return collidesWithActors(driver.OBSTACLE_GEN.getActors(),x,y);
 	}

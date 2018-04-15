@@ -8,6 +8,8 @@ import com.edd.circlebrawl.Tick;
 import com.edd.generator.BaseGenerator;
 import com.edd.osvaldo.MainApplication;
 
+import acm.graphics.GImage;
+
 public class Obstacle extends BaseActor implements Tick {
 	private final int MAX_IMAGES = 6; // number of images
 	
@@ -16,28 +18,35 @@ public class Obstacle extends BaseActor implements Tick {
 
 	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator) {
 		basicPreConstructor(gameType,driver);
-		basicObstacleConstructor(generator,randomObstacle());
+		basicObstacleConstructor(generator);
 	}
 	
-	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator, String obstacleFile) {
+	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator, GImage image) {
 		basicPreConstructor(gameType,driver);
-		basicObstacleConstructor(generator,obstacleFile);
+		basicObstacleConstructor(generator,image);
 	}
 	
 	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator) {
 		basicPreConstructor(x,y,driver);
-		basicObstacleConstructor(generator,randomObstacle());
+		basicObstacleConstructor(generator);
 	}
 	
-	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator, String obstacleFile) {
+	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator, GImage image) {
 		basicPreConstructor(x,y,driver);
-		basicObstacleConstructor(generator,obstacleFile);
+		basicObstacleConstructor(generator,image);
 	}
 	
-	private void basicObstacleConstructor(BaseGenerator generator, String obstacleFile){
+	private void basicObstacleConstructor(BaseGenerator generator){
 		this.generator = generator;
-		this.obstacleFile = obstacleFile;
+		this.obstacleFile = randomObstacle();
 		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
+	}
+
+	private void basicObstacleConstructor(BaseGenerator generator, GImage image){
+		this.generator = generator;
+		this.obstacleFile = "";
+		this.sprite = image;
+		basicPostConstructor();
 	}
 
 	public String randomObstacle() {

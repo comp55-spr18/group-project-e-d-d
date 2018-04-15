@@ -11,6 +11,7 @@ import com.edd.generator.BoundaryGenerator;
 import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
+import com.edd.map.MapBuilder;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
@@ -18,8 +19,8 @@ import acm.graphics.GLabel;
 public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 720;
-	public static final int MAP_WIDTH = 16000; // temp
-	public static final int MAP_HEIGHT = 16000; // temp
+	public static final int MAP_WIDTH = MapBuilder.TILES_IN_MAP_X*MapBuilder.TILE_WIDTH;
+	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y*MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
 	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
 	public final int TICKS_PER_SECOND = 120;
@@ -106,7 +107,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			OBSTACLE_GEN.tick();
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
-			//BOUNDARY_GEN.spawn();
+			BOUNDARY_GEN.spawn();
 			//AI_GEN.tick();
 			player.tick();
 		}

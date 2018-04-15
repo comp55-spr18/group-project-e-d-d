@@ -21,8 +21,8 @@ public class PowerUpGenerator extends BaseGenerator {
 		this.gameType = gameType;
 		this.driver = driver;
 		
-		maxSpawns = 10;
-		spawnDelay = 0;
+		maxSpawns = 50;
+		spawnDelay = 3;
 		
 		activated = true;
 	}
@@ -71,7 +71,8 @@ public class PowerUpGenerator extends BaseGenerator {
 	@Override
 	public void spawn() {
 		PowerUpType generatedType = generatePowerUpType(rand);
-		actors.add(new PowerUp(gameType,driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType,this));
+		for(int i=0;i<3;i++)
+			actors.add(new PowerUp(gameType,driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType,this));
 	}
 	
 	@Override

@@ -22,6 +22,12 @@ public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
+	protected CollisionResult collidesWithBoundaries(int x, int y){
+		ArrayList<BaseActor> multiplayerBoundaries = new ArrayList<BaseActor>();
+		return collidesWithActors(multiplayerBoundaries,x,y);
+	}
+	
+	@Override
 	protected CollisionResult collidesWithObstacles(int x, int y) {
 		ArrayList<BaseActor> multiplayerObstacles = new ArrayList<BaseActor>(); // TODO: Sam, make this the actual list of obstacles 
 		return collidesWithActors(multiplayerObstacles,x,y);

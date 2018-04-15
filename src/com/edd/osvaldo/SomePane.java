@@ -25,9 +25,9 @@ public class SomePane extends GraphicsPane {
 
 	public SomePane(MainApplication app) {
 		this.program = app;
-		program.player = new Player("Mike", program.WINDOW_WIDTH / 2 - 100, program.WINDOW_HEIGHT / 2 - 100, program);
+		program.player = new Player("Mike", MainApplication.MAP_WIDTH / 2 - 100, MainApplication.MAP_HEIGHT / 2 - 100, program);
 		muteButton.setFillColor(Color.GREEN);
-		
+		background.move(program.player.getCam().getTotalTranslationX(),program.player.getCam().getTotalTranslationY());
 		program.player.getNameLabel().setColor(Color.WHITE);
 	}
 
