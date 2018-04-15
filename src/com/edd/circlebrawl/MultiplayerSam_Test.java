@@ -335,6 +335,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			player.getNameLabel().move(xVel, yVel);
 		}
 	}
+	
+	public boolean isClient(String name){
+		return name.equals(this.myName);
+	}
 
 	public void tick() {
 		player.tick();

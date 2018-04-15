@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
+import com.edd.circlebrawl.MultiplayerSam_Test;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionResult;
@@ -272,7 +273,15 @@ public abstract class Character extends BaseActor {
 	}
 	
 	private boolean shouldMoveSprite(){
-		return !(this instanceof Player);
+		if(this instanceof Player){
+			Player p = (Player)this;
+			if(driver instanceof MultiplayerSam_Test){
+				MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+				return !multiDriver.isClient(p.name);
+			}
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
