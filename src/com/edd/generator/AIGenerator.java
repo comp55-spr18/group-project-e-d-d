@@ -1,7 +1,6 @@
 package com.edd.generator;
 
 import com.edd.character.AI;
-import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
 

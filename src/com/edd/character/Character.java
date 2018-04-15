@@ -260,8 +260,13 @@ public abstract class Character extends BaseActor {
 		this.y += y;
 		
 		if(this instanceof Player){
-			Player p = (Player)this;
-			p.getCam().translate(-x, -y);
+			if(driver instanceof MultiplayerSam_Test){
+				MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+				if(multiDriver.getClientPlayer() == this)
+					((Player)this).getCam().translate(-x, -y);
+			} else {
+				((Player)this).getCam().translate(-x, -y);
+			}
 		}
 	
 		if(attackOrbs != null)
