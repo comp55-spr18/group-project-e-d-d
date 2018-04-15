@@ -389,4 +389,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		}
 		return GR;
     }
+    
+    public Player getClientPlayer() {
+    		return this.player;
+    }
 }
