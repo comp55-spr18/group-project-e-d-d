@@ -6,11 +6,13 @@ import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Resource;
+import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionResult;
+import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.generator.AIGenerator;
-import com.edd.osvaldo.MainApplication;
 
 public class AI extends Character {
 
@@ -53,9 +55,10 @@ public class AI extends Character {
 		basicAIConstructor(gameType,driver,generator);
 	}
 	
-	private void basicAIConstructor(GameType gametype, MainApplication driver, AIGenerator generator){
+	private void basicAIConstructor(GameType gameType, MainApplication driver, AIGenerator generator){
 		rand = new Random();
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),gameType,80+rand.nextInt(31),BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+		BaseCollisionEngine collisionEngine = gameType == GameType.SINGLEPLAYER ? new SinglePlayerCollisionEngine(this,driver) : new MultiPlayerCollisionEngine(this,driver);
+		basicCharacterConstructor(collisionEngine,gameType,80+rand.nextInt(31),BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		
 		chooseNewRandomDirection(); // establishing initial direction
 	}
@@ -65,9 +68,16 @@ public class AI extends Character {
 		
 		super.tick();
 		
-		if(playerIsInDetectionRange()){
-			chooseNewDirectionTowardActor(driver.player);
-			if(playerIsInAttackRange())
+		Player nearestPlayerInRange = (Player)getNearestActorInRange(accesser.getPlayers());
+		AI nearestAIInRange = (AI)getNearestActorInRange(accesser.getAIs());
+		
+		if(nearestPlayerInRange != null){
+			chooseNewDirectionTowardActor(nearestPlayerInRange);
+			if(characterIsInAttackRange(nearestPlayerInRange))
+				attemptAttack();
+		} else if(nearestAIInRange != null){
+			chooseNewDirectionTowardActor(nearestAIInRange);
+			if(characterIsInAttackRange(nearestAIInRange))
 				attemptAttack();
 		} else {
 			directionResetTicks++;
@@ -94,18 +104,30 @@ public class AI extends Character {
 		}
 	}
 	
-	private Character getNearestCharacter(){
-		ArrayList<Player> players = new ArrayList<Player>();
-		ArrayList<AI>  AIs = new ArrayList<AI>();
-		return driver.player;
+	private boolean characterIsInAttackRange(Character character){
+		int distance = (int)Math.abs(x-character.getX());
+		return distance <= range;
 	}
 	
-	private boolean playerIsInAttackRange(){
-		return false;//return driver.player.
-	}
-	
-	private boolean playerIsInDetectionRange(){
-		return(Math.abs(driver.player.getX()-x) <= DETECTION_RANGE_X && Math.abs(driver.player.getY()-y) <= DETECTION_RANGE_Y);
+	private BaseActor getNearestActorInRange(ArrayList<BaseActor> actors){
+		
+		ArrayList<BaseActor> parsedActors = new ArrayList<BaseActor>();
+		for(BaseActor actor : actors)
+			if(actor != this)
+				parsedActors.add(actor);
+		
+		BaseActor nearestActor = null;
+		int minDist = 0;
+		
+		for(BaseActor actor : parsedActors){
+			int distance = (int)Math.abs(x-actor.getX());
+			if(distance < minDist || minDist == 0){
+				minDist = distance;
+				nearestActor = (BaseActor)actor;
+			}
+		}
+		
+		return nearestActor;
 	}
 	
 	private Resource getNearestResourceInRange(){

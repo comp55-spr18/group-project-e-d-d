@@ -1,7 +1,7 @@
 package com.edd.circlebrawl;
 
 import com.edd.character.Player;
-import com.edd.osvaldo.MainApplication;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

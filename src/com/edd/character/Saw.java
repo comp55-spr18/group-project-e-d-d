@@ -2,13 +2,14 @@ package com.edd.character;
 
 import java.util.ArrayList;
 
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionUtil;
 import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
 
@@ -25,6 +26,7 @@ public class Saw extends Character {
 		basicPostConstructor("com/edd/character/saw.gif");
 		this.gameType = gameType;
 		adjust();
+		remove(); // do not show unless attacking
 	}
 	
 	public Character getOwner(){ return owner; }
@@ -32,6 +34,7 @@ public class Saw extends Character {
 	public void start(){
 		active = true;
 		driver.add(sprite);
+		owner.getSprite().sendToFront();
 	}
 	
 	public void stop(){
@@ -47,22 +50,9 @@ public class Saw extends Character {
 	@Override
 	public void tick(){
 		if(active){
-			ArrayList<Character> characters = new ArrayList<Character>();
-			
-			switch(gameType){
-				case SINGLEPLAYER:
-					for(BaseActor character : driver.AI_GEN.getActors())
-						characters.add((Character)character);
-					characters.add(driver.player);
-					break;
-				case MULTIPLAYER:
-					// TODO: Sam, implement collecting of characters in multiplayer here
-					break;
-			}
-			
-			for(Character character : characters){
+			for(BaseActor character : accesser.getCharacters()){
 				if(CollisionUtil.overlaps(this, character)){
-					character.onHit(owner);
+					((Character)character).onHit(owner);
 					stop();
 				}
 			}

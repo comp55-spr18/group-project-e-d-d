@@ -1,8 +1,8 @@
 package com.edd.generator;
 
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Resource;
-import com.edd.osvaldo.MainApplication;
 
 public class ResourceGenerator extends BaseGenerator {
 

@@ -3,24 +3,26 @@ package com.edd.collision;
 import java.util.ArrayList;
 
 import com.edd.character.Character;
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.Item;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Resource;
-import com.edd.osvaldo.MainApplication;
 import com.edd.powerup.PowerUp;
 
 public abstract class BaseCollisionEngine {
 
 	protected BaseActor actor;
 	protected MainApplication driver;
+	protected ActorAccesser accesser;
 	
 	public CollisionResult move(int x, int y) {
 		if(actor instanceof Character){
 			Character character = (Character)actor;
-			ArrayList<Item> items = collidesWithItems(x,y);
-			CollisionResult boundaryOverlap = collidesWithBoundaries(x,y);
-			CollisionResult obstacleOverlap = collidesWithObstacles(x,y);
-			CollisionResult characterOverlap = collidesWithCharacters(x,y);
+			ArrayList<Item> items = collidesWithItems(accesser.getItems(),x,y);
+			CollisionResult boundaryOverlap = collidesWithActors(accesser.getBoundaries(),x,y);
+			CollisionResult obstacleOverlap = collidesWithActors(accesser.getObstacles(),x,y);
+			CollisionResult characterOverlap = collidesWithActors(accesser.getCharacters(),x,y);
 
 			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides || boundaryOverlap.xCollides;
 			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides || boundaryOverlap.yCollides;
@@ -48,38 +50,23 @@ public abstract class BaseCollisionEngine {
 	// handles actual movement
 	protected abstract void moveActor(int x, int y);
 	
-	// when implementing, set return to call collidesWithActors() and pass in the proper list
-	protected abstract CollisionResult collidesWithBoundaries(int x, int y);
-	
-	// when implementing, set return to call collidesWithActors() and pass in the proper list
-	protected abstract CollisionResult collidesWithObstacles(int x, int y);
-
-	// when implementing, set return to call collidesWithActors() and pass in the proper list
-	protected abstract CollisionResult collidesWithCharacters(int x, int y);
-	
-	// when implementing, set return to call collidesWithItems() and pass in the proper lists
-	protected abstract ArrayList<Item> collidesWithItems(int x, int y);
-
-	// returns true if the character is colliding with any existing actor
-	public abstract boolean collidesWithAnything();
-	
 	// removes the item from active item lists
 	protected abstract void cleanUpItem(Item item);
 	
-	protected boolean collidesWithAnything(ArrayList<BaseActor> powerUps, ArrayList<BaseActor> resources, ArrayList<BaseActor> AIs, ArrayList<BaseActor> obstacles, ArrayList<BaseActor> players){
-		for(BaseActor powerUp : powerUps)
+	public boolean collidesWithAnything(){
+		for(BaseActor powerUp : accesser.getPowerUps())
 			if(CollisionUtil.overlaps(actor, powerUp))
 				return true;
-		for(BaseActor resource : resources)
+		for(BaseActor resource : accesser.getResources())
 			if(CollisionUtil.overlaps(actor, resource))
 				return true;
-		for(BaseActor AI : AIs)
+		for(BaseActor AI : accesser.getAIs())
 			if(CollisionUtil.overlaps(actor, AI))
 				return true;
-		for(BaseActor obstacle : obstacles)
+		for(BaseActor obstacle : accesser.getObstacles())
 			if(CollisionUtil.overlaps(actor, obstacle))
 				return true;
-		for(BaseActor player : players)
+		for(BaseActor player : accesser.getPlayers())
 			if(CollisionUtil.overlaps(actor, player))
 				return true;
 		return false;
@@ -100,15 +87,11 @@ public abstract class BaseCollisionEngine {
 		return new CollisionResult(xOverlaps,yOverlaps);
 	}
 	
-	protected ArrayList<Item> collidesWithItems(ArrayList<BaseActor> powerUps, ArrayList<BaseActor> items, int x, int y){
+	protected ArrayList<Item> collidesWithItems(ArrayList<BaseActor> items, int x, int y){
 		ArrayList<Item> retVal = new ArrayList<Item>();
-		for(BaseActor powerUp : powerUps){
-			if(powerUp.collidesWith(actor))
-				retVal.add((PowerUp)powerUp);
-		}
-		for(BaseActor resource : items){
-			if(resource.collidesWith(actor))
-				retVal.add((Resource)resource);
+		for(BaseActor item : items){
+			if(item.collidesWith(actor))
+				retVal.add((Item)item);
 		}
 		return retVal;
 	}

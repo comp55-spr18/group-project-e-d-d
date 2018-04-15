@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
-import com.edd.osvaldo.MainApplication;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
 

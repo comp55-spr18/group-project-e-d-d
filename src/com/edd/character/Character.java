@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionResult;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GOval;
 
@@ -65,10 +65,12 @@ public abstract class Character extends BaseActor {
 			((GOval)sprite).setColor(color);
 			((GOval)sprite).setFilled(true);
 			saw = new Saw(gameType,this,driver);
-			adjustSaw();
 		}
 		
 		basicPostConstructor();
+		
+		if(saw != null)
+			adjustSaw();
 	}
 	
 	//modifiers

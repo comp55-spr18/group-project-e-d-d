@@ -1,9 +1,10 @@
 package com.edd.generator;
 
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.obstacle.Obstacle;
-import com.edd.osvaldo.MainApplication;
 
 public class ObstacleGenerator extends BaseGenerator {
 	
@@ -11,7 +12,7 @@ public class ObstacleGenerator extends BaseGenerator {
 		this.gameType = gameType;
 		this.driver = driver;
 
-		maxSpawns = 2;
+		maxSpawns = 20;
 		spawnDelay = 0; // all spawn immediately
 
 		activated = true;

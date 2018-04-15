@@ -1,17 +1,18 @@
-package com.edd.osvaldo;
+package com.edd.circlebrawl;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import com.edd.character.Player;
-import com.edd.circlebrawl.GameType;
-import com.edd.circlebrawl.Tick;
 import com.edd.generator.AIGenerator;
 import com.edd.generator.BoundaryGenerator;
 import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
 import com.edd.map.MapBuilder;
+import com.edd.osvaldo.AudioPlayer;
+import com.edd.osvaldo.GraphicsApplication;
+import com.edd.osvaldo.MenuPane;
+import com.edd.osvaldo.SomePane;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
@@ -22,15 +23,17 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int MAP_WIDTH = MapBuilder.TILES_IN_MAP_X*MapBuilder.TILE_WIDTH;
 	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y*MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
-	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
+	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
 	public static final int TICKS_PER_SECOND = 120;
+	
+	public ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER,this);
 	
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(GameType.SINGLEPLAYER,this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(GameType.SINGLEPLAYER,this);
 	public final ObstacleGenerator OBSTACLE_GEN = new ObstacleGenerator(GameType.SINGLEPLAYER,this);
 	public final BoundaryGenerator BOUNDARY_GEN = new BoundaryGenerator(this);
-	
 	public final AIGenerator AI_GEN = new AIGenerator(GameType.SINGLEPLAYER,this);
+	
 	public final int AI_MAX = 3;
 	public Player player;
 	
@@ -41,7 +44,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	private MenuPane menu;
 	private int count;
 
-	AudioPlayer audio = AudioPlayer.getInstance();
+	public AudioPlayer audio = AudioPlayer.getInstance();
 	public boolean test = false;
 	
 	public void init() {

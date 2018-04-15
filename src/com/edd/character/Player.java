@@ -1,21 +1,18 @@
 package com.edd.character;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
-import javax.swing.Timer;
-
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.Camera;
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionResult;
 import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GLabel;
 
@@ -52,7 +49,7 @@ public class Player extends Character {
 		basicPlayerConstructor(GameType.MULTIPLAYER,name, c[color],new MultiPlayerCollisionEngine(this,driver));
 	}
 	
-	public Player(GameType gameType, MainApplication mainApplication) {
+	public Player(GameType gameType, MainApplication driver) {
 		basicPreConstructor(gameType,driver);
 		basicPlayerConstructor(gameType,"", new SinglePlayerCollisionEngine(this,driver));
 	}

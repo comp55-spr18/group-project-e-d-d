@@ -3,8 +3,9 @@ package com.edd.character;
 import java.awt.Color;
 import java.util.Random;
 
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.GameType;
-import com.edd.osvaldo.MainApplication;
+import com.edd.circlebrawl.MainApplication;
 
 public class AttackOrb extends Character {
 

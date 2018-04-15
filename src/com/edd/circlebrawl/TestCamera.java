@@ -2,8 +2,6 @@ package com.edd.circlebrawl;
 
 import java.awt.event.KeyEvent;
 
-import com.edd.osvaldo.MainApplication;
-
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GOval;

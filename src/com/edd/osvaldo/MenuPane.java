@@ -2,6 +2,7 @@ package com.edd.osvaldo;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
+import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Tick;
 
 import acm.graphics.GImage;

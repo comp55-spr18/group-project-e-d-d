@@ -16,12 +16,9 @@ import javax.swing.Timer;
 
 import com.edd.character.Player;
 import com.edd.collision.CollisionResult;
-import com.edd.generator.BaseGenerator;
-import com.edd.generator.PowerUpGenerator;
-import com.edd.generator.ResourceGenerator;
-import com.edd.osvaldo.MainApplication;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
+import com.edd.circlebrawl.ActorAccesser;
 
 import acm.graphics.GLabel;
 
@@ -36,6 +33,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final HashMap<String, PowerUp> powerups = new HashMap<String, PowerUp>();
 	public final HashMap<String, Resource> resources = new HashMap<String, Resource>();
+	
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
@@ -61,6 +59,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	@Override
 	public void init() {
+		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER,this);
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		Random r = new Random();
 		NC = new NetworkClient("138.68.18.227", 9991, r.nextInt(100), this);

@@ -2,8 +2,9 @@ package com.edd.osvaldo;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-import com.edd.character.AI;
 import com.edd.character.Player;
+import com.edd.circlebrawl.ActorAccesser;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.map.Map;
 import com.edd.map.MapBuilder;
 
@@ -25,7 +26,7 @@ public class SomePane extends GraphicsPane {
 
 	public SomePane(MainApplication app) {
 		this.program = app;
-		program.player = new Player("Mike", MainApplication.MAP_WIDTH / 2 - 100, MainApplication.MAP_HEIGHT / 2 - 100, program);
+		program.player = new Player("Mike", MainApplication.MAP_WIDTH / 2 - 100, MainApplication.MAP_HEIGHT / 2 - 100, app);
 		muteButton.setFillColor(Color.GREEN);
 		background.move(program.player.getCam().getTotalTranslationX(),program.player.getCam().getTotalTranslationY());
 		program.player.getNameLabel().setColor(Color.WHITE);

@@ -2,11 +2,12 @@ package com.edd.obstacle;
 
 import java.util.Random;
 
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Tick;
 import com.edd.generator.BaseGenerator;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
 

@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
+import com.edd.circlebrawl.ActorAccesser;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.map.MapBuilder;
 import com.edd.obstacle.Obstacle;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
 
@@ -15,7 +16,7 @@ public class BoundaryGenerator extends BaseGenerator {
 	boolean hasSpawned = false;
 	
 	public BoundaryGenerator(MainApplication driver) {
-		this.driver = driver;	
+		this.driver = driver;
 		maxSpawns = 0;
 		spawnDelay = 0;		
 		activated = true;

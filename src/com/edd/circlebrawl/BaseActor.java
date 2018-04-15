@@ -11,7 +11,6 @@ import com.edd.collision.CollisionUtil;
 import com.edd.collision.MultiPlayerCollisionEngine;
 import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.map.MapBuilder;
-import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
@@ -23,17 +22,20 @@ public abstract class BaseActor implements Actor, Tick {
 	protected double y;
 	protected GameType gameType;
 	protected CollisionBox collisionBox;
+	protected ActorAccesser accesser;
 
 	public void basicPreConstructor(int x, int y, MainApplication driver){
 		this.x = x;
 		this.y = y;
 		this.driver = driver;
+		this.accesser = driver.actorAccesser;
 	}
 	
 	// use this for auto generation of location
 	public void basicPreConstructor(GameType gameType, MainApplication driver){
 		this.gameType = gameType;
 		this.driver = driver;
+		this.accesser = driver.actorAccesser;
 	}
 	
 	public void basicPostConstructor(){

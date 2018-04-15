@@ -1,8 +1,9 @@
 package com.edd.generator;
 
 import com.edd.character.AI;
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.GameType;
-import com.edd.osvaldo.MainApplication;
+import com.edd.circlebrawl.MainApplication;
 
 public class AIGenerator extends BaseGenerator {
 
@@ -11,7 +12,7 @@ public class AIGenerator extends BaseGenerator {
 		this.gameType = gameType;
 		this.driver = driver;
 
-		maxSpawns = 5;//driver.AI_MAX;
+		maxSpawns = 1;//driver.AI_MAX;
 		spawnDelay = 0;
 		
 		activated = true;
@@ -20,7 +21,7 @@ public class AIGenerator extends BaseGenerator {
 	
 	@Override
 	public void spawn() {
-		actors.add(new AI(gameType, driver, this));
+		actors.add(new AI((int)driver.player.getX()-100,(int)driver.player.getY(),gameType, driver, this));
 	}
 
 }

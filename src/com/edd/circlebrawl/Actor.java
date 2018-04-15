@@ -1,7 +1,6 @@
 package com.edd.circlebrawl;
 
 import com.edd.collision.CollisionBox;
-import com.edd.osvaldo.MainApplication;
 
 /*
  * This is going to be the interface for the base Actor.

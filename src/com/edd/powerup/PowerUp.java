@@ -2,11 +2,12 @@ package com.edd.powerup;
 
 import com.edd.character.AttackOrb;
 import com.edd.character.Character;
+import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.Item;
+import com.edd.circlebrawl.MainApplication;
 import com.edd.generator.BaseGenerator;
-import com.edd.osvaldo.MainApplication;
 
 public class PowerUp extends Item {
 
