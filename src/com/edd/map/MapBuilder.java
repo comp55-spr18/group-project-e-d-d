@@ -16,10 +16,10 @@ public abstract class MapBuilder {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
-	public static final int TILES_IN_MAP_X = 50;
-	public static final int TILES_IN_MAP_Y = 50;
-	public static final int TILE_BUFFER_X = 10;
-	public static final int TILE_BUFFER_Y = 10;
+	public static final int TILES_IN_MAP_X = 200;
+	public static final int TILES_IN_MAP_Y = 200;
+	public static final int TILE_BUFFER_X = 55;
+	public static final int TILE_BUFFER_Y = 55;
 	
 	public static final int ROWS_IN_SET = (int)TILE_SET.getWidth()/TILE_WIDTH;
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;

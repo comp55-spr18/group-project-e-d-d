@@ -20,7 +20,7 @@ public class SomePane extends GraphicsPane {
 	
 	private GImage background = map.createImage();
 	private GParagraph para;
-	GButton muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
+	GButton muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 200, 200);
 	private boolean soundPaused = false;
 	
 
