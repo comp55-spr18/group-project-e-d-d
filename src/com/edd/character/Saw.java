@@ -61,8 +61,10 @@ public class Saw extends Character {
 			}
 			
 			for(Character character : characters){
-				if(CollisionUtil.overlaps(this, character))
+				if(CollisionUtil.overlaps(this, character)){
 					character.onHit(owner);
+					stop();
+				}
 			}
 		}
 	}

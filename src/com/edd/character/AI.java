@@ -71,7 +71,7 @@ public class AI extends Character {
 				attemptAttack();
 		} else {
 			directionResetTicks++;
-			if(directionResetTicks >= DIRECTION_RESET_DELAY*driver.TICKS_PER_SECOND){
+			if(directionResetTicks >= DIRECTION_RESET_DELAY*MainApplication.TICKS_PER_SECOND){
 				Resource nearestResource = getNearestResourceInRange();
 				if(nearestResource != null){
 					chooseNewDirectionTowardActor(nearestResource);

@@ -12,7 +12,7 @@ import acm.graphics.GImage;
 
 public abstract class MapBuilder {
 	
-	public static final GImage TILE_SET = new GImage("com/edd/map/spritesheetscomplete.png");
+	public static final GImage TILE_SET = new GImage("com/edd/map/spritesheet.png");
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
@@ -29,7 +29,7 @@ public abstract class MapBuilder {
 	
 	public static Map buildMap(String mapFile, int rows, int cols, int baselineID){
 		if(tileImages.isEmpty())
-			buildTileImages();
+			buildTileImages(baselineID);
 		GImage[][] map = new GImage[rows][cols];
 		
 		try {
@@ -37,20 +37,22 @@ public abstract class MapBuilder {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			String line = null;
-			int row = 0;
+			int col = 0;
 			
 			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(",");
-				for(int col=0;col<elements.length;col++){
-					int id = Integer.parseInt(elements[col]);
+				for(int row=0;row<elements.length;row++){
+					int id = Integer.parseInt(elements[row]);
 					GImage baseImage = tileImages.get(baselineID);
 					GImage primaryImage = tileImages.get(id);
-					if(primaryImage != null && baseImage != null)
-						map[col][row] = layerImages(primaryImage, baseImage);
-					else
-						map[col][row] = tileImages.get(baselineID);
+					if(primaryImage != null && baseImage != null){
+						map[row][col] = layerImages(primaryImage, baseImage);
+					} else {
+						System.out.println(id+"_err");
+						map[row][col] = tileImages.get(baselineID);
+					}
 				}
-				row++;
+				col++;
 			}
 			
 			bufferedReader.close();
@@ -66,13 +68,33 @@ public abstract class MapBuilder {
 		return new Map(map,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
 	}
 	
-	private static void buildTileImages(){
-		int id = 0;
-		for(int col=0;col<COLS_IN_SET;col++){
-			for(int row=0;row<ROWS_IN_SET;row++){
-				tileImages.put(id, getTile(row,col));
-				id++;
+	private static void buildTileImages(int baselineID){
+		try {
+			FileReader fileReader = new FileReader("com/edd/map/spritesheet.csv");
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			String line = null;
+			int row = 0;
+			
+			while((line = bufferedReader.readLine()) != null){
+				String[] elements = line.split(",");
+				for(int col=0;col<elements.length;col++){
+					int id = Integer.parseInt(elements[col]);
+					tileImages.put(id, getTile(row,col));
+				}
+				row++;
 			}
+
+			tileImages.put(-1, tileImages.get(baselineID)); // for non-existent tiles
+			
+			bufferedReader.close();
+			
+		} catch(FileNotFoundException ex){
+			System.out.println("Unable to open spritesheet.csv!");
+		} catch(IOException ex){
+			System.out.println("Error reading map spritesheet.csv!");
+		} catch(NumberFormatException ex){
+			System.out.println("Error reading map spritesheet.csv! -- ID value is not number?");
 		}
 	}
 	
@@ -86,11 +108,11 @@ public abstract class MapBuilder {
 	}
 
 	private static GImage getTile(int row, int col){
-		BufferedImage tileSet = new BufferedImage((int)TILE_SET.getWidth(),(int)TILE_SET.getHeight(),BufferedImage.TYPE_INT_RGB);
+		BufferedImage tileSet = new BufferedImage((int)TILE_SET.getWidth(),(int)TILE_SET.getHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics g = tileSet.createGraphics();
 		g.drawImage(TILE_SET.getImage(), 0, 0, null);
 		g.dispose();
-		return new GImage(tileSet.getSubimage(row*TILE_WIDTH, col*TILE_WIDTH, TILE_WIDTH, TILE_HEIGHT));
+		return new GImage(tileSet.getSubimage(col*TILE_WIDTH, row*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT));
 	}
 	
 }

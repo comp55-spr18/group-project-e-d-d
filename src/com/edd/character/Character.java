@@ -194,7 +194,7 @@ public abstract class Character extends BaseActor {
 	}
 	
 	public void onHit(Character actor){
-		// TODO: Hit logic
+		System.out.println("HIT! - "+this+" || "+actor);
 	}
 	
 	public void onDeath(){

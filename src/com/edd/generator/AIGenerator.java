@@ -11,7 +11,7 @@ public class AIGenerator extends BaseGenerator {
 		this.gameType = gameType;
 		this.driver = driver;
 
-		maxSpawns = 1;//driver.AI_MAX;
+		maxSpawns = 5;//driver.AI_MAX;
 		spawnDelay = 0;
 		
 		activated = true;
