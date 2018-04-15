@@ -20,7 +20,7 @@ public class SomePane extends GraphicsPane {
 	
 	private GImage background = map.createImage();
 	private GParagraph para;
-	GButton muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 200, 200);
+	private GButton muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
 	private boolean soundPaused = false;
 	
 
@@ -28,6 +28,7 @@ public class SomePane extends GraphicsPane {
 		this.program = app;
 		program.player = new Player("Mike", MainApplication.MAP_WIDTH / 2 - 100, MainApplication.MAP_HEIGHT / 2 - 100, app);
 		muteButton.setFillColor(Color.GREEN);
+		program.muteButton = muteButton;
 		background.move(program.player.getCam().getTotalTranslationX(),program.player.getCam().getTotalTranslationY());
 		program.player.getNameLabel().setColor(Color.WHITE);
 	}

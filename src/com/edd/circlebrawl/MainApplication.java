@@ -10,6 +10,7 @@ import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
 import com.edd.map.MapBuilder;
 import com.edd.osvaldo.AudioPlayer;
+import com.edd.osvaldo.GButton;
 import com.edd.osvaldo.GraphicsApplication;
 import com.edd.osvaldo.MenuPane;
 import com.edd.osvaldo.SomePane;
@@ -46,6 +47,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public AudioPlayer audio = AudioPlayer.getInstance();
 	public boolean test = false;
+	public GButton muteButton;
 	
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
