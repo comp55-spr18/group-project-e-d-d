@@ -333,7 +333,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public void moveSuccess(Player player, int xVel, int yVel){
 		if(xVel != 0 || yVel != 0) {
 			NC.sendMove(xVel, yVel);
-			player.getNameLabel().move(xVel, yVel);
 		}
 	}
 	
