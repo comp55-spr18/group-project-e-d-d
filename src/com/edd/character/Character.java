@@ -75,8 +75,10 @@ public abstract class Character extends BaseActor {
 	public int modifySize(int modifyValue) {
 		if(size+modifyValue > MAX_SIZE)
 			modifyValue = MAX_SIZE-size;
-		if(size+modifyValue < MIN_SIZE)
+		if(size+modifyValue < MIN_SIZE){
 			onDeath();
+			return 0;
+		}
 		
 		size += modifyValue;
 		adjustSaw();
@@ -195,13 +197,22 @@ public abstract class Character extends BaseActor {
 	
 	public void onHit(Character actor){
 		if(actor.x > x){
-			//hitVelocityX = 
+			hitVelocityX = -actor.getStrength()*2;
+		} else {
+			hitVelocityX = actor.getStrength()*2;
 		}
+		
+		if(actor.y > y){
+			hitVelocityY = -actor.getStrength()*2;
+		} else {
+			hitVelocityY = actor.getStrength()*2;
+		}
+
+		modifySize(-actor.getStrength()/2);
 	}
 	
 	public void onDeath(){
 		dead = true;
-		remove();
 		
 		for(AttackOrb attackOrb : attackOrbs){
 			attackOrbs.remove(attackOrb);
@@ -209,10 +220,13 @@ public abstract class Character extends BaseActor {
 		}
 		
 		if(this instanceof AI){
+			remove();
+			saw.remove();
 			driver.AI_GEN.addToRemoveList(this);
 		}
 		if(this instanceof Player){
-			// TODO: Respawn logic.
+			//Player p = (Player)this;
+			//p.respawn();
 		}
 	}
 	
@@ -313,6 +327,38 @@ public abstract class Character extends BaseActor {
 					attackedRecently = true;
 					stopAttacking();
 					attackTicks = 0;
+				}
+			}
+			
+			if(hitVelocityX != 0 || hitVelocityY != 0){
+				CollisionResult cr = attemptMove(hitVelocityX,hitVelocityY);
+				
+				if(cr.xCollides)
+					hitVelocityX = 0;
+				if(cr.yCollides)
+					hitVelocityY = 0;
+				
+				if(hitVelocityX != 0){
+					if(hitVelocityX > 0){
+						hitVelocityX -= HIT_VELOCITY_REDUCTION_PER_TICK;
+						if(hitVelocityX < 0)
+							hitVelocityX = 0;
+					}
+					if(hitVelocityX < 0)
+						hitVelocityX += HIT_VELOCITY_REDUCTION_PER_TICK;
+						if(hitVelocityX > 0)
+							hitVelocityX = 0;
+				}
+				
+				if(hitVelocityY != 0){
+					if(hitVelocityY > 0)
+						hitVelocityY -= HIT_VELOCITY_REDUCTION_PER_TICK;
+						if(hitVelocityY < 0)
+							hitVelocityY = 0;
+					if(hitVelocityY < 0)
+						hitVelocityY += HIT_VELOCITY_REDUCTION_PER_TICK;
+						if(hitVelocityY > 0)
+							hitVelocityY = 0;
 				}
 			}
 		}

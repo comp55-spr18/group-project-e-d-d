@@ -90,13 +90,9 @@ public class ActorAccesser {
 	}
 	
 	public ArrayList<BaseActor> getAIs(){
-		switch(gameType){
-			case SINGLEPLAYER:
-				return driver.AI_GEN.getActors();
-			case MULTIPLAYER:
-				return new ArrayList<BaseActor>(); // TODO: Sam, make this retrieve the proper list
-		}
-		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
+		if(gameType == GameType.SINGLEPLAYER)
+			return driver.AI_GEN.getActors();
+		return new ArrayList<BaseActor>();
 	}
 	
 }

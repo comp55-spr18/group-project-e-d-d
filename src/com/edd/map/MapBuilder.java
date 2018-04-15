@@ -16,10 +16,10 @@ public abstract class MapBuilder {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
-	public static final int TILES_IN_MAP_X = 400;
-	public static final int TILES_IN_MAP_Y = 400;
-	public static final int TILE_BUFFER_X = 50;
-	public static final int TILE_BUFFER_Y = 50;
+	public static final int TILES_IN_MAP_X = 200;
+	public static final int TILES_IN_MAP_Y = 200;
+	public static final int TILE_BUFFER_X = 55;
+	public static final int TILE_BUFFER_Y = 55;
 	
 	public static final int ROWS_IN_SET = (int)TILE_SET.getWidth()/TILE_WIDTH;
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
@@ -27,10 +27,10 @@ public abstract class MapBuilder {
 	
 	public static HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
 	
-	public static Map buildMap(String mapFile, int rows, int cols, int baselineID){
+	public static Map buildMap(String mapFile, int baselineID){
 		if(tileImages.isEmpty())
 			buildTileImages(baselineID);
-		GImage[][] map = new GImage[rows][cols];
+		GImage[][] map = new GImage[TILES_IN_MAP_X][TILES_IN_MAP_Y];
 		
 		try {
 			FileReader fileReader = new FileReader(mapFile);
@@ -41,16 +41,20 @@ public abstract class MapBuilder {
 			
 			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(",");
-				for(int row=0;row<elements.length;row++){
-					int id = Integer.parseInt(elements[row]);
-					GImage baseImage = tileImages.get(baselineID);
-					GImage primaryImage = tileImages.get(id);
-					if(primaryImage != null && baseImage != null){
-						map[row][col] = layerImages(primaryImage, baseImage);
-					} else {
-						System.out.println(id+"_err");
-						map[row][col] = tileImages.get(baselineID);
+				for(int row=0;row< TILES_IN_MAP_X;row++){
+					if (row < elements.length)
+					{
+						int id = Integer.parseInt(elements[row]);
+						GImage baseImage = tileImages.get(baselineID);
+						GImage primaryImage = tileImages.get(id);
+						if(primaryImage != null && baseImage != null){
+							map[row][col] = layerImages(primaryImage, baseImage);
+						} else {
+							System.out.println(id+"_err");
+							map[row][col] = tileImages.get(baselineID);
+						}
 					}
+					
 				}
 				col++;
 			}

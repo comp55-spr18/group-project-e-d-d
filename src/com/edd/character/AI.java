@@ -65,43 +65,44 @@ public class AI extends Character {
 	
 	@Override
 	public void tick(){
-		
-		super.tick();
-		
-		Player nearestPlayerInRange = (Player)getNearestActorInRange(accesser.getPlayers());
-		AI nearestAIInRange = (AI)getNearestActorInRange(accesser.getAIs());
-		
-		if(nearestPlayerInRange != null){
-			chooseNewDirectionTowardActor(nearestPlayerInRange);
-			if(characterIsInAttackRange(nearestPlayerInRange))
-				attemptAttack();
-		} else if(nearestAIInRange != null){
-			chooseNewDirectionTowardActor(nearestAIInRange);
-			if(characterIsInAttackRange(nearestAIInRange))
-				attemptAttack();
-		} else {
-			directionResetTicks++;
-			if(directionResetTicks >= DIRECTION_RESET_DELAY*MainApplication.TICKS_PER_SECOND){
-				Resource nearestResource = getNearestResourceInRange();
-				if(nearestResource != null){
-					chooseNewDirectionTowardActor(nearestResource);
-				} else {
-					chooseNewRandomDirection();
+		if(!dead){
+			super.tick();
+			
+			Player nearestPlayerInRange = (Player)getNearestActorInRange(accesser.getPlayers());
+			AI nearestAIInRange = (AI)getNearestActorInRange(accesser.getAIs());
+			
+			if(nearestPlayerInRange != null){
+				chooseNewDirectionTowardActor(nearestPlayerInRange);
+				if(characterIsInAttackRange(nearestPlayerInRange))
+					attemptAttack();
+			} else if(nearestAIInRange != null){
+				chooseNewDirectionTowardActor(nearestAIInRange);
+				if(characterIsInAttackRange(nearestAIInRange))
+					attemptAttack();
+			} else {
+				directionResetTicks++;
+				if(directionResetTicks >= DIRECTION_RESET_DELAY*MainApplication.TICKS_PER_SECOND){
+					Resource nearestResource = getNearestResourceInRange();
+					if(nearestResource != null){
+						chooseNewDirectionTowardActor(nearestResource);
+					} else {
+						chooseNewRandomDirection();
+					}
+					directionResetTicks = 0;
 				}
-				directionResetTicks = 0;
 			}
-		}
-		
-		if(direction == null){
-			System.out.println("WARNING: Having to use fail-safe random direction! Should never be called! Something's wrong?");
-			chooseNewRandomDirection();
-		}
-		
-		setVelocityFromDirection();
-		CollisionResult result = attemptMove(xVelocity,yVelocity);
-		if(result.xCollides && result.yCollides){
-			chooseNewRandomDirection();
-		}
+			
+			if(direction == null){
+				System.out.println("WARNING: Having to use fail-safe random direction! Should never be called! Something's wrong?");
+				chooseNewRandomDirection();
+			}
+			
+			setVelocityFromDirection();
+			CollisionResult result = attemptMove(xVelocity,yVelocity);
+			if(result.xCollides && result.yCollides){
+				chooseNewRandomDirection();
+			}
+	}
 	}
 	
 	private boolean characterIsInAttackRange(Character character){

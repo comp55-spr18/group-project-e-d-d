@@ -65,7 +65,7 @@ public class Player extends Character {
 	}
 	
 	protected void basicPlayerConstructor(GameType gameType, String name, Color color, BaseCollisionEngine collisionEngine){
-		basicCharacterConstructor(collisionEngine,gameType,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,pColor);
+		basicCharacterConstructor(collisionEngine,gameType,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,color);
 		this.name = name;
 		cam = new Camera(-(int)x+MainApplication.WINDOW_WIDTH/2-(int)getWidth()/2, -(int)y+MainApplication.WINDOW_HEIGHT/2-(int)getHeight()/2, this, driver);
 		this.pColor = color;
