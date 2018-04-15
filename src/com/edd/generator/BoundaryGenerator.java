@@ -45,9 +45,11 @@ public class BoundaryGenerator extends BaseGenerator {
 			Graphics wg = westBoundaryImage.createGraphics();
 			Graphics eg = eastBoundaryImage.createGraphics();
 			
-			for(int i=0;i<100;i++){
+			for(int i=0;i<(MapBuilder.TILES_IN_MAP_X-totalBufferX)/3;i++){
 				ng.drawImage(horizontalBoundary.getImage(),i*MapBuilder.TILE_WIDTH*3,0,null);
 				sg.drawImage(horizontalBoundary.getImage(),i*MapBuilder.TILE_WIDTH*3,0,null);
+			}
+			for(int i=0;i<(MapBuilder.TILES_IN_MAP_Y-totalBufferY)/3;i++){
 				wg.drawImage(verticalBoundary.getImage(),0,i*MapBuilder.TILE_HEIGHT*3,null);
 				eg.drawImage(verticalBoundary.getImage(),0,i*MapBuilder.TILE_HEIGHT*3,null);
 			}
