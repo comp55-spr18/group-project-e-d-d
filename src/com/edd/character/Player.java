@@ -5,10 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
-import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.Camera;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
+import com.edd.circlebrawl.MultiplayerSam_Test;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionResult;
 import com.edd.collision.MultiPlayerCollisionEngine;
@@ -73,6 +73,9 @@ public class Player extends Character {
 		namePlate = new GLabel(name, sprite.getX() + size/2, sprite.getY() + size);
 		namePlate.move(-namePlate.getWidth()/2, namePlate.getHeight());
 		driver.add(namePlate);
+
+		driver.addKeyListeners();
+		driver.addMouseListeners();
 		adjustSaw();
 	}
 
@@ -156,10 +159,11 @@ public class Player extends Character {
 			xVelocity = 0;
 		if(moveSuccess.yCollides)
 			yVelocity = 0;
+		
+		if(driver instanceof MultiplayerSam_Test)
+			((MultiplayerSam_Test)driver).moveSuccess(this, (int)xVelocity, (int)yVelocity);
 
 		cam.translate(-xVelocity, -yVelocity);
-		if(namePlate != null)
-			namePlate.move(xVelocity, yVelocity);
 		bringToFront();
 	}
 

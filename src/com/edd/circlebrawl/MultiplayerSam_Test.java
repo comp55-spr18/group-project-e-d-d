@@ -38,21 +38,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public final int MAP_HEIGHT = 768;
 	public final int WINDOW_WIDTH = 1024;
 	public final int WINDOW_HEIGHT = 768;
-	private double velX = 0;
-	private double velY = 0;
 	private Player player;
-
-	private final int BALL_CIRC = 100;
-	public static final int ATTACK_RING = 150;
-	private int keyI;
-	private int lastKeyPressed;
-
-	private Timer testTimer = new Timer(2000, this);
-	private boolean keyW, keyS, keyLEFT, keyRIGHT;
-	private double xVelocity = 0;
-	private double yVelocity = 0;
 	
-	NetworkClient NC;
+	private NetworkClient NC;
 
 	int ticks = 0;
 	int frames = 0;
@@ -297,11 +285,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		} //wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.clientName, NC.myStartX, NC.myStartY, NC.myStartColor, this);
-
-		//ring = new GOval(player.x + 30, player.y + 30, 140, 140);
-		addKeyListeners();
-		addMouseListeners();
-
+		
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
 		double ns = 1000000000 / ticks;
@@ -345,96 +329,23 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		characters.get(p.getName()).setY(p2.getY());
 	}
 	
-	public void bringPlayersToFront() {
-		player.bringToFront();
-	}
-
-	public void keyPressed(KeyEvent e) {
-		keyI = e.getKeyChar();
-		if (keyI == 'w') {
-			keyW = true;
+	public void moveSuccess(Player player, int xVel, int yVel){
+		if(xVel != 0 || yVel != 0) {
+			NC.sendMove(xVel, yVel);
+			player.getNameLabel().move(xVel, yVel);
 		}
-		if (keyI == 's') {
-			keyS = true;
-		}
-		if (keyI == 'a') {
-			keyLEFT = true;
-		}
-		if (keyI == 'd') {
-			keyRIGHT = true;
-		}
-	}
-
-	public void keyReleased(KeyEvent e) {
-		keyI = e.getKeyChar();
-		if (keyI == 'w') {
-			keyW = false;
-			yVelocity = 0;
-		}
-		if (keyI == 's') {
-			keyS = false;
-			yVelocity = 0;
-		}
-		if (keyI == 'a') {
-			keyLEFT = false;
-			xVelocity = 0;
-		}
-		if (keyI == 'd') {
-			keyRIGHT = false;
-			xVelocity = 0;
-		}
-	}
-
-	public void mousePressed(MouseEvent e) {
-		//add(ring);
-		testTimer.start();
-
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		//remove(ring);
 	}
 
 	public void tick() {
-		double x = player.getX();
-		double y = player.getY();
-
-		int count = 0;
-		int LKP = lastKeyPressed;
-		if (keyW && y >= 0) {
-			yVelocity = -10;
-		}
-
-		else if (keyS && y + BALL_CIRC * 2 <= 768) {
-			yVelocity = 10;
-		} else
-			yVelocity = 0;
-
-		if (keyLEFT && x >= 0) {
-			xVelocity = -10;
-		}
-
-		else if (keyRIGHT && x + BALL_CIRC * 2 <= 1024) {
-			xVelocity = 10;
-		} else
-			xVelocity = 0;
-		
-		CollisionResult cr = player.attemptMove((int)xVelocity, (int)yVelocity);
-		if(cr.xCollides) {
-			xVelocity = 0;
-		}
-		if(cr.yCollides) {
-			yVelocity = 0;
-		}
-		if(xVelocity != 0 || xVelocity != 0) {
-			NC.sendMove(xVelocity, yVelocity);
-			player.getNameLabel().move(xVelocity, yVelocity);
-		}
-		
-		//RESOURCE_GEN.tick();
-		//POWERUP_GEN.tick();
-		//player.tick();
+		player.tick();
 	}
 	
+	public void keyPressed(KeyEvent e) {
+        player.keyPressed(e);
+    }
+
+    public void keyReleased(KeyEvent e) {
+        player.keyReleased(e);
+    }
 	
 }

@@ -16,11 +16,6 @@ public class SinglePlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
-	public void moveActor(int x, int y){
-		((Character)actor).move(x,y);
-	}
-	
-	@Override
 	protected void cleanUpItem(Item item){
 		if(item instanceof PowerUp)
 			driver.POWERUP_GEN.use((PowerUp)item);

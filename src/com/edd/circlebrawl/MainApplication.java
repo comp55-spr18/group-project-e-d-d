@@ -68,6 +68,9 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		int frames = 0;
 		long timer = System.currentTimeMillis();
 
+		addKeyListeners();
+		addMouseListeners();
+		
 		GLabel g = new GLabel("Ticks: " + ticks + "\nFrames: " + frames);
 		g.setLocation(WINDOW_WIDTH - g.getWidth() - 60, WINDOW_HEIGHT - g.getHeight());
 
@@ -116,17 +119,17 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		}
 			
 	}
-	
-	public void keyPressed(KeyEvent e) {
-		player.keyPressed(e);
-	}
-
-	public void keyReleased(KeyEvent e) {
-		player.keyReleased(e);
-	}
 
 	public void bringPlayersToFront() {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void keyPressed(KeyEvent e) {
+        player.keyPressed(e);
+    }
+
+    public void keyReleased(KeyEvent e) {
+        player.keyReleased(e);
+    }
 }

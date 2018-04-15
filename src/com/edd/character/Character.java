@@ -29,6 +29,7 @@ public abstract class Character extends BaseActor {
 	protected final double MIN_ATTACK_SPEED = .5;
 	
 	protected final int ATTACK_DURATION = MainApplication.TICKS_PER_SECOND/2;
+	private final int HIT_VELOCITY_REDUCTION_PER_TICK = 10;
 	
 	// ALL NUMBERS ABOVE CAN BE CHANGED AT WILL
 	
@@ -49,28 +50,24 @@ public abstract class Character extends BaseActor {
 	
 	private boolean isAttacking, attackedRecently;
 	private int attackTicks;
+	private int hitVelocityX, hitVelocityY;
 	
 	protected void basicCharacterConstructor(BaseCollisionEngine engine, GameType gameType, int size, int defense, int speed, int strength, double attackSpeed, Color color){
 		this.collisionEngine = engine;
 		this.size = size;
-		
-		if(!(this instanceof Saw)){
-			this.defense = defense;
-			this.speed = speed;
-			this.strength = strength;
-			this.attackSpeed = attackSpeed;
-			this.sprite = new GOval(x, y, size, size);
-			this.attackOrbs = new ArrayList<AttackOrb>();
-			this.attackOrbRemovalList = new ArrayList<AttackOrb>();
-			((GOval)sprite).setColor(color);
-			((GOval)sprite).setFilled(true);
-			saw = new Saw(gameType,this,driver);
-		}
+		this.defense = defense;
+		this.speed = speed;
+		this.strength = strength;
+		this.attackSpeed = attackSpeed;
+		this.sprite = new GOval(x, y, size, size);
+		this.attackOrbs = new ArrayList<AttackOrb>();
+		this.attackOrbRemovalList = new ArrayList<AttackOrb>();
+		((GOval)sprite).setColor(color);
+		((GOval)sprite).setFilled(true);
+		saw = new Saw(this,driver);
 		
 		basicPostConstructor();
-		
-		if(saw != null)
-			adjustSaw();
+		adjustSaw();
 	}
 	
 	//modifiers
@@ -196,7 +193,9 @@ public abstract class Character extends BaseActor {
 	}
 	
 	public void onHit(Character actor){
-		System.out.println("HIT! - "+this+" || "+actor);
+		if(actor.x > x){
+			//hitVelocityX = 
+		}
 	}
 	
 	public void onDeath(){
@@ -242,27 +241,12 @@ public abstract class Character extends BaseActor {
 			sprite.move(x,y);
 		this.x += x;
 		this.y += y;
-		
-		if(saw != null)
-			saw.move(x, y);
 	
 		if(attackOrbs != null)
 			for(AttackOrb attackOrb : attackOrbs)
 				attackOrb.move(x, y);
 		
 		constructCollisionBox();
-	}
-	
-	/***
-	 * Moves the character.
-	 * @param x the x val to move the character (including saw and attack orbs)
-	 * @param y the y val to move the character (including saw and attack orbs)
-	 */
-	public void moveMulti(int x, int y) {
-		
-		move(x,y);
-		
-		sprite.move(x, y);
 	}
 	
 	/***
@@ -280,9 +264,6 @@ public abstract class Character extends BaseActor {
 		this.x += xChange;
 		this.y += yChange;
 		
-		if(saw != null)
-			saw.movePolar(distance, angle);
-		
 		if(attackOrbs != null)
 			for(AttackOrb attackOrb : attackOrbs)
 				attackOrb.movePolar(distance, angle);
@@ -291,13 +272,7 @@ public abstract class Character extends BaseActor {
 	}
 	
 	private boolean shouldMoveSprite(){
-		boolean moveSprite = !(this instanceof Player);
-		if(this instanceof Saw){
-			Saw s = (Saw)this;
-			if(s.getOwner() instanceof Player)
-				moveSprite = false;
-		}
-		return moveSprite;
+		return !(this instanceof Player);
 	}
 	
 	@Override

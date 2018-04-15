@@ -99,7 +99,7 @@ public class AI extends Character {
 		
 		setVelocityFromDirection();
 		CollisionResult result = attemptMove(xVelocity,yVelocity);
-		if(!result.xCollides && !result.yCollides){
+		if(result.xCollides && result.yCollides){
 			chooseNewRandomDirection();
 		}
 	}

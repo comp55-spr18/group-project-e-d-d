@@ -39,16 +39,13 @@ public abstract class BaseCollisionEngine {
 				y = 0;
 
 			if(x != 0 || y != 0){
-				moveActor(x,y);
+				character.move(x,y);
 				return new CollisionResult(x==0,y==0);
 			}
 		}
 		
 		return new CollisionResult(true,true); // do not move!
 	}
-
-	// handles actual movement
-	protected abstract void moveActor(int x, int y);
 	
 	// removes the item from active item lists
 	protected abstract void cleanUpItem(Item item);

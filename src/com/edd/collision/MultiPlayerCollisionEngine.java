@@ -14,11 +14,6 @@ public class MultiPlayerCollisionEngine extends BaseCollisionEngine {
 	}
 	
 	@Override
-	public void moveActor(int x, int y){
-		((Character)actor).moveMulti(x,y);
-	}
-	
-	@Override
 	protected void cleanUpItem(Item item){
 		
 		// TODO: Sam, make this remove the item from whatever ticklist it belongs to. Below is the code for the SinglePlayer version of this function. (for reference)
