@@ -1,6 +1,8 @@
 package com.edd.circlebrawl;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -13,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import com.edd.character.Player;
@@ -22,6 +28,7 @@ import com.edd.powerup.PowerUpType;
 import com.edd.circlebrawl.ActorAccesser;
 
 import acm.graphics.GLabel;
+import acm.gui.DoubleField;
 
 // Driver Class
 public class MultiplayerSam_Test extends MainApplication implements Tick {
@@ -29,6 +36,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
 	String myName = "Osvaldo";
+	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
@@ -45,11 +53,17 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	int ticks = 0;
 	int frames = 0;
+	
+	private JTextField name;
+	private JPanel[] login = {new JPanel()};
+	private JLabel nameLabel;
+	private JButton button;
 
 	@Override
 	public void init() {
-		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER,this);
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER,this);
+
 		Random r = new Random();
 		NC = new NetworkClient("138.68.18.227", 9991, r.nextInt(100), this);
 		NC.start();
