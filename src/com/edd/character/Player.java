@@ -73,7 +73,8 @@ public class Player extends Character {
 		cam = new Camera(-(int)x+MainApplication.WINDOW_WIDTH/2-(int)getWidth()/2, -(int)y+MainApplication.WINDOW_HEIGHT/2-(int)getHeight()/2, this, driver);
 		this.pColor = color;
 		sprite.setLocation(MainApplication.WINDOW_WIDTH/2-getWidth()/2,MainApplication.WINDOW_HEIGHT/2-getHeight()/2);
-		namePlate = new GLabel(name, sprite.getX() + size / 2, sprite.getY() + size / 2);
+		namePlate = new GLabel(name, sprite.getX() + size/2, sprite.getY() + size);
+		namePlate.move(-namePlate.getWidth()/2, namePlate.getHeight());
 		driver.add(namePlate);
 		adjustSaw();
 	}

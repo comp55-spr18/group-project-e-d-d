@@ -218,7 +218,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			    				int y = Integer.parseInt(powerUpInfo[4]);
 			    				String type = powerUpInfo[5];
 			    				PowerUpType PUT = PowerUpType.stringToEnum(type);
-			    				PowerUp PU = new PowerUp(x, y, world, efficacy, multiple, PowerUpType.stringToEnum(type), null);
+			    				PowerUp PU = new PowerUp(GameType.MULTIPLAYER,x, y, world, efficacy, multiple, PowerUpType.stringToEnum(type), null);
 			    				System.out.println("adding powerup" + powerUpID);
 			    				powerups.put(powerUpID, PU);
 			    			}
