@@ -27,10 +27,10 @@ public abstract class MapBuilder {
 	
 	public static HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
 	
-	public static Map buildMap(String mapFile, int rows, int cols, int baselineID){
+	public static Map buildMap(String mapFile, int baselineID){
 		if(tileImages.isEmpty())
 			buildTileImages(baselineID);
-		GImage[][] map = new GImage[rows][cols];
+		GImage[][] map = new GImage[TILES_IN_MAP_X][TILES_IN_MAP_Y];
 		
 		try {
 			FileReader fileReader = new FileReader(mapFile);
@@ -41,16 +41,20 @@ public abstract class MapBuilder {
 			
 			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(",");
-				for(int row=0;row<elements.length;row++){
-					int id = Integer.parseInt(elements[row]);
-					GImage baseImage = tileImages.get(baselineID);
-					GImage primaryImage = tileImages.get(id);
-					if(primaryImage != null && baseImage != null){
-						map[row][col] = layerImages(primaryImage, baseImage);
-					} else {
-						System.out.println(id+"_err");
-						map[row][col] = tileImages.get(baselineID);
+				for(int row=0;row< TILES_IN_MAP_X;row++){
+					if (row < elements.length)
+					{
+						int id = Integer.parseInt(elements[row]);
+						GImage baseImage = tileImages.get(baselineID);
+						GImage primaryImage = tileImages.get(id);
+						if(primaryImage != null && baseImage != null){
+							map[row][col] = layerImages(primaryImage, baseImage);
+						} else {
+							System.out.println(id+"_err");
+							map[row][col] = tileImages.get(baselineID);
+						}
 					}
+					
 				}
 				col++;
 			}
@@ -78,6 +82,7 @@ public abstract class MapBuilder {
 			
 			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(",");
+				System.out.println(elements.length);
 				for(int col=0;col<elements.length;col++){
 					int id = Integer.parseInt(elements[col]);
 					tileImages.put(id, getTile(row,col));
@@ -108,6 +113,7 @@ public abstract class MapBuilder {
 	}
 
 	private static GImage getTile(int row, int col){
+		System.out.println("" + row + " " +  col);
 		BufferedImage tileSet = new BufferedImage((int)TILE_SET.getWidth(),(int)TILE_SET.getHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics g = tileSet.createGraphics();
 		g.drawImage(TILE_SET.getImage(), 0, 0, null);
