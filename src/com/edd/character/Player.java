@@ -19,20 +19,19 @@ import com.edd.osvaldo.MainApplication;
 
 import acm.graphics.GLabel;
 
-public class Player extends Character implements ActionListener {
+public class Player extends Character {
 
 	private final int BASE_SIZE = 100;
 	private final int BASE_DEFENSE = 10;
 	private final int BASE_SPEED = 5;
 	private final int BASE_STRENGTH = 50;
+	private final double BASE_ATTACK_SPEED = 2.3;
 	
 	private boolean keyW, keyS, keyA, keyD;
 	private double xVelocity = 0;
 	private double yVelocity = 0;
 	private int keyI;
 	private GLabel namePlate;
-	private Timer testTimer = new Timer(4000, this);
-	public boolean startTick = false;
 	private Color c[] = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.CYAN, Color.PINK, Color.YELLOW, Color.MAGENTA };
 	private Color pColor;
 	private Camera cam;
@@ -40,48 +39,48 @@ public class Player extends Character implements ActionListener {
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor("", new SinglePlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(GameType.SINGLEPLAYER,"", new SinglePlayerCollisionEngine(this,driver));
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(name, new SinglePlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(GameType.SINGLEPLAYER,name, new SinglePlayerCollisionEngine(this,driver));
 	}
 	
 	public Player(String name, int x, int y, int color, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(name, c[color],new MultiPlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(GameType.MULTIPLAYER,name, c[color],new MultiPlayerCollisionEngine(this,driver));
 	}
 	
 	public Player(GameType gameType, MainApplication mainApplication) {
 		basicPreConstructor(gameType,driver);
-		basicPlayerConstructor("", new SinglePlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(gameType,"", new SinglePlayerCollisionEngine(this,driver));
 	}
 	
 	public Player(String name, GameType gameType, MainApplication driver) {
 		basicPreConstructor(gameType,driver);
-		basicPlayerConstructor(name, new SinglePlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(gameType,name, new SinglePlayerCollisionEngine(this,driver));
 	}
 	
 	public Player(String name, GameType gameType, int color, MainApplication driver) {
 		basicPreConstructor(gameType,driver);
-		basicPlayerConstructor(name, c[color],new MultiPlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(gameType,name, c[color],new MultiPlayerCollisionEngine(this,driver));
 	}
 	
-	protected void basicPlayerConstructor(String name, Color color, BaseCollisionEngine collisionEngine){
-		basicCharacterConstructor(collisionEngine,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,pColor);
-		
+	protected void basicPlayerConstructor(GameType gameType, String name, Color color, BaseCollisionEngine collisionEngine){
+		basicCharacterConstructor(collisionEngine,gameType,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,pColor);
 		this.name = name;
 		cam = new Camera(-(int)x+MainApplication.WINDOW_WIDTH/2-(int)getWidth()/2, -(int)y+MainApplication.WINDOW_HEIGHT/2-(int)getHeight()/2, this, driver);
 		this.pColor = color;
-		namePlate = new GLabel(name, x + size / 2, y + size / 2);
-		driver.add(namePlate);
 		sprite.setLocation(MainApplication.WINDOW_WIDTH/2-getWidth()/2,MainApplication.WINDOW_HEIGHT/2-getHeight()/2);
+		namePlate = new GLabel(name, sprite.getX() + size / 2, sprite.getY() + size / 2);
+		driver.add(namePlate);
+		adjustSaw();
 	}
 
-	protected void basicPlayerConstructor(String name, BaseCollisionEngine collisionEngine){
+	protected void basicPlayerConstructor(GameType gameType, String name, BaseCollisionEngine collisionEngine){
 		Random rand = new Random();
-		basicPlayerConstructor(name,c[rand.nextInt(c.length)],collisionEngine);
+		basicPlayerConstructor(gameType,name,c[rand.nextInt(c.length)],collisionEngine);
 	}
 	
 	public Color generateColor (){
@@ -137,13 +136,7 @@ public class Player extends Character implements ActionListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		driver.add(saw);
-		testTimer.start();
-
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		driver.remove(saw);
+		attemptAttack();
 	}
 
 	public void tick() {

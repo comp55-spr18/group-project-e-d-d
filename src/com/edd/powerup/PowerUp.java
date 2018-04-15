@@ -23,8 +23,9 @@ public class PowerUp extends Item {
 		basicPowerUpConstructor(type);
 	}
 	
-	public PowerUp(int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
-		basicPreConstructor(gameType,driver);
+	public PowerUp(GameType gameType, int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
+		this.gameType = gameType;
+		basicPreConstructor(x,y,driver);
 		basicItemConstructor(efficacy,multiple,generator);
 		basicPowerUpConstructor(type);
 	}
@@ -66,7 +67,7 @@ public class PowerUp extends Item {
 				break;
 			case ATTACK_ORB:
 				if(!activated){
-					attackOrb = consumer.spawnAttackOrb();
+					attackOrb = consumer.spawnAttackOrb(gameType);
 					System.out.println("Spawned attack orb!");
 				} else {
 					consumer.despawnAttackOrb(attackOrb);

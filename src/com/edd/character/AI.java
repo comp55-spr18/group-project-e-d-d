@@ -1,6 +1,7 @@
 package com.edd.character;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.edd.circlebrawl.BaseActor;
@@ -16,6 +17,11 @@ public class AI extends Character {
 	private static final int DETECTION_RANGE_X = 400;
 	private static final int DETECTION_RANGE_Y = 200;
 	private static final double DIRECTION_RESET_DELAY = .5; // time in seconds before AI chooses new direction
+
+	private final int BASE_DEFENSE = 8;
+	private final int BASE_SPEED = 4;
+	private final int BASE_STRENGTH = 30;
+	private final double BASE_ATTACK_SPEED = 2;
 	
 	private AIGenerator generator;
 	private Random rand;
@@ -32,9 +38,9 @@ public class AI extends Character {
 	 * @param driver the main driver of the game
 	 * @param generator the thing generating the AI
 	 */
-	public AI(int x, int y, MainApplication driver, AIGenerator generator) {
+	public AI(int x, int y, GameType gameType, MainApplication driver, AIGenerator generator) {
 		basicPreConstructor(x,y,driver);
-		basicAIConstructor(driver,generator);
+		basicAIConstructor(gameType,driver,generator);
 	}
 	/***
 	 * AI is an artificially intelligent character. Its goals include growing stronger and killing the player.
@@ -44,12 +50,12 @@ public class AI extends Character {
 	 */
 	public AI(GameType gameType, MainApplication driver, AIGenerator generator) {
 		basicPreConstructor(gameType,driver);
-		basicAIConstructor(driver,generator);
+		basicAIConstructor(gameType,driver,generator);
 	}
 	
-	private void basicAIConstructor(MainApplication driver, AIGenerator generator){
+	private void basicAIConstructor(GameType gametype, MainApplication driver, AIGenerator generator){
 		rand = new Random();
-		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),80+rand.nextInt(31),10,5,50,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+		basicCharacterConstructor(new SinglePlayerCollisionEngine(this,driver),gameType,80+rand.nextInt(31),BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		
 		chooseNewRandomDirection(); // establishing initial direction
 	}
@@ -61,6 +67,8 @@ public class AI extends Character {
 		
 		if(playerIsInDetectionRange()){
 			chooseNewDirectionTowardActor(driver.player);
+			if(playerIsInAttackRange())
+				attemptAttack();
 		} else {
 			directionResetTicks++;
 			if(directionResetTicks >= DIRECTION_RESET_DELAY*driver.TICKS_PER_SECOND){
@@ -84,6 +92,16 @@ public class AI extends Character {
 		if(!result.xCollides && !result.yCollides){
 			chooseNewRandomDirection();
 		}
+	}
+	
+	private Character getNearestCharacter(){
+		ArrayList<Player> players = new ArrayList<Player>();
+		ArrayList<AI>  AIs = new ArrayList<AI>();
+		return driver.player;
+	}
+	
+	private boolean playerIsInAttackRange(){
+		return false;//return driver.player.
 	}
 	
 	private boolean playerIsInDetectionRange(){

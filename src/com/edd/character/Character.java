@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import com.edd.circlebrawl.BaseActor;
+import com.edd.circlebrawl.GameType;
 import com.edd.collision.BaseCollisionEngine;
 import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionResult;
+import com.edd.osvaldo.MainApplication;
 
-import acm.graphics.GImage;
 import acm.graphics.GOval;
 
 public abstract class Character extends BaseActor {
@@ -19,11 +20,15 @@ public abstract class Character extends BaseActor {
 	protected final int MAX_DEFENSE = 50;
 	protected final int MAX_SPEED = 15;
 	protected final int MAX_STRENGTH = 100;
+	protected final double MAX_ATTACK_SPEED = 3;
 	
 	protected final int MIN_SIZE = 30; // death below this point
 	protected final int MIN_DEFENSE = -50;
 	protected final int MIN_SPEED = 1;
 	protected final int MIN_STRENGTH = 10; 
+	protected final double MIN_ATTACK_SPEED = .5;
+	
+	protected final int ATTACK_DURATION = MainApplication.TICKS_PER_SECOND/2;
 	
 	// ALL NUMBERS ABOVE CAN BE CHANGED AT WILL
 	
@@ -33,30 +38,35 @@ public abstract class Character extends BaseActor {
 	protected int defense; // how much damage this Character can take
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
+	protected int range; // how far the character can hit
+	protected double attackSpeed; // how fast the character can attack (higher = slower)
 	
-	protected GImage saw = new GImage("com/edd/character/Buzzsaw2.gif");
+	protected Saw saw;
 	protected ArrayList<AttackOrb> attackOrbs;
 	protected ArrayList<AttackOrb> attackOrbRemovalList;
 	
 	protected boolean dead = false;
 	
-	public int ATTACK_RING = 190;
+	private boolean isAttacking, attackedRecently;
+	private int attackTicks;
 	
-	protected void basicCharacterConstructor(BaseCollisionEngine engine, int size, int defense, int speed, int strength, Color color){
+	protected void basicCharacterConstructor(BaseCollisionEngine engine, GameType gameType, int size, int defense, int speed, int strength, double attackSpeed, Color color){
 		this.collisionEngine = engine;
 		this.size = size;
-		this.defense = defense;
-		this.speed = speed;
-		this.strength = strength;
-		this.sprite = new GOval(x, y, size, size);
-		this.attackOrbs = new ArrayList<AttackOrb>();
-		this.attackOrbRemovalList = new ArrayList<AttackOrb>();
 		
-		((GOval)sprite).setColor(color);
-		((GOval)sprite).setFilled(true);
-		
-		// temp
-		saw.setBounds(((driver.WINDOW_WIDTH - sprite.getWidth()) /2) - ATTACK_RING/2, ((driver.WINDOW_HEIGHT - sprite.getHeight())/2) - ATTACK_RING/2 , ATTACK_RING, ATTACK_RING);
+		if(!(this instanceof Saw)){
+			this.defense = defense;
+			this.speed = speed;
+			this.strength = strength;
+			this.attackSpeed = attackSpeed;
+			this.sprite = new GOval(x, y, size, size);
+			this.attackOrbs = new ArrayList<AttackOrb>();
+			this.attackOrbRemovalList = new ArrayList<AttackOrb>();
+			((GOval)sprite).setColor(color);
+			((GOval)sprite).setFilled(true);
+			saw = new Saw(gameType,this,driver);
+			adjustSaw();
+		}
 		
 		basicPostConstructor();
 	}
@@ -69,6 +79,7 @@ public abstract class Character extends BaseActor {
 			onDeath();
 		
 		size += modifyValue;
+		adjustSaw();
 		resize(modifyValue);
 
 		// making AttackOrbs' size scale
@@ -79,6 +90,11 @@ public abstract class Character extends BaseActor {
 		}
 		
 		return modifyValue;
+	}
+	
+	protected void adjustSaw(){
+		range = (int)(size*1.5);
+		saw.adjust();
 	}
 	
 	public int modifyDefense(int modifyValue) {
@@ -122,7 +138,15 @@ public abstract class Character extends BaseActor {
 		return modifyValue;
 	}
 	
-	public void scaleSprite() {
+	public double modifyAttackSpeed(double modifyValue) {
+		if(attackSpeed+modifyValue > MAX_SPEED)
+			modifyValue = MAX_ATTACK_SPEED-attackSpeed;
+		if(speed+modifyValue < MIN_SPEED)
+			modifyValue = -(attackSpeed-MIN_ATTACK_SPEED);
+		
+		attackSpeed += modifyValue;
+		
+		return modifyValue;
 	}
 	
 	private void resize(int modifyValue){
@@ -149,12 +173,29 @@ public abstract class Character extends BaseActor {
 	public int getDefense() { return defense; }
 	public int getSpeed() { return speed; }
 	public int getStrength() { return strength; }
-	public GImage getSawSprite() { return saw; }
+	public double getAttackSpeed(){ return attackSpeed; }
+	public int getRange(){ return range; }
+	public Saw getSaw() { return saw; }
 	public BaseCollisionEngine getCollisionEngine(){ return collisionEngine; }
 	
 	public ArrayList<AttackOrb> getAttackOrbs(){ return attackOrbs; }
-	public AttackOrb spawnAttackOrb(){ return new AttackOrb(this,driver); }
+	public AttackOrb spawnAttackOrb(GameType gameType){ return new AttackOrb(gameType,this,driver); }
 	public void despawnAttackOrb(AttackOrb attackOrbToRemove){ attackOrbRemovalList.add(attackOrbToRemove); }
+	
+	protected void attemptAttack(){
+		if(!isAttacking && !attackedRecently){
+			saw.start();
+			isAttacking = true;
+		}
+	}
+	
+	private void stopAttacking(){
+		saw.stop();
+	}
+	
+	public void onHit(Character actor){
+		// TODO: Hit logic
+	}
 	
 	public void onDeath(){
 		dead = true;
@@ -194,15 +235,18 @@ public abstract class Character extends BaseActor {
 	 * @param y the y val to move the character (including saw and attack orbs)
 	 */
 	public void move(int x, int y) {
-		if(!(this instanceof Player))
+		
+		if(shouldMoveSprite())
 			sprite.move(x,y);
 		this.x += x;
 		this.y += y;
 		
-		//saw.move(x, y);
-		
-		for(AttackOrb attackOrb : attackOrbs)
-			attackOrb.move(x, y);
+		if(saw != null)
+			saw.move(x, y);
+	
+		if(attackOrbs != null)
+			for(AttackOrb attackOrb : attackOrbs)
+				attackOrb.move(x, y);
 		
 		constructCollisionBox();
 	}
@@ -228,29 +272,63 @@ public abstract class Character extends BaseActor {
 		
 		int xChange = 0, yChange = 0;
 		// TODO: Implement xChange and yChange
-		if(!(this instanceof Player))
+		
+		if(shouldMoveSprite())
 			sprite.movePolar(distance,angle);
 		this.x += xChange;
 		this.y += yChange;
 		
-		saw.move(distance, angle);
+		if(saw != null)
+			saw.movePolar(distance, angle);
 		
-		for(AttackOrb attackOrb : attackOrbs)
-			attackOrb.movePolar(distance, angle);
+		if(attackOrbs != null)
+			for(AttackOrb attackOrb : attackOrbs)
+				attackOrb.movePolar(distance, angle);
 		
 		constructCollisionBox();
+	}
+	
+	private boolean shouldMoveSprite(){
+		boolean moveSprite = !(this instanceof Player);
+		if(this instanceof Saw){
+			Saw s = (Saw)this;
+			if(s.getOwner() instanceof Player)
+				moveSprite = false;
+		}
+		return moveSprite;
 	}
 	
 	@Override
 	public void tick(){
 		if(!dead){
-			for(AttackOrb attackOrb : attackOrbs)
-				attackOrb.tick();
-			for(AttackOrb attackOrb : attackOrbRemovalList){
-				attackOrbs.remove(attackOrb);
-				attackOrb.remove();
+			
+			if(saw != null)
+				saw.tick();
+			
+			if(attackOrbs != null && attackOrbRemovalList != null){
+				for(AttackOrb attackOrb : attackOrbs)
+					attackOrb.tick();
+				for(AttackOrb attackOrb : attackOrbRemovalList){
+					attackOrbs.remove(attackOrb);
+					attackOrb.remove();
+				}
+				attackOrbRemovalList.clear();
 			}
-			attackOrbRemovalList.clear();
+			
+			if(isAttacking || attackedRecently){
+				attackTicks++;
+				if(attackedRecently && attackTicks >= (MAX_ATTACK_SPEED-attackSpeed+.1)*MainApplication.TICKS_PER_SECOND){
+					attackedRecently = false;
+					attackTicks = 0;
+				}
+					
+				if(isAttacking && attackTicks >= ATTACK_DURATION){
+					isAttacking = false;
+					attackedRecently = true;
+					stopAttacking();
+					attackTicks = 0;
+				}
+			}
 		}
 	}
 	

@@ -62,7 +62,7 @@ public class Camera implements Tick{
 		totalTranslationY += velY;
 		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();){
 			GObject next = it.next();
-			if (next == player.sprite || next == player.getSawSprite()){
+			if (next == player.sprite || next == player.getSaw().getSprite()){
 				continue;
 			}
 			else
@@ -75,7 +75,7 @@ public class Camera implements Tick{
 		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();){
 
 			GObject next = it.next();
-			if (next == player.sprite || next == player.getSawSprite()){
+			if (next == player.sprite || next == player.getSaw().getSprite()){
 				continue;
 			} else {
 				//next.move(velX, velY);

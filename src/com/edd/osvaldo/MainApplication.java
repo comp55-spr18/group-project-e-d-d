@@ -23,7 +23,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y*MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
 	static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3", "11. Bollywood.mp3", "saw.mp3" };
-	public final int TICKS_PER_SECOND = 120;
+	public static final int TICKS_PER_SECOND = 120;
 	
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(GameType.SINGLEPLAYER,this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(GameType.SINGLEPLAYER,this);
@@ -120,10 +120,6 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		player.actionPerformed(e);
 	}
 
 	public void bringPlayersToFront() {
