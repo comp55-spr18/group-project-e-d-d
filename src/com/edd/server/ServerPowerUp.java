@@ -8,14 +8,16 @@ public class ServerPowerUp {
 	private int multiple;
 	private int x;
 	private int y;
+	private String type;
 	private String myID;
 	Random r = new Random();
 	
 	public ServerPowerUp() {
-		this.efficacy = getEfficacy(2, 3);
+		this.efficacy = getEfficacy(10, 20);
 		this.multiple = 1;
 		this.x = r.nextInt(830);
 		this.y = r.nextInt(751);
+		this.type = getType();
 		this.myID = getSaltString();
 	}
 	
@@ -35,8 +37,22 @@ public class ServerPowerUp {
         return saltStr;
     }
 	
+	private String getType() {
+		int rand = r.nextInt(2) + 1;
+		switch(rand) {
+		case 1:
+			return "Speed";
+		case 2:
+			return "Strength";
+		case 3:
+			return "Endurance";
+		default:
+			return "";
+		}		
+	}
+	
 	public String generatePacket() {
-		return "("+ myID + "," + efficacy + "," + multiple + "," + x + "," + y + ")";
+		return "("+ myID + "," + efficacy + "," + multiple + "," + x + "," + y + "," + type + ")";
 	}
 	
 	public String getID() {
