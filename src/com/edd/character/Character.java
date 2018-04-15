@@ -31,6 +31,8 @@ public abstract class Character extends BaseActor {
 	
 	protected final int ATTACK_DURATION = MainApplication.TICKS_PER_SECOND/2;
 	private final int HIT_VELOCITY_REDUCTION_PER_TICK = 10;
+	private final int KNOCKBACK_VELOCITY_X = 100;
+	private final int KNOCKBACK_VELOCITY_Y = 100;
 	
 	// ALL NUMBERS ABOVE CAN BE CHANGED AT WILL
 	
@@ -197,18 +199,18 @@ public abstract class Character extends BaseActor {
 	
 	public void onHit(Character actor){
 		if(actor.x > x){
-			hitVelocityX = -actor.getStrength()*2;
+			hitVelocityX = -KNOCKBACK_VELOCITY_X;
 		} else {
-			hitVelocityX = actor.getStrength()*2;
+			hitVelocityX = KNOCKBACK_VELOCITY_X;
 		}
 		
 		if(actor.y > y){
-			hitVelocityY = -actor.getStrength()*2;
+			hitVelocityY = -KNOCKBACK_VELOCITY_Y;
 		} else {
-			hitVelocityY = actor.getStrength()*2;
+			hitVelocityY = KNOCKBACK_VELOCITY_Y;
 		}
 
-		modifySize(-actor.getStrength()/2);
+		//modifySize(-actor.getStrength()/2);
 	}
 	
 	public void onDeath(){
@@ -256,6 +258,11 @@ public abstract class Character extends BaseActor {
 			sprite.move(x,y);
 		this.x += x;
 		this.y += y;
+		
+		if(this instanceof Player){
+			Player p = (Player)this;
+			p.getCam().translate(-x, -y);
+		}
 	
 		if(attackOrbs != null)
 			for(AttackOrb attackOrb : attackOrbs)

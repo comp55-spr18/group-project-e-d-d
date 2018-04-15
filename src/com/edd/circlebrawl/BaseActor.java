@@ -63,8 +63,15 @@ public abstract class BaseActor implements Actor, Tick {
 			if(attackOrb.getOwner() instanceof Player)
 				return;
 		}
-		if(driver.player != null)
-			sprite.move(driver.player.getCam().getTotalTranslationX(),driver.player.getCam().getTotalTranslationY());
+		Player p = null;
+		if(driver instanceof MultiplayerSam_Test){
+			MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+			p = multiDriver.getClientPlayer();
+		} else {
+			p = driver.player;
+		}
+		if(p != null)
+			sprite.move(p.getCam().getTotalTranslationX(),p.getCam().getTotalTranslationY());
 	}
 	
 	// Setters for sprite

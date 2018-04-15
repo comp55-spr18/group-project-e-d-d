@@ -6,8 +6,29 @@ import com.edd.circlebrawl.BaseActor;
 
 public abstract class CollisionUtil {
 	
+	private static final int MDRPI = 5; // Max detection range per instance
+	
 	public static CollisionResult overlaps(BaseActor moving, BaseActor resting, int x, int y){
 
+		CollisionResult result = new CollisionResult(false,false);
+
+		int tX = 0;
+		int tY = 0;
+		
+		if(x < -MDRPI)
+			tX = x+MDRPI;
+		else if(x > MDRPI)
+			tX = x-MDRPI;
+
+		if(y < -MDRPI)
+			tY = y+MDRPI;
+		else if(y > MDRPI)
+			tY = y-MDRPI;
+		
+		if(x > MDRPI || y > MDRPI){
+			result.merge(overlaps(moving,resting,tX,tY));
+		}
+		
 		if(moving == resting) // if the two actors are the same
 			return new CollisionResult(false,false);
 		
@@ -62,7 +83,7 @@ public abstract class CollisionUtil {
 					break;
 		}
 		
-		return new CollisionResult(xOverlap,yOverlap);
+		return result.merge(new CollisionResult(xOverlap,yOverlap));
 	}
 	
 	public static boolean overlaps(BaseActor first, BaseActor second){

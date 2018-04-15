@@ -163,7 +163,6 @@ public class Player extends Character {
 		if(driver instanceof MultiplayerSam_Test)
 			((MultiplayerSam_Test)driver).moveSuccess(this, (int)xVelocity, (int)yVelocity);
 
-		cam.translate(-xVelocity, -yVelocity);
 		bringToFront();
 	}
 
