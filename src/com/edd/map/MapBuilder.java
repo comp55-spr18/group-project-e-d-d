@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 import acm.graphics.GImage;
 
@@ -24,9 +25,12 @@ public abstract class MapBuilder {
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
 	public static final int TOTAL_TILES = ROWS_IN_SET*COLS_IN_SET;
 	
+	public static HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
+	
 	public static Map buildMap(String mapFile, int rows, int cols, int baselineID){
+		if(tileImages.isEmpty())
+			buildTileImages();
 		GImage[][] map = new GImage[rows][cols];
-		GImage baselineImage = getTileFromID(baselineID);
 		
 		try {
 			FileReader fileReader = new FileReader(mapFile);
@@ -39,8 +43,8 @@ public abstract class MapBuilder {
 				String[] elements = line.split(",");
 				for(int col=0;col<elements.length;col++){
 					int id = Integer.parseInt(elements[col]);
-					GImage baseImage = new GImage(baselineImage.getImage());
-					GImage primaryImage = getTileFromID(id);
+					GImage baseImage = tileImages.get(baselineID);
+					GImage primaryImage = tileImages.get(id);
 					map[col][row] = layerImages(primaryImage, baseImage);
 				}
 				row++;
@@ -56,7 +60,17 @@ public abstract class MapBuilder {
 			System.out.println("Error reading map: "+mapFile+" -- ID value is not number?");
 		}
 		
-		return new Map(map,TILE_WIDTH,TILE_HEIGHT,getTileFromID(baselineID));
+		return new Map(map,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
+	}
+	
+	private static void buildTileImages(){
+		int id = 0;
+		for(int col=0;col<COLS_IN_SET;col++){
+			for(int row=0;row<ROWS_IN_SET;row++){
+				tileImages.put(id, getTile(row,col));
+				id++;
+			}
+		}
 	}
 	
 	private static GImage layerImages(GImage primaryImage, GImage baseImage){
@@ -66,19 +80,6 @@ public abstract class MapBuilder {
 		g.drawImage(primaryImage.getImage(), 0, 0, null);
 		g.dispose();
 		return new GImage(result);
-	}
-	
-	private static GImage getTileFromID(int id){
-		int tId = 0;
-		for(int col=0;col<COLS_IN_SET;col++){
-			for(int row=0;row<ROWS_IN_SET;row++){
-				if(tId == id)
-					return getTile(row,col);
-				tId++;
-			}
-		}
-		System.out.println("ERROR: ID GREATER THAN TILE COUNT");
-		return null;
 	}
 
 	private static GImage getTile(int row, int col){

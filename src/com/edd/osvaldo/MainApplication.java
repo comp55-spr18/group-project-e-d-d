@@ -108,7 +108,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
 			BOUNDARY_GEN.spawn();
-			//AI_GEN.tick();
+			AI_GEN.tick();
 			player.tick();
 		}
 			
