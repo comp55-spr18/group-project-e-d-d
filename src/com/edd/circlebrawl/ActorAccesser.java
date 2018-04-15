@@ -39,7 +39,8 @@ public class ActorAccesser {
 			case SINGLEPLAYER:
 				return driver.POWERUP_GEN.getActors();
 			case MULTIPLAYER:
-				return new ArrayList<BaseActor>(); // TODO: Sam, make this retrieve the proper list
+				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				return d.getPowerUps();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
 	}
@@ -49,7 +50,8 @@ public class ActorAccesser {
 			case SINGLEPLAYER:
 				return driver.RESOURCE_GEN.getActors();
 			case MULTIPLAYER:
-				return new ArrayList<BaseActor>(); // TODO: Sam, make this retrieve the proper list
+				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				return d.getResources();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
 	}
@@ -81,7 +83,8 @@ public class ActorAccesser {
 				ret.add(driver.player);
 				return ret;
 			case MULTIPLAYER:
-				return new ArrayList<BaseActor>(); // TODO: Sam, make this retrieve the proper list
+				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				return d.getPlayerList();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
 	}

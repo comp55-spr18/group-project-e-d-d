@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -351,5 +352,28 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
     public void keyReleased(KeyEvent e) {
         player.keyReleased(e);
     }
+    
+    public ArrayList<BaseActor> getPlayerList() {
+    		ArrayList<BaseActor> players = new ArrayList<BaseActor>();
+    		for(Player player : characters.values()) {
+    			players.add(player);
+    		}
+    		return players;
+    }
 	
+    public ArrayList<BaseActor> getPowerUps() {
+		ArrayList<BaseActor> PU = new ArrayList<BaseActor>();
+		for(PowerUp powerup : powerups.values()) {
+			PU.add(powerup);
+		}
+		return PU;
+    }
+    
+    public ArrayList<BaseActor> getResources() {
+		ArrayList<BaseActor> GR = new ArrayList<BaseActor>();
+		for(Resource resource : resources.values()) {
+			GR.add(resource);
+		}
+		return GR;
+    }
 }
