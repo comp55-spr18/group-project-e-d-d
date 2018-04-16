@@ -29,6 +29,7 @@ public class SomePane extends GraphicsPane {
 
 	private boolean soundPaused = false;
 	private boolean gamePaused = false;
+	private boolean pauseGameAudioFlag = false;
 
 	public SomePane(MainApplication app) {
 		this.program = app;
@@ -117,12 +118,16 @@ public class SomePane extends GraphicsPane {
 	public boolean togglePauseButton(GObject obj) {
 		if (obj == pauseButton && !soundPaused) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			toggleMuteButton(muteButton);
+			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
+			pauseGameAudioFlag = true;
+			// System.out.println("pauseGameAudioFlag set to true!");
 			gamePaused = true;
 			pause();
 			return true;
 		} else if (obj == pauseButton) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
 			gamePaused = true;
 			pause();
 			return true;
@@ -136,7 +141,6 @@ public class SomePane extends GraphicsPane {
 
 	public void checkResume(GObject obj) {
 		if (obj == resume) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			unpause();
 		}
 	}
@@ -144,10 +148,11 @@ public class SomePane extends GraphicsPane {
 	public void checkQuit(GObject obj) {
 		if (obj == quit) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			program.remove(resume);
-			program.remove(quit);
-			program.removeAll();
-			program.switchToMenu();
+			System.exit(0);
+			// program.remove(resume);
+			// program.remove(quit);
+			// program.removeAll();
+			// program.switchToMenu();
 		}
 	}
 
@@ -158,8 +163,13 @@ public class SomePane extends GraphicsPane {
 
 	public void unpause() {
 		gamePaused = false;
-		soundPaused = false;
 		program.remove(resume);
 		program.remove(quit);
+		program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
+		if (pauseGameAudioFlag) {
+			soundPaused = false;
+			pauseGameAudioFlag = false;
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
+		}
 	}
 }

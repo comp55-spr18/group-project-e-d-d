@@ -26,9 +26,9 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y * MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
-			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3" };
+			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
 	public static final int TICKS_PER_SECOND = 120;
-	
+
 	private Map map = MapBuilder.buildMap("com/edd/map/test-background.csv", 2);
 
 	public GImage background = map.createImage();
@@ -104,14 +104,14 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	}
 
 	public void switchToMenu() {
-		// audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
+		audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
 		count++;
 		switchToScreen(menu);
 	}
 
 	public void switchToSome() {
-		// audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
-		// audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
+		audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
 		switchToScreen(somePane);
 	}
 
@@ -140,5 +140,9 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
+	}
+
+	public void resetGame() {
+
 	}
 }
