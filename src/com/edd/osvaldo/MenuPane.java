@@ -99,10 +99,13 @@ public class MenuPane extends GraphicsPane {
 			program.removeAll();
 			MultiplayerSam_Test m = new MultiplayerSam_Test();
 			m.init();
-			// m.run();
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException ie) {
+			}
+			m.run();
 
 		}
-
 		if (obj == rect) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.test = true;

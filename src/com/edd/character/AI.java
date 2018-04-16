@@ -59,7 +59,7 @@ public class AI extends Character {
 		rand = new Random();
 		BaseCollisionEngine collisionEngine = gameType == GameType.SINGLEPLAYER ? new SinglePlayerCollisionEngine(this,driver) : new MultiPlayerCollisionEngine(this,driver);
 		basicCharacterConstructor(collisionEngine,gameType,80+rand.nextInt(31),BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
-		
+		basicPostConstructor();
 		chooseNewRandomDirection(); // establishing initial direction
 	}
 	

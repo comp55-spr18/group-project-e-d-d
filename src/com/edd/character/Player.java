@@ -37,46 +37,45 @@ public class Player extends Character {
 	public Player(int x, int y, MainApplication mainApplication) {
 		basicPreConstructor(x,y,driver);
 		basicPlayerConstructor(GameType.SINGLEPLAYER,"", new SinglePlayerCollisionEngine(this,driver));
+		setPlayerSpritePos();
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
 		basicPlayerConstructor(GameType.SINGLEPLAYER,name, new SinglePlayerCollisionEngine(this,driver));
+		setPlayerSpritePos();
 	}
 	
-	public Player(String name, int x, int y, int color, MainApplication driver) {
+	public Player(String name, boolean isClient, int x, int y, int color, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
 		basicPlayerConstructor(GameType.MULTIPLAYER,name, c[color],new MultiPlayerCollisionEngine(this,driver));
-	}
-	
-	public Player(GameType gameType, MainApplication driver) {
-		basicPreConstructor(gameType,driver);
-		basicPlayerConstructor(gameType,"", new SinglePlayerCollisionEngine(this,driver));
-	}
-	
-	public Player(String name, GameType gameType, MainApplication driver) {
-		basicPreConstructor(gameType,driver);
-		basicPlayerConstructor(gameType,name, new SinglePlayerCollisionEngine(this,driver));
-	}
-	
-	public Player(String name, GameType gameType, int color, MainApplication driver) {
-		basicPreConstructor(gameType,driver);
-		basicPlayerConstructor(gameType,name, c[color],new MultiPlayerCollisionEngine(this,driver));
+		if(isClient)
+			setPlayerSpritePos();
 	}
 	
 	protected void basicPlayerConstructor(GameType gameType, String name, Color color, BaseCollisionEngine collisionEngine){
 		basicCharacterConstructor(collisionEngine,gameType,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,color);
+		basicPostConstructor();
 		this.name = name;
 		cam = new Camera(-(int)x+MainApplication.WINDOW_WIDTH/2-(int)getWidth()/2, -(int)y+MainApplication.WINDOW_HEIGHT/2-(int)getHeight()/2, this, driver);
 		this.pColor = color;
-		sprite.setLocation(MainApplication.WINDOW_WIDTH/2-getWidth()/2,MainApplication.WINDOW_HEIGHT/2-getHeight()/2);
-		namePlate = new GLabel(name, sprite.getX() + size/2, sprite.getY() + size);
-		namePlate.move(-namePlate.getWidth()/2, namePlate.getHeight());
-		driver.add(namePlate);
-
+		setNamePlateLabel();
 		driver.addKeyListeners();
 		driver.addMouseListeners();
 		adjustSaw();
+	}
+	
+	private void setPlayerSpritePos(){
+		sprite.setLocation(MainApplication.WINDOW_WIDTH/2-getWidth()/2,MainApplication.WINDOW_HEIGHT/2-getHeight()/2);
+		setNamePlateLabel();
+	}
+	
+	private void setNamePlateLabel(){
+		if(namePlate != null)
+			driver.remove(namePlate);
+		namePlate = new GLabel(name, sprite.getX() + size/2, sprite.getY() + size);
+		namePlate.move(-namePlate.getWidth()/2, namePlate.getHeight());
+		driver.add(namePlate);
 	}
 
 	protected void basicPlayerConstructor(GameType gameType, String name, BaseCollisionEngine collisionEngine){

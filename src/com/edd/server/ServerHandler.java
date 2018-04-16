@@ -41,6 +41,8 @@ public class ServerHandler extends Thread {
 					SL.clients.put(new ServerPlayer(clientName), out);
 					System.out.println("new client: " + SL.clients.keySet());
 					handleNewClient(clientName);
+					sendPlayerList(clientName);
+					sendPowerUpList(clientName);
 				}
 				if(inputLine.contains("<remove>")) {
 					String clientName = this.string_between(inputLine, "<remove>", "</remove>");
@@ -62,12 +64,6 @@ public class ServerHandler extends Thread {
 					String xVelocity = packetData[0];
 					String yVelocity = packetData[1];
 					handlePlayerMove(clientName, xVelocity, yVelocity);
-				}
-				if(inputLine.contains("<getlist>")) {
-					String[] packetData = this.string_between(inputLine, "<getlist>", "</getlist>").split(",");
-					String clientName = this.getPlayerName(out);
-					sendPlayerList(clientName);
-					sendPowerUpList(clientName);
 				}
 			}
 			socket.close();
@@ -168,10 +164,6 @@ public class ServerHandler extends Thread {
 		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY(), p.getPlayerColor());
 		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
 		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "," + p.getPlayerColor() + "</newclient>", playerName);
-	}
-	
-	public void sendLists(String playerName) {
-		
 	}
 	
 	public void handlePlayerRemove(String playerName) {
