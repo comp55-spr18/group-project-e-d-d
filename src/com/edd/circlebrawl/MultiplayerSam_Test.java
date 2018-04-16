@@ -307,7 +307,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.clientName, NC.myStartX, NC.myStartY, NC.myStartColor, this);
 		NC.sendGetList();
-		while(!NC.getClientInitiated()) {
+		while(!NC.listsDone) {
 			System.out.print("");
 		} //wait until complete
 		
