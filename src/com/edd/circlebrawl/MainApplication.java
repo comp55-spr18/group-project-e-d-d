@@ -113,7 +113,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		if (test) {
+		if (test && !somePane.getPauseStatus()) {
 			// OBSTACLE_GEN.tick();
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
