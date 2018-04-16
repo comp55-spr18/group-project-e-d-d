@@ -22,10 +22,10 @@ public class SomePane extends GraphicsPane {
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
 	private GButton pauseButton = new GButton("Pause", (program.WINDOW_WIDTH + 900) / 2,
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
-	private GButton resume = new GButton("Resume", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2,
-			200, 100);
-	private GButton quit = new GButton("Quit", (program.WINDOW_WIDTH - 200) / 2,
-			((program.WINDOW_HEIGHT - 200) / 2) + 130, 200, 100);
+	private GButton resume = new GButton("Resume", ((program.WINDOW_WIDTH - 200) / 2) - 150,
+			(program.WINDOW_HEIGHT - 200) / 2, 200, 100);
+	private GButton quit = new GButton("Quit", ((program.WINDOW_WIDTH - 200) / 2) + 150,
+			(program.WINDOW_HEIGHT - 200) / 2, 200, 100);
 
 	private boolean soundPaused = false;
 	private boolean gamePaused = false;
@@ -66,7 +66,7 @@ public class SomePane extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (gamePaused) {
 			checkResume(obj);
-			checkQuit(obj); // TEMPORARILY COMMENTED OUT
+			checkQuit(obj);
 		}
 		// mute button interaction
 		if (toggleMuteButton(obj) || togglePauseButton(obj) || gamePaused)
@@ -144,14 +144,16 @@ public class SomePane extends GraphicsPane {
 	public void checkQuit(GObject obj) {
 		if (obj == quit) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			this.hideContents();
+			program.remove(resume);
+			program.remove(quit);
+			program.removeAll();
 			program.switchToMenu();
 		}
 	}
 
 	public void pause() {
 		program.add(resume);
-		// program.add(quit); //Not working, need to revisit
+		program.add(quit); // Not working, need to revisit
 	}
 
 	public void unpause() {
