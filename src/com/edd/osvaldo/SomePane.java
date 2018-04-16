@@ -66,7 +66,7 @@ public class SomePane extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (gamePaused) {
 			checkResume(obj);
-			// checkQuit(obj); //TEMPORARILY COMMENTED OUT
+			checkQuit(obj); // TEMPORARILY COMMENTED OUT
 		}
 		// mute button interaction
 		if (toggleMuteButton(obj) || togglePauseButton(obj) || gamePaused)
@@ -90,11 +90,13 @@ public class SomePane extends GraphicsPane {
 	 */
 	public boolean toggleMuteButton(GObject obj) {
 		if (obj == muteButton && !soundPaused && !gamePaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = true;
 			muteButton.setFillColor(Color.GRAY);
 			return true;
 		} else if (obj == muteButton && soundPaused && !gamePaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
@@ -114,13 +116,15 @@ public class SomePane extends GraphicsPane {
 	 */
 	public boolean togglePauseButton(GObject obj) {
 		if (obj == pauseButton && !soundPaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			toggleMuteButton(muteButton);
 			gamePaused = true;
 			pause();
 			return true;
 		} else if (obj == pauseButton) {
-			pause();
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			gamePaused = true;
+			pause();
 			return true;
 		} else
 			return false;
@@ -131,20 +135,23 @@ public class SomePane extends GraphicsPane {
 	}
 
 	public void checkResume(GObject obj) {
-		if (obj == resume)
+		if (obj == resume) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			unpause();
+		}
 	}
 
 	public void checkQuit(GObject obj) {
 		if (obj == quit) {
-			unpause();
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			this.hideContents();
 			program.switchToMenu();
 		}
 	}
 
 	public void pause() {
 		program.add(resume);
-		program.add(quit);
+		// program.add(quit); //Not working, need to revisit
 	}
 
 	public void unpause() {

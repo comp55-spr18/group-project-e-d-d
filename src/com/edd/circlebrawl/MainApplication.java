@@ -25,7 +25,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y * MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
-			"11. Bollywood.mp3", "saw.mp3" };
+			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3" };
 	public static final int TICKS_PER_SECOND = 120;
 
 	public ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER, this);
