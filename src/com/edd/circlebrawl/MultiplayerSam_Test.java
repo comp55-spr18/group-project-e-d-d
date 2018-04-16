@@ -1,10 +1,6 @@
 package com.edd.circlebrawl;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,16 +15,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 import com.edd.character.Player;
-import com.edd.collision.CollisionResult;
+import com.edd.generator.BoundaryGenerator;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
-import com.edd.circlebrawl.ActorAccesser;
 
 import acm.graphics.GLabel;
-import acm.gui.DoubleField;
 
 // Driver Class
 public class MultiplayerSam_Test extends MainApplication implements Tick {
@@ -42,6 +35,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final HashMap<String, PowerUp> powerups = new HashMap<String, PowerUp>();
 	public final HashMap<String, Resource> resources = new HashMap<String, Resource>();
+	
+	private final BoundaryGenerator BOUNDARY_GEN = new BoundaryGenerator(this);
 	
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
@@ -357,6 +352,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public void tick() {
 		player.tick();
+		BOUNDARY_GEN.spawn();
 	}
 	
 	public void keyPressed(KeyEvent e) {
