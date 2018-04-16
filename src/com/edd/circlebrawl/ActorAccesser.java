@@ -61,7 +61,8 @@ public class ActorAccesser {
 			case SINGLEPLAYER:
 				return driver.BOUNDARY_GEN.getActors();
 			case MULTIPLAYER:
-				return new ArrayList<BaseActor>(); // TODO: Sam, make this retrieve the proper list
+				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				return d.getBoundaries();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
 	}

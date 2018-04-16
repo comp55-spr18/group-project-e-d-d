@@ -28,7 +28,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
-	String myName = "Mike";
+	String myName = "Zach";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
@@ -37,9 +37,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public final HashMap<String, Resource> resources = new HashMap<String, Resource>();
 	
 	private final BoundaryGenerator BOUNDARY_GEN = new BoundaryGenerator(this);
-	
-	public final int MAP_WIDTH = 1024;
-	public final int MAP_HEIGHT = 768;
 	private Player player;
 	
 	private NetworkClient NC;
@@ -67,7 +64,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		    		NC.sendExit();
 		    }
 		}));
-		
+
 		add(this.background);
 	}
 	
@@ -296,18 +293,13 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		} //wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.clientName, true, NC.myStartX, NC.myStartY, NC.myStartColor, this);
+		background.move(player.getCam().getTotalTranslationX(), player.getCam().getTotalTranslationY());
 		
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
 		double ns = 1000000000 / ticks;
 		double delta = 0;
-		int updates = 0;
-		int frames = 0;
 		long timer = System.currentTimeMillis();
-
-		GLabel g = new GLabel("Ticks: " + ticks + "\nFrames: " + frames);
-		g.setLocation(WINDOW_WIDTH - g.getWidth() - 60, WINDOW_HEIGHT - g.getHeight());
-		add(g);
 
 		while (true) {
 			long now = System.nanoTime();
@@ -315,15 +307,12 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			lastTime = now;
 			if (delta >= 1) {
 				tick();
-				updates++;
 				delta--;
 			}
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				g.setLabel("Ticks: " + ticks + "\nFrames: " + frames);
-				updates = 0;
 				frames = 0;
 			}
 		}
@@ -387,6 +376,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			GR.add(resource);
 		}
 		return GR;
+    }
+    
+    public ArrayList<BaseActor> getBoundaries(){
+    	return BOUNDARY_GEN.getActors();
     }
     
     public Player getClientPlayer() {

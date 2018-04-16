@@ -11,8 +11,8 @@ public class ServerPlayer {
 	public ServerPlayer(String name) {
 		Random rand = new Random();
 		this.name = name;
-		int min = 32*60;
-		int max = 32*195-min;
+		int min = 32*80;
+		int max = 32*170-min;
 		this.x = rand.nextInt(max) + min;
 		this.y = rand.nextInt(max) + min;
 		this.color = rand.nextInt(8);
