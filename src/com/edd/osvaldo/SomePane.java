@@ -66,11 +66,10 @@ public class SomePane extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (gamePaused) {
 			checkResume(obj);
-			// checkQuit();
-			return;
+			// checkQuit(obj); //TEMPORARILY COMMENTED OUT
 		}
 		// mute button interaction
-		else if (toggleMuteButton(obj) || togglePauseButton(obj))
+		if (toggleMuteButton(obj) || togglePauseButton(obj) || gamePaused)
 			return;
 		program.player.mousePressed(e);
 		program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[4]);
@@ -134,6 +133,13 @@ public class SomePane extends GraphicsPane {
 	public void checkResume(GObject obj) {
 		if (obj == resume)
 			unpause();
+	}
+
+	public void checkQuit(GObject obj) {
+		if (obj == quit) {
+			unpause();
+			program.switchToMenu();
+		}
 	}
 
 	public void pause() {
