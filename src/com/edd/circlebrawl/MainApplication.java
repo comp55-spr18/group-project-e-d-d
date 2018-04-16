@@ -8,6 +8,7 @@ import com.edd.generator.BoundaryGenerator;
 import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
+import com.edd.map.Map;
 import com.edd.map.MapBuilder;
 import com.edd.osvaldo.AudioPlayer;
 import com.edd.osvaldo.GButton;
@@ -27,6 +28,10 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3" };
 	public static final int TICKS_PER_SECOND = 120;
+	
+	private Map map = MapBuilder.buildMap("com/edd/map/test-background.csv", 2);
+
+	public GImage background = map.createImage();
 
 	public ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER, this);
 
