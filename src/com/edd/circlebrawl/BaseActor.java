@@ -163,12 +163,12 @@ public abstract class BaseActor implements Actor, Tick {
 
 	public void setRandomLocation() {
 		Random rand = new Random();
-		int minX = MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH;
+		int minX = MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH + MapBuilder.TILE_WIDTH;
 		;
-		int minY = MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT;
+		int minY = MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT + MapBuilder.TILE_HEIGHT;
 		;
-		int maxX = MainApplication.MAP_WIDTH - (int) getWidth() - MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH;
-		int maxY = MainApplication.MAP_HEIGHT - (int) getHeight() - MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT;
+		int maxX = MainApplication.MAP_WIDTH - (int) getWidth() - MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH - MapBuilder.TILE_WIDTH;
+		int maxY = MainApplication.MAP_HEIGHT - (int) getHeight() - MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT - MapBuilder.TILE_HEIGHT;
 
 		BaseCollisionEngine tempEngine = null;
 
