@@ -35,7 +35,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
-	String myName = "Zach";
+	String myName = "Sam";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
@@ -95,6 +95,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		private int clientID;
 		private String clientName;
 		boolean client_initiated = false;
+		boolean listsDone = false;
 		int myStartX = 0;
 		int myStartY = 0;
 		int myStartColor = 0;
@@ -221,8 +222,11 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			    				PowerUp PU = new PowerUp(GameType.MULTIPLAYER,x, y, world, efficacy, multiple, PowerUpType.stringToEnum(type), null);
 			    				System.out.println("adding powerup" + powerUpID);
 			    				powerups.put(powerUpID, PU);
+			    				//set here
+			    				this.listsDone = true;
 			    			}
 		    			}
+		    			
 		    		}
 		    		if(parsePacket(userInput).equals("resource")) {
 		    			String packet = string_between(userInput, "<resource>", "</resource>");
@@ -266,6 +270,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			sendPacket(out, "<newclient>" + this.clientName + "</newclient>");
 		}
 		
+		public void sendGetList() {
+			sendPacket(out, "<getlist></getlist>");
+		}
+		
 		public void sendMove(double x, double y) {
 			sendPacket(out, "<move>" + x + "," + y + "</move>");
 		}
@@ -298,6 +306,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		} //wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.clientName, NC.myStartX, NC.myStartY, NC.myStartColor, this);
+		NC.sendGetList();
+		while(!NC.getClientInitiated()) {
+			System.out.print("");
+		} //wait until complete
 		
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;

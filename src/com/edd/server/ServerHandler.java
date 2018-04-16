@@ -63,6 +63,12 @@ public class ServerHandler extends Thread {
 					String yVelocity = packetData[1];
 					handlePlayerMove(clientName, xVelocity, yVelocity);
 				}
+				if(inputLine.contains("<getlist>")) {
+					String[] packetData = this.string_between(inputLine, "<getlist>", "</getlist>").split(",");
+					String clientName = this.getPlayerName(out);
+					sendPlayerList(clientName);
+					sendPowerUpList(clientName);
+				}
 			}
 			socket.close();
 		} catch (IOException e) {
@@ -162,8 +168,10 @@ public class ServerHandler extends Thread {
 		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY(), p.getPlayerColor());
 		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
 		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "," + p.getPlayerColor() + "</newclient>", playerName);
-		sendPlayerList(playerName);
-		sendPowerUpList(playerName);
+	}
+	
+	public void sendLists(String playerName) {
+		
 	}
 	
 	public void handlePlayerRemove(String playerName) {
