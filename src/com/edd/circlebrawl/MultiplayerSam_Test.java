@@ -35,7 +35,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
-	String myName = "Sam";
+	String myName = "Zach";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
