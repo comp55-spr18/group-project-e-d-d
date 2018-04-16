@@ -355,11 +355,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	}
 
 	public void tick() {
-		for(BaseActor p : getPlayerList()){
-			Player pl = (Player)p;
-			System.out.println("name: "+pl.getName()+" | x:"+pl.getX()+" | y:"+pl.getY());
-		}
-		System.out.println("name: "+getClientPlayer().getName()+" | x:"+getClientPlayer().getX()+" | y:"+getClientPlayer().getY());
 		player.tick();
 	}
 	
