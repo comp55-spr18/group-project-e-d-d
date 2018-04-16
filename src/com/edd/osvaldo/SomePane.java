@@ -22,9 +22,13 @@ public class SomePane extends GraphicsPane {
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
 	private GButton pauseButton = new GButton("Pause", (program.WINDOW_WIDTH + 900) / 2,
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
+	private GButton resume = new GButton("Resume", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2,
+			200, 100);
+	private GButton quit = new GButton("Quit", (program.WINDOW_WIDTH - 200) / 2,
+			((program.WINDOW_HEIGHT - 200) / 2) + 130, 200, 100);
+
 	private boolean soundPaused = false;
 	private boolean gamePaused = false;
-	private PausePane pausePane;
 
 	public SomePane(MainApplication app) {
 		this.program = app;
@@ -36,6 +40,8 @@ public class SomePane extends GraphicsPane {
 		program.pauseButton = this.pauseButton;
 		background.move(program.player.getCam().getTotalTranslationX(), program.player.getCam().getTotalTranslationY());
 		program.player.getNameLabel().setColor(Color.WHITE);
+		resume.setFillColor(Color.GREEN);
+		quit.setFillColor(Color.GREEN);
 	}
 
 	@Override
@@ -58,9 +64,13 @@ public class SomePane extends GraphicsPane {
 	public void mousePressed(MouseEvent e) {
 		// para.setText("you need\nto click\non the eyes\nto go back");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
-
+		if (gamePaused) {
+			checkResume(obj);
+			// checkQuit();
+			return;
+		}
 		// mute button interaction
-		if (toggleMuteButton(obj) || toggleMuteButton(obj))
+		else if (toggleMuteButton(obj) || togglePauseButton(obj))
 			return;
 		program.player.mousePressed(e);
 		program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[4]);
@@ -80,12 +90,12 @@ public class SomePane extends GraphicsPane {
 	 * @return A Boolean value reflecting whether it was selected or not
 	 */
 	public boolean toggleMuteButton(GObject obj) {
-		if (obj == muteButton && !soundPaused) {
+		if (obj == muteButton && !soundPaused && !gamePaused) {
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = true;
 			muteButton.setFillColor(Color.GRAY);
 			return true;
-		} else if (obj == muteButton && soundPaused) {
+		} else if (obj == muteButton && soundPaused && !gamePaused) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
@@ -105,18 +115,36 @@ public class SomePane extends GraphicsPane {
 	 */
 	public boolean togglePauseButton(GObject obj) {
 		if (obj == pauseButton && !soundPaused) {
-			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
-			soundPaused = true;
-			switchToPause();
+			toggleMuteButton(muteButton);
+			gamePaused = true;
+			pause();
 			return true;
 		} else if (obj == pauseButton) {
-			switchToPause();
+			pause();
+			gamePaused = true;
 			return true;
 		} else
 			return false;
 	}
 
-	public void switchToPause() {
-		program.switchToScreen(pausePane);
+	public boolean getPauseStatus() {
+		return this.gamePaused;
+	}
+
+	public void checkResume(GObject obj) {
+		if (obj == resume)
+			unpause();
+	}
+
+	public void pause() {
+		program.add(resume);
+		program.add(quit);
+	}
+
+	public void unpause() {
+		gamePaused = false;
+		soundPaused = false;
+		program.remove(resume);
+		program.remove(quit);
 	}
 }
