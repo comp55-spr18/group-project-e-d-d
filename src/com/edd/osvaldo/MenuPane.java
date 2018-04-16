@@ -90,7 +90,10 @@ public class MenuPane extends GraphicsPane {
 			program.removeAll();
 			MultiplayerSam_Test m = new MultiplayerSam_Test();
 			m.init();
-			//m.run();
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException ie) {}
+			m.run();
 			
 	  	}
 		
