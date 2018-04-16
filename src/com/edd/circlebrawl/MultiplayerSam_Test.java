@@ -28,7 +28,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
-	String myName = "Zach";
+	String myName = "Mike";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
@@ -67,6 +67,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		    		NC.sendExit();
 		    }
 		}));
+		
+		add(this.background);
 	}
 	
 	public String getSaltString() {
