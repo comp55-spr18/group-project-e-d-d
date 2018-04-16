@@ -54,6 +54,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER,this);
 
+		add(this.background);
+		
 		Random r = new Random();
 		NC = new NetworkClient("138.68.18.227", 9991, r.nextInt(100), this);
 		NC.start();
@@ -65,7 +67,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		    }
 		}));
 
-		add(this.background);
 	}
 	
 	public String getSaltString() {
