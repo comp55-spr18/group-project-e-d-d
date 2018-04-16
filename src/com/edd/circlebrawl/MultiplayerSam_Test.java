@@ -184,7 +184,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		    			int x = Integer.parseInt(packet[1]);
 		    			int y = Integer.parseInt(packet[2]);
 		    			int color = Integer.parseInt(packet[3]);
-		    			Player p = new Player(name, x, y, color, world);
+		    			Player p = new Player(name, false, x, y, color, world);
 		    			world.addPlayer(p);
 		    		}
 		    		if(parsePacket(userInput).equals("playerlist")) {
@@ -198,7 +198,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			    				int clientX = Integer.parseInt(playerInfo[1]);
 			    				int clientY = Integer.parseInt(playerInfo[2]);
 			    				int clientColor = Integer.parseInt(playerInfo[3]);
-			    				Player NP = new Player(clientName, clientX, clientY, clientColor, world);
+			    				Player NP = new Player(clientName, false, clientX, clientY, clientColor, world);
 			    				System.out.println("adding player" + clientName);
 			    				characters.put(clientName, NP);
 			    				world.addPlayer(NP);
@@ -305,7 +305,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			System.out.print("");
 		} //wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
-		player = new Player(NC.clientName, NC.myStartX, NC.myStartY, NC.myStartColor, this);
+		player = new Player(NC.clientName, true, NC.myStartX, NC.myStartY, NC.myStartColor, this);
 		NC.sendGetList();
 		while(!NC.listsDone) {
 			System.out.print("");

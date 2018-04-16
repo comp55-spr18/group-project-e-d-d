@@ -69,7 +69,6 @@ public abstract class Character extends BaseActor {
 		((GOval)sprite).setFilled(true);
 		saw = new Saw(this,driver);
 		
-		basicPostConstructor();
 		adjustSaw();
 	}
 	
