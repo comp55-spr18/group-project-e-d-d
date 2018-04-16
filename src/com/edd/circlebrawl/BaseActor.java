@@ -24,43 +24,43 @@ public abstract class BaseActor implements Actor, Tick {
 	protected CollisionBox collisionBox;
 	protected ActorAccesser accesser;
 
-	public void basicPreConstructor(int x, int y, MainApplication driver){
+	public void basicPreConstructor(int x, int y, MainApplication driver) {
 		this.x = x;
 		this.y = y;
 		this.driver = driver;
 		this.accesser = driver.actorAccesser;
 	}
-	
+
 	// use this for auto generation of location
-	public void basicPreConstructor(GameType gameType, MainApplication driver){
+	public void basicPreConstructor(GameType gameType, MainApplication driver) {
 		this.gameType = gameType;
 		this.driver = driver;
 		this.accesser = driver.actorAccesser;
 	}
-	
-	public void basicPostConstructor(){
-		if(sprite != null){
-			if(gameType != null)
+
+	public void basicPostConstructor() {
+		if (sprite != null) {
+			if (gameType != null)
 				setRandomLocation();
 			setupSprite(sprite);
 			applyTranslation();
 			constructCollisionBox();
 		}
 	}
-	
-	public void basicPostConstructor(String spriteFile){
+
+	public void basicPostConstructor(String spriteFile) {
 		sprite = new GImage(spriteFile);
-		if(gameType != null)
+		if (gameType != null)
 			setRandomLocation();
 		setupSprite(sprite);
 		applyTranslation();
 		constructCollisionBox();
 	}
-	
-	private void applyTranslation(){
-		if(this instanceof AttackOrb){
-			AttackOrb attackOrb = (AttackOrb)this;
-			if(attackOrb.getOwner() instanceof Player)
+
+	private void applyTranslation() {
+		if (this instanceof AttackOrb) {
+			AttackOrb attackOrb = (AttackOrb) this;
+			if (attackOrb.getOwner() instanceof Player)
 				return;
 		}
 		if(driver instanceof MultiplayerSam_Test){
@@ -76,7 +76,7 @@ public abstract class BaseActor implements Actor, Tick {
 				sprite.move(p.getCam().getTotalTranslationX(),p.getCam().getTotalTranslationY());
 		}
 	}
-	
+
 	// Setters for sprite
 	public void setX(double x) {
 		this.x = x;
@@ -102,7 +102,7 @@ public abstract class BaseActor implements Actor, Tick {
 	public GObject getSprite() {
 		return this.sprite;
 	}
-	
+
 	public CollisionBox getCollisionBox() {
 		return collisionBox;
 	}
@@ -132,7 +132,7 @@ public abstract class BaseActor implements Actor, Tick {
 
 		driver.add(sprite);
 	}
-	
+
 	public void addSprite() {
 		driver.add(sprite);
 	}
@@ -140,54 +140,60 @@ public abstract class BaseActor implements Actor, Tick {
 	@Override
 	public void tick() {
 	}
-	
-	public double getWidth(){
+
+	public double getWidth() {
 		return sprite.getWidth();
 	}
-	
-	public double getHeight(){
+
+	public double getHeight() {
 		return sprite.getHeight();
 	}
-	
-	public void constructCollisionBox(){
-		collisionBox = new CollisionBox((int)x,(int)y,(int)(x+getWidth()),(int)(y+getHeight()));
+
+	public void constructCollisionBox() {
+		collisionBox = new CollisionBox((int) x, (int) y, (int) (x + getWidth()), (int) (y + getHeight()));
 	}
 
-	public int getTranslationX(){
-		return (int)(x - sprite.getX());
+	public int getTranslationX() {
+		return (int) (x - sprite.getX());
 	}
-	
-	public int getTranslationY(){
-		return (int)(y - sprite.getY());
+
+	public int getTranslationY() {
+		return (int) (y - sprite.getY());
 	}
-	
-	public void setRandomLocation(){
+
+	public void setRandomLocation() {
 		Random rand = new Random();
-		int minX = MapBuilder.TILE_BUFFER_X*MapBuilder.TILE_WIDTH;;
-		int minY = MapBuilder.TILE_BUFFER_Y*MapBuilder.TILE_HEIGHT;;
-		int maxX = MainApplication.MAP_WIDTH-(int)getWidth()-MapBuilder.TILE_BUFFER_X*MapBuilder.TILE_WIDTH;
-		int maxY = MainApplication.MAP_HEIGHT-(int)getHeight()-MapBuilder.TILE_BUFFER_Y*MapBuilder.TILE_HEIGHT;
-		
+		int minX = MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH;
+		;
+		int minY = MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT;
+		;
+		int maxX = MainApplication.MAP_WIDTH - (int) getWidth() - MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH;
+		int maxY = MainApplication.MAP_HEIGHT - (int) getHeight() - MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT;
+
 		BaseCollisionEngine tempEngine = null;
-		
-		if(this instanceof Character){
-			tempEngine = ((Character)this).getCollisionEngine();
+
+		if (this instanceof Character) {
+			tempEngine = ((Character) this).getCollisionEngine();
 		} else {
-			switch(gameType){
-				case SINGLEPLAYER:
-					tempEngine = new SinglePlayerCollisionEngine(this,driver);
-					break;
-				case MULTIPLAYER:
-					tempEngine = new MultiPlayerCollisionEngine(this,driver);
-					break;
+			switch (gameType) {
+			case SINGLEPLAYER:
+				tempEngine = new SinglePlayerCollisionEngine(this, driver);
+				break;
+			case MULTIPLAYER:
+				tempEngine = new MultiPlayerCollisionEngine(this, driver);
+				break;
 			}
 		}
 
 		constructCollisionBox();
-		while(tempEngine.collidesWithAnything()){
-			setX(rand.nextInt(maxX-minX+1)+minX);
-			setY(rand.nextInt(maxY-minY+1)+minY);
+		while (tempEngine.collidesWithAnything()) {
+			setX(rand.nextInt(maxX - minX + 1) + minX);
+			setY(rand.nextInt(maxY - minY + 1) + minY);
 			constructCollisionBox();
 		}
+	}
+
+	public MainApplication getDriver() {
+		return this.driver;
 	}
 }
