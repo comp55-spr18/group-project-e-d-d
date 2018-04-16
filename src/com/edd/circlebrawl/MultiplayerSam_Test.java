@@ -35,7 +35,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	// CHANGE NAME HERE
 	//String myName = this.getSaltString();
-	String myName = "Osvaldo";
+	String myName = "Zach";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
@@ -45,8 +45,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	public final int MAP_WIDTH = 1024;
 	public final int MAP_HEIGHT = 768;
-	public final int WINDOW_WIDTH = 1024;
-	public final int WINDOW_HEIGHT = 768;
 	private Player player;
 	
 	private NetworkClient NC;
