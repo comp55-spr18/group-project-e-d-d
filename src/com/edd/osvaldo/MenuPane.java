@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import com.edd.circlebrawl.MainApplication;
+import com.edd.circlebrawl.MultiplayerSam_Test;
 import com.edd.circlebrawl.Tick;
 
 import acm.graphics.GImage;
@@ -84,6 +85,14 @@ public class MenuPane extends GraphicsPane {
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 		}	
+		
+		if (obj == rect2) {
+			program.removeAll();
+			MultiplayerSam_Test m = new MultiplayerSam_Test();
+			m.init();
+			//m.run();
+			
+	  	}
 		
 		if (obj == rect) {
 			program.test = true;
