@@ -38,6 +38,14 @@ public class ServerHandler extends Thread {
 				System.out.println(inputLine);
 				if(inputLine.contains("<newclient>")) {
 					String clientName = this.string_between(inputLine, "<newclient>", "</newclient>");
+					
+					// Check if this name exists
+					if(this.clientExists(clientName)) {
+						out.write("<error>Name in use</error>");
+						out.close();
+						continue;
+					}
+					
 					SL.clients.put(new ServerPlayer(clientName), out);
 					System.out.println("new client: " + SL.clients.keySet());
 					handleNewClient(clientName);
@@ -124,6 +132,24 @@ public class ServerHandler extends Thread {
 	
 	public void sendPlayerPacket(String packet) {
 		out.println(packet);
+	}
+	
+	public void closeSocket(String playerName) {
+		PrintWriter o = getPlayerSocket(playerName);
+		o.close();
+	}
+	
+	public boolean clientExists(String clientName) {
+		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
+			String name = entry.getKey().getPlayerName();
+			System.out.println("Looking for: "  + clientName);
+			System.out.println("Currently: "  + name);
+		    if(clientName.equals(name)) {
+		    		System.out.println("True!");
+		    		return true;
+		    }
+		}
+		return false;
 	}
 	
 	public void sendPlayerPacket(String packet, String playerName) {

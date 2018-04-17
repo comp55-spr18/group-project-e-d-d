@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ import com.edd.character.Player;
 import com.edd.generator.BoundaryGenerator;
 import com.edd.powerup.PowerUp;
 import com.edd.powerup.PowerUpType;
+import com.edd.server.ServerPlayer;
 
 // Driver Class
 public class MultiplayerSam_Test extends MainApplication implements Tick {
@@ -268,6 +270,22 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		public void sendExit() {
 			sendPacket(out, "<remove>" + this.clientName + "</remove>");
 		}
+		
+		public String getPowerUpID(PowerUp PU) {
+			for (Entry<String, PowerUp> entry : world.powerups.entrySet()) {
+				String ID = entry.getKey();
+			    PowerUp PUA = entry.getValue();
+			    if(PU.equals(PUA)) {
+			    		return ID;
+			    }
+			}
+			return null;
+		}
+		
+		public void removePowerUp(PowerUp r) {
+			String ID = getPowerUpID(r);
+			sendPacket(out, "<removePU>" + ID + "</removePU>");
+		}
 
 		public int getStartX() {
 			return this.myStartX;
@@ -383,5 +401,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public Player getClientPlayer() {
 		return this.player;
+	}
+	
+	public void removePowerUP(PowerUp PU) {
+		NC.removePowerUp(PU);
 	}
 }
