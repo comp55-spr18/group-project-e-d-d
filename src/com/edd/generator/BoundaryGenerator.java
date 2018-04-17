@@ -35,10 +35,10 @@ public class BoundaryGenerator extends BaseGenerator {
 			GImage horizontalBoundary = new GImage("com/edd/obstacle/barbedWire.png");
 			GImage verticalBoundary = new GImage("com/edd/obstacle/barbedWireV.png");
 			
-			BufferedImage northBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH*MapBuilder.TILES_IN_MAP_X-totalBufferX,MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
-			BufferedImage southBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH*MapBuilder.TILES_IN_MAP_X-totalBufferX,MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
-			BufferedImage westBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT*MapBuilder.TILES_IN_MAP_Y-totalBufferY,BufferedImage.TYPE_INT_ARGB);
-			BufferedImage eastBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT*MapBuilder.TILES_IN_MAP_Y-totalBufferY,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage northBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH*MapBuilder.TILES_IN_MAP_X-totalBufferX*MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage southBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH*MapBuilder.TILES_IN_MAP_X-totalBufferX*MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage westBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT*MapBuilder.TILES_IN_MAP_Y-totalBufferY*MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage eastBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT*MapBuilder.TILES_IN_MAP_Y-totalBufferY*MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
 			
 			Graphics ng = northBoundaryImage.createGraphics();
 			Graphics sg = southBoundaryImage.createGraphics();

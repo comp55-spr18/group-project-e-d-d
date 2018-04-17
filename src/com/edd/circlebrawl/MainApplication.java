@@ -1,5 +1,6 @@
 package com.edd.circlebrawl;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 
 import com.edd.character.Player;
@@ -20,8 +21,8 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 
 public class MainApplication extends GraphicsApplication implements Tick {
-	public static final int WINDOW_WIDTH = 1280;
-	public static final int WINDOW_HEIGHT = 720;
+	public static final int WINDOW_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	public static final int WINDOW_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public static final int MAP_WIDTH = MapBuilder.TILES_IN_MAP_X * MapBuilder.TILE_WIDTH;
 	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y * MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
@@ -60,7 +61,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		add(new GImage("com/edd/osvaldo/brick4.jpg"));
 		GImage loading = new GImage("com/edd/osvaldo/CircleBrawlLoading.gif");
 		loading = new GImage("com/edd/osvaldo/CircleBrawlLoading.gif", (WINDOW_WIDTH - loading.getWidth()) / 2,
-				(WINDOW_WIDTH - loading.getHeight() * 5) / 2);
+				(WINDOW_HEIGHT - loading.getHeight()) / 2);
 		add(loading);
 	}
 
