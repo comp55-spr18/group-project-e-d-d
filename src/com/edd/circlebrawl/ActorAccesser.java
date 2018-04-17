@@ -128,8 +128,10 @@ public class ActorAccesser {
 				driver.RESOURCE_GEN.addToRemoveList(resource);
 				return;
 			case MULTIPLAYER:
-				// TODO: Sam, add to remove ticklist!
+				//MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				//d.RESOURCE_GEN.addToRemoveList(resource);
 				return;
+				// TODO: Sam, add to remove ticklist!
 		}
 	}
 	
@@ -140,7 +142,10 @@ public class ActorAccesser {
 				driver.POWERUP_GEN.use(powerUp);
 				return;
 			case MULTIPLAYER:
-				// TODO: Sam, add to remove ticklist and "use" the powerUp!
+				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				d.POWERUP_GEN.addToRemoveList(powerUp);
+				d.POWERUP_GEN.use(powerUp);
+				d.removePowerUP(powerUp);
 				return;
 		}
 	}
