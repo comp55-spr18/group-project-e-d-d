@@ -293,7 +293,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		} // wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
 		player = new Player(NC.clientName, true, NC.myStartX, NC.myStartY, NC.myStartColor, this);
-		background.move(player.getCam().getTotalTranslationX(), player.getCam().getTotalTranslationY());
 
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
