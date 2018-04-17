@@ -23,10 +23,10 @@ public class CollisionEngine {
 	public CollisionResult move(int x, int y) {
 		if(actor instanceof Character){
 			Character character = (Character)actor;
-			ArrayList<Item> items = collidesWithItems(driver.actorAccesser.getItems(),x,y);
-			CollisionResult boundaryOverlap = collidesWithActors(driver.actorAccesser.getBoundaries(),x,y);
-			CollisionResult obstacleOverlap = collidesWithActors(driver.actorAccesser.getObstacles(),x,y);
-			CollisionResult characterOverlap = collidesWithActors(driver.actorAccesser.getCharacters(),x,y);
+			ArrayList<Item> items = collidesWithItems(driver.getAccesser().getItems(),x,y);
+			CollisionResult boundaryOverlap = collidesWithActors(driver.getAccesser().getBoundaries(),x,y);
+			CollisionResult obstacleOverlap = collidesWithActors(driver.getAccesser().getObstacles(),x,y);
+			CollisionResult characterOverlap = collidesWithActors(driver.getAccesser().getCharacters(),x,y);
 
 			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides || boundaryOverlap.xCollides;
 			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides || boundaryOverlap.yCollides;
@@ -53,25 +53,25 @@ public class CollisionEngine {
 	
 	private void cleanUpItem(Item item){
 		if(item instanceof PowerUp)
-			driver.actorAccesser.removePowerUp((PowerUp)item);
+			driver.getAccesser().removePowerUp((PowerUp)item);
 		if(item instanceof Resource)
-			driver.actorAccesser.removeResource((Resource)item);
+			driver.getAccesser().removeResource((Resource)item);
 	}
 	
 	public boolean collidesWithAnything(){
-		for(BaseActor powerUp : driver.actorAccesser.getPowerUps())
+		for(BaseActor powerUp : driver.getAccesser().getPowerUps())
 			if(CollisionUtil.overlaps(actor, powerUp))
 				return true;
-		for(BaseActor resource : driver.actorAccesser.getResources())
+		for(BaseActor resource : driver.getAccesser().getResources())
 			if(CollisionUtil.overlaps(actor, resource))
 				return true;
-		for(BaseActor AI : driver.actorAccesser.getAIs())
+		for(BaseActor AI : driver.getAccesser().getAIs())
 			if(CollisionUtil.overlaps(actor, AI))
 				return true;
-		for(BaseActor obstacle : driver.actorAccesser.getObstacles())
+		for(BaseActor obstacle : driver.getAccesser().getObstacles())
 			if(CollisionUtil.overlaps(actor, obstacle))
 				return true;
-		for(BaseActor player : driver.actorAccesser.getPlayers())
+		for(BaseActor player : driver.getAccesser().getPlayers())
 			if(CollisionUtil.overlaps(actor, player))
 				return true;
 		return false;

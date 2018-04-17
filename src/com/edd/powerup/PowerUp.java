@@ -87,7 +87,7 @@ public class PowerUp extends Item {
 		if(activated){
 			if(time <= 0) {
 				toggleEffect();
-				driver.actorAccesser.removePowerUp(this);
+				driver.getAccesser().removePowerUp(this);
 			} else {
 				time--;
 			}

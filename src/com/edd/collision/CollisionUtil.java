@@ -28,7 +28,7 @@ public abstract class CollisionUtil {
 			tY = y-MDRPI;
 		
 		if(x > MDRPI || y > MDRPI || x < -MDRPI || y < -MDRPI){
-			result.merge(overlaps(moving,resting,tX,tY));
+			result = result.merge(overlaps(moving,resting,tX,tY));
 		}
 		
 		if(moving == resting) // if the two actors are the same

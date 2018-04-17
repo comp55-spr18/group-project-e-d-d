@@ -16,21 +16,16 @@ public abstract class MapBuilder {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
-	public static final int TILES_IN_MAP_X = 200;
-	public static final int TILES_IN_MAP_Y = 200;
-	public static final int TILE_BUFFER_X = 55;
-	public static final int TILE_BUFFER_Y = 55;
-	
 	public static final int ROWS_IN_SET = (int)TILE_SET.getWidth()/TILE_WIDTH;
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
 	public static final int TOTAL_TILES = ROWS_IN_SET*COLS_IN_SET;
 	
 	public static HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
 	
-	public static Map buildMap(String mapFile, int baselineID){
+	public static Map buildMap(String mapFile, int tilesInMapX, int tilesInMapY, int tilesBufferX, int tilesBufferY, int baselineID){
 		if(tileImages.isEmpty())
 			buildTileImages(baselineID);
-		GImage[][] map = new GImage[TILES_IN_MAP_X][TILES_IN_MAP_Y];
+		GImage[][] map = new GImage[tilesInMapX][tilesInMapY];
 		
 		try {
 			FileReader fileReader = new FileReader(mapFile);
@@ -41,7 +36,7 @@ public abstract class MapBuilder {
 			
 			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(",");
-				for(int row=0;row< TILES_IN_MAP_X;row++){
+				for(int row=0;row< tilesInMapX;row++){
 					if (row < elements.length)
 					{
 						int id = Integer.parseInt(elements[row]);
@@ -69,7 +64,7 @@ public abstract class MapBuilder {
 			System.out.println("Error reading map: "+mapFile+" -- ID value is not number?");
 		}
 		
-		return new Map(map,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
+		return new Map(map,tilesInMapX,tilesInMapY,tilesBufferX,tilesBufferY,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
 	}
 	
 	private static void buildTileImages(int baselineID){

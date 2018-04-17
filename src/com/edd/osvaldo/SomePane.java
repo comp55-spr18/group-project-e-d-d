@@ -14,9 +14,7 @@ import acm.graphics.GObject;
 public class SomePane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
-	private Map map = MapBuilder.buildMap("com/edd/map/test-background.csv", 2);
-
-	private GImage background = map.createImage();
+	private GImage background;
 	private GParagraph para;
 	private GButton muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2,
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
@@ -33,12 +31,13 @@ public class SomePane extends GraphicsPane {
 
 	public SomePane(MainApplication app) {
 		this.program = app;
-		program.player = new Player("Mike", MainApplication.MAP_WIDTH / 2 - 100, MainApplication.MAP_HEIGHT / 2 - 100,
+		program.player = new Player("Mike", app.getMapWidth() / 2 - 100, app.getMapHeight() / 2 - 100,
 				app);
 		muteButton.setFillColor(Color.GREEN);
 		program.muteButton = this.muteButton;
 		pauseButton.setFillColor(Color.GREEN);
 		program.pauseButton = this.pauseButton;
+		background = app.getBackgroundImage();
 		background.move(program.player.getCam().getTotalTranslationX(), program.player.getCam().getTotalTranslationY());
 		program.player.getNameLabel().setColor(Color.WHITE);
 		resume.setFillColor(Color.GREEN);

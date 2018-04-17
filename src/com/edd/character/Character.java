@@ -233,7 +233,7 @@ public abstract class Character extends BaseActor {
 		remove();
 		
 		if(this instanceof AI){
-			driver.actorAccesser.removeAI((AI)this);
+			driver.getAccesser().removeAI((AI)this);
 		}
 		if(this instanceof Player){
 			Player p = (Player)this;

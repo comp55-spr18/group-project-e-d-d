@@ -59,7 +59,7 @@ public class Resource extends Item {
 	public void activate(BaseActor consumer) {
 		if (consumer instanceof Character) {
 			((Character) consumer).modifySize(efficacy * multiple);
-			driver.actorAccesser.removeResource(this);
+			driver.getAccesser().removeResource(this);
 		}
 	}
 

@@ -175,10 +175,16 @@ public abstract class BaseActor implements Actor, Tick {
 
 	public void setRandomLocation() {
 		Random rand = new Random();
-		int minX = MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH + MapBuilder.TILE_WIDTH*2;
-		int minY = MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT + MapBuilder.TILE_HEIGHT*2;
-		int maxX = MainApplication.MAP_WIDTH - (int) getWidth() - MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH - MapBuilder.TILE_WIDTH*2;
-		int maxY = MainApplication.MAP_HEIGHT - (int) getHeight() - MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT - MapBuilder.TILE_HEIGHT*2;
+		int tilesBufferX = driver.getTilesBufferX();
+		int tilesBufferY = driver.getTilesBufferX();
+		int mapWidth = driver.getMapWidth();
+		int mapHeight = driver.getMapHeight();
+		int tileWidth = MapBuilder.TILE_WIDTH;
+		int tileHeight = MapBuilder.TILE_HEIGHT;
+		int minX = tilesBufferX * tileWidth + tileWidth*2;
+		int minY = tilesBufferY * tileHeight + tileHeight*2;
+		int maxX = mapWidth - (int) getWidth() - tilesBufferX * tileWidth - tileWidth*2;
+		int maxY = mapHeight - (int) getHeight() - tilesBufferY * tileHeight - tileHeight*2;
 
 		CollisionEngine tempEngine = null;
 

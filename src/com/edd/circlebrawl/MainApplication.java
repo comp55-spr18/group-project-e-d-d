@@ -23,18 +23,10 @@ import acm.graphics.GLabel;
 public class MainApplication extends GraphicsApplication implements Tick {
 	public static final int WINDOW_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	public static final int WINDOW_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	public static final int MAP_WIDTH = MapBuilder.TILES_IN_MAP_X * MapBuilder.TILE_WIDTH;
-	public static final int MAP_HEIGHT = MapBuilder.TILES_IN_MAP_Y * MapBuilder.TILE_HEIGHT;
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
 	public static final int TICKS_PER_SECOND = 120;
-
-	private Map map;
-
-	public GImage background;
-
-	public ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER, this);
 
 	public final PowerUpGenerator POWERUP_GEN = new PowerUpGenerator(GameType.SINGLEPLAYER, this);
 	public final ResourceGenerator RESOURCE_GEN = new ResourceGenerator(GameType.SINGLEPLAYER, this);
@@ -49,7 +41,10 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	private SomePane somePane;
 	private MenuPane menu;
-	private int count;
+
+	protected Map currentMap;
+	protected GImage backgroundImage;
+	protected ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER, this);
 
 	public AudioPlayer audio = AudioPlayer.getInstance();
 	public boolean test = false;
@@ -57,8 +52,8 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public GButton pauseButton;
 
 	public void setupMap(){
-		map = MapBuilder.buildMap("com/edd/map/test-background.csv", 2);
-		background = map.createImage();
+		currentMap = MapBuilder.buildMap("com/edd/map/test-background.csv", 200, 200, 55, 55, 2);
+		backgroundImage = currentMap.createImage();
 	}
 	
 	public void init() {
@@ -112,7 +107,6 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public void switchToMenu() {
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
-		count++;
 		switchToScreen(menu);
 	}
 
@@ -151,5 +145,39 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public void resetGame() {
 
+	}
+	
+	public ActorAccesser getAccesser(){
+		return actorAccesser;
+	}
+	
+	public GImage getBackgroundImage(){
+		if(backgroundImage == null)
+			setupMap();
+		return backgroundImage;
+	}
+	
+	public int getMapWidth(){
+		return currentMap.getMapWidth();
+	}
+	
+	public int getMapHeight(){
+		return currentMap.getMapHeight();
+	}
+	
+	public int getTilesInMapX(){
+		return currentMap.getTilesInMapX();
+	}
+	
+	public int getTilesInMapY(){
+		return currentMap.getTilesInMapY();
+	}
+	
+	public int getTilesBufferX(){
+		return currentMap.getTilesBufferX();
+	}
+	
+	public int getTilesBufferY(){
+		return currentMap.getTilesBufferY();
 	}
 }

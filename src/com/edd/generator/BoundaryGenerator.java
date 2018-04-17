@@ -2,9 +2,7 @@ package com.edd.generator;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 
-import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.MainApplication;
 import com.edd.map.MapBuilder;
 import com.edd.obstacle.Obstacle;
@@ -29,29 +27,37 @@ public class BoundaryGenerator extends BaseGenerator {
 		if(!hasSpawned){
 			activated = false;
 			
-			int totalBufferX = MapBuilder.TILE_BUFFER_X*2;
-			int totalBufferY = MapBuilder.TILE_BUFFER_Y*2;
+			int tilesBufferX = driver.getTilesBufferX();
+			int tilesBufferY = driver.getTilesBufferY();
+			int tilesInMapX = driver.getTilesInMapX();
+			int tilesInMapY = driver.getTilesInMapY();
+			int mapWidth = driver.getMapWidth();
+			int mapHeight = driver.getMapHeight();
+			int tileWidth = MapBuilder.TILE_WIDTH;
+			int tileHeight = MapBuilder.TILE_HEIGHT;
+			int totalBufferX = tilesBufferX*2;
+			int totalBufferY = tilesBufferY*2;
 			
 			GImage horizontalBoundary = new GImage("com/edd/obstacle/barbedWire.png");
 			GImage verticalBoundary = new GImage("com/edd/obstacle/barbedWireV.png");
 			
-			BufferedImage northBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH*MapBuilder.TILES_IN_MAP_X-totalBufferX*MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
-			BufferedImage southBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH*MapBuilder.TILES_IN_MAP_X-totalBufferX*MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
-			BufferedImage westBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT*MapBuilder.TILES_IN_MAP_Y-totalBufferY*MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
-			BufferedImage eastBoundaryImage = new BufferedImage(MapBuilder.TILE_WIDTH,MapBuilder.TILE_HEIGHT*MapBuilder.TILES_IN_MAP_Y-totalBufferY*MapBuilder.TILE_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage northBoundaryImage = new BufferedImage(tileWidth*tilesInMapX-totalBufferX*tileWidth,tileHeight,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage southBoundaryImage = new BufferedImage(tileWidth*tilesInMapX-totalBufferX*tileWidth,tileHeight,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage westBoundaryImage = new BufferedImage(tileWidth,tileHeight*tilesInMapY-totalBufferY*tileHeight,BufferedImage.TYPE_INT_ARGB);
+			BufferedImage eastBoundaryImage = new BufferedImage(tileWidth,tileHeight*tilesInMapY-totalBufferY*tileHeight,BufferedImage.TYPE_INT_ARGB);
 			
 			Graphics ng = northBoundaryImage.createGraphics();
 			Graphics sg = southBoundaryImage.createGraphics();
 			Graphics wg = westBoundaryImage.createGraphics();
 			Graphics eg = eastBoundaryImage.createGraphics();
 			
-			for(int i=0;i<(MapBuilder.TILES_IN_MAP_X-totalBufferX)/3;i++){
-				ng.drawImage(horizontalBoundary.getImage(),i*MapBuilder.TILE_WIDTH*3,0,null);
-				sg.drawImage(horizontalBoundary.getImage(),i*MapBuilder.TILE_WIDTH*3,0,null);
+			for(int i=0;i<(tilesInMapX-totalBufferX)/3;i++){
+				ng.drawImage(horizontalBoundary.getImage(),i*tileWidth*3,0,null);
+				sg.drawImage(horizontalBoundary.getImage(),i*tileWidth*3,0,null);
 			}
-			for(int i=0;i<(MapBuilder.TILES_IN_MAP_Y-totalBufferY)/3;i++){
-				wg.drawImage(verticalBoundary.getImage(),0,i*MapBuilder.TILE_HEIGHT*3,null);
-				eg.drawImage(verticalBoundary.getImage(),0,i*MapBuilder.TILE_HEIGHT*3,null);
+			for(int i=0;i<(tilesInMapY-totalBufferY)/3;i++){
+				wg.drawImage(verticalBoundary.getImage(),0,i*tileHeight*3,null);
+				eg.drawImage(verticalBoundary.getImage(),0,i*tileHeight*3,null);
 			}
 			
 			ng.dispose();
@@ -64,10 +70,10 @@ public class BoundaryGenerator extends BaseGenerator {
 			GImage westBoundary = new GImage(westBoundaryImage);
 			GImage eastBoundary = new GImage(eastBoundaryImage);
 			
-			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,northBoundary));
-			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MainApplication.MAP_HEIGHT-MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,southBoundary));
-			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,westBoundary));
-			actors.add(new Obstacle(MainApplication.MAP_WIDTH-MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,eastBoundary));
+			actors.add(new Obstacle(tileWidth*tilesBufferX,tileHeight*tilesBufferY,driver,northBoundary));
+			actors.add(new Obstacle(tileWidth*tilesBufferX,mapHeight-tileHeight*tilesBufferY,driver,southBoundary));
+			actors.add(new Obstacle(tileWidth*tilesBufferX,tileHeight*tilesBufferY,driver,westBoundary));
+			actors.add(new Obstacle(mapWidth-tileWidth*tilesBufferX,tileHeight*tilesBufferY,driver,eastBoundary));
 			
 			hasSpawned = true;
 		}

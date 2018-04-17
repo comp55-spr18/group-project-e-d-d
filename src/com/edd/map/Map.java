@@ -7,12 +7,18 @@ import acm.graphics.GImage;
 
 public class Map {
 
+	private int tilesInMapX, tilesInMapY;
+	private int tilesBufferX, tilesBufferY;
 	private int tileWidth, tileHeight;
 	private GImage[][] map;
 	private GImage baseImage;
 	
-	public Map(GImage[][] map, int tileWidth, int tileHeight, GImage baseImage){
+	public Map(GImage[][] map, int tilesInMapX, int tilesInMapY, int tilesBufferX, int tilesBufferY, int tileWidth, int tileHeight, GImage baseImage){
 		this.map = map;
+		this.tilesInMapX = tilesInMapX;
+		this.tilesInMapY = tilesInMapY;
+		this.tilesBufferX = tilesBufferX;
+		this.tilesBufferY = tilesBufferY;
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
 		this.baseImage = baseImage;
@@ -31,6 +37,30 @@ public class Map {
 		}
 		g.dispose();
 		return new GImage(image);
+	}
+
+	public int getTilesInMapX() {
+		return tilesInMapX;
+	}
+
+	public int getTilesInMapY() {
+		return tilesInMapY;
+	}
+
+	public int getTilesBufferX() {
+		return tilesBufferX;
+	}
+
+	public int getTilesBufferY() {
+		return tilesBufferY;
+	}
+	
+	public int getMapWidth(){
+		return tilesInMapX * tileWidth;
+	}
+	
+	public int getMapHeight(){
+		return tilesInMapY * tileHeight;
 	}
 	
 }
