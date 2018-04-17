@@ -45,11 +45,12 @@ public class Saw extends BaseActor {
 		adjust();
 		if(active){
 			for(BaseActor character : accesser.getCharacters()){
-				if(character != owner)
+				if(character != owner){
 					if(CollisionUtil.overlaps(this, character)){
 						((Character)character).onHit(owner);
 						active = false;
 					}
+				}
 			}
 		}
 	}

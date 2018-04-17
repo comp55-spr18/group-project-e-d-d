@@ -74,11 +74,13 @@ public abstract class Character extends BaseActor {
 	
 	//modifiers
 	public int modifySize(int modifyValue) {
-		if(size+modifyValue > MAX_SIZE)
-			modifyValue = MAX_SIZE-size;
-		if(size+modifyValue < MIN_SIZE){
-			onDeath();
-			return 0;
+		if(!(this instanceof AttackOrb)){
+			if(size+modifyValue > MAX_SIZE)
+				modifyValue = MAX_SIZE-size;
+			if(size+modifyValue < MIN_SIZE){
+				onDeath();
+				return 0;
+			}
 		}
 		
 		size += modifyValue;
@@ -148,7 +150,7 @@ public abstract class Character extends BaseActor {
 	
 
 	protected void adjustSaw(){
-		range = (int)(size*1.5);
+		range = this instanceof AttackOrb ? size*2 : (int)(size*1.5);
 		saw.adjust();
 	}
 	
@@ -163,6 +165,11 @@ public abstract class Character extends BaseActor {
 		((GOval)sprite).setFillColor(oldSprite.getFillColor());
 		
 		driver.add(sprite);
+		
+		if(this instanceof Player){
+			Player p = (Player)this;
+			p.getNameLabel().move(modifyValue/2, modifyValue);
+		}
 		
 		adjustSaw();
 		
@@ -205,6 +212,7 @@ public abstract class Character extends BaseActor {
 	}
 	
 	public void onHit(Character actor){
+		
 		if(actor.x > x){
 			hitVelocityX = -KNOCKBACK_VELOCITY_X;
 		} else {
@@ -216,19 +224,18 @@ public abstract class Character extends BaseActor {
 		} else {
 			hitVelocityY = KNOCKBACK_VELOCITY_Y;
 		}
-
+		
 		modifySize(-actor.getStrength());
 	}
 	
 	public void onDeath(){
 		dead = true;
+		remove();
 		
 		if(this instanceof AI){
-			remove();
 			driver.actorAccesser.removeAI((AI)this);
 		}
 		if(this instanceof Player){
-			remove();
 			Player p = (Player)this;
 			p.respawn();
 		}

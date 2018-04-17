@@ -1,7 +1,9 @@
 package com.edd.collision;
 
+import com.edd.character.AttackOrb;
 import com.edd.character.Direction;
 import com.edd.character.Rate;
+import com.edd.character.Saw;
 import com.edd.circlebrawl.BaseActor;
 
 public abstract class CollisionUtil {
@@ -9,7 +11,7 @@ public abstract class CollisionUtil {
 	private static final int MDRPI = 5; // Max detection range per instance
 	
 	public static CollisionResult overlaps(BaseActor moving, BaseActor resting, int x, int y){
-
+		
 		CollisionResult result = new CollisionResult(false,false);
 
 		int tX = 0;
@@ -25,8 +27,8 @@ public abstract class CollisionUtil {
 		else if(y > MDRPI)
 			tY = y-MDRPI;
 		
-		if(x > MDRPI || y > MDRPI){
-			result.merge(overlaps(moving,resting,tX,tY));
+		if(x > MDRPI || y > MDRPI || x < -MDRPI || y < -MDRPI){
+			result = result.merge(overlaps(moving,resting,tX,tY));
 		}
 		
 		if(moving == resting) // if the two actors are the same
@@ -51,7 +53,7 @@ public abstract class CollisionUtil {
 		int y2b = cb2.yb; // far up end of resting actor
 		int x2e = cb2.xe; // far right end of resting actor
 		int y2e = cb2.ye; // far down end of resting actor
-
+		
 		if(direction == Direction.NEUTRAL){
 			boolean overlaps = inRange(x1b,x1e,x2b,x2e) && inRange(y1b,y1e,y2b,y2e);
 			return new CollisionResult(overlaps,overlaps);
@@ -87,7 +89,7 @@ public abstract class CollisionUtil {
 	}
 	
 	public static boolean overlaps(BaseActor first, BaseActor second){
-		return overlaps(first, second, 0, 0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
+		return overlaps(first, second, 0, 0).xCollides || overlaps(second,first,0,0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
 	}
 	
 	private static boolean inRange(int t1b, int t1e, int t2b, int t2e){

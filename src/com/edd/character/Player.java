@@ -74,6 +74,7 @@ public class Player extends Character {
 			driver.remove(namePlate);
 		namePlate = new GLabel(name, sprite.getX() + size/2, sprite.getY() + size);
 		namePlate.move(-namePlate.getWidth()/2, namePlate.getHeight());
+		namePlate.setColor(Color.WHITE);
 		driver.add(namePlate);
 	}
 
@@ -89,14 +90,12 @@ public class Player extends Character {
 	}
 
 	public void respawn(){
-		Random rand = new Random();
-		
 		remove();
 		basicPreConstructor(gameType,driver);
-		setRandomLocation();
 		cam.undoTranslation();
-		basicPlayerConstructor(gameType,name, c[rand.nextInt(c.length)],new CollisionEngine(this,driver));
-		
+		setRandomLocation();
+		basicPlayerConstructor(gameType,name,new CollisionEngine(this,driver));
+
 		boolean setPlayerSpritePos = false;
 		
 		switch(gameType){
@@ -111,6 +110,8 @@ public class Player extends Character {
 		
 		if(setPlayerSpritePos)
 			setPlayerSpritePos();
+		
+		dead = false;
 	}
 	
 	public String getName() { return name; }
