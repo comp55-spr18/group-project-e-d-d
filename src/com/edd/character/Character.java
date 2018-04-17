@@ -23,7 +23,7 @@ public abstract class Character extends BaseActor {
 	protected final int MAX_STRENGTH = 100;
 	protected final double MAX_ATTACK_SPEED = 3;
 	
-	protected final int MIN_SIZE = 30; // death below this point
+	protected final int MIN_SIZE = 50; // death below this point
 	protected final int MIN_DEFENSE = -50;
 	protected final int MIN_SPEED = 1;
 	protected final int MIN_STRENGTH = 10; 
@@ -217,7 +217,7 @@ public abstract class Character extends BaseActor {
 			hitVelocityY = KNOCKBACK_VELOCITY_Y;
 		}
 
-		modifySize(-actor.getStrength()/2);
+		modifySize(-actor.getStrength());
 	}
 	
 	public void onDeath(){

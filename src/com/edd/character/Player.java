@@ -93,6 +93,8 @@ public class Player extends Character {
 		
 		remove();
 		basicPreConstructor(gameType,driver);
+		setRandomLocation();
+		cam.undoTranslation();
 		basicPlayerConstructor(gameType,name, c[rand.nextInt(c.length)],new CollisionEngine(this,driver));
 		
 		boolean setPlayerSpritePos = false;

@@ -18,6 +18,29 @@ public class Camera implements Tick {
 		this.totalTranslationY = totalTranslationY;
 		this.player = player;
 		this.app = app;
+		applyInitialTranslation();
+	}
+	
+	private void applyInitialTranslation(){
+		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();) {
+			GObject next = it.next();
+			if (next == player.sprite || next == player.getSaw().getSprite() || next == player.getNameLabel()
+					|| next.equals(app.muteButton) || next.equals(app.pauseButton)) {
+				continue;
+			} else
+				next.move(totalTranslationX, totalTranslationY);
+		}
+	}
+	
+	public void undoTranslation(){
+		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();) {
+			GObject next = it.next();
+			if (next == player.sprite || next == player.getSaw().getSprite() || next == player.getNameLabel()
+					|| next.equals(app.muteButton) || next.equals(app.pauseButton)) {
+				continue;
+			} else
+				next.move(-totalTranslationX, -totalTranslationY);
+		}
 	}
 
 	public void setX(double x) {
