@@ -223,16 +223,12 @@ public abstract class Character extends BaseActor {
 	public void onDeath(){
 		dead = true;
 		
-		for(AttackOrb attackOrb : attackOrbs){
-			attackOrbs.remove(attackOrb);
-			attackOrb.remove();
-		}
-		
 		if(this instanceof AI){
 			remove();
 			driver.actorAccesser.removeAI((AI)this);
 		}
 		if(this instanceof Player){
+			//remove();
 			//Player p = (Player)this;
 			//p.respawn();
 		}

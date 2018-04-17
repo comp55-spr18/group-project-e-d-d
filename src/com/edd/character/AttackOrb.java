@@ -46,7 +46,6 @@ public class AttackOrb extends Character {
 					break;
 			}
 			if(shouldTranslate){
-				System.out.println("translating");
 				sprite.setLocation((int)(owner.getSprite().getX()+owner.getWidth()/2),(int)(owner.getSprite().getY()-owner.getHeight()/2));
 			}
 		}

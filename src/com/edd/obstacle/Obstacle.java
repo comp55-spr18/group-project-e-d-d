@@ -12,7 +12,8 @@ import com.edd.generator.BaseGenerator;
 import acm.graphics.GImage;
 
 public class Obstacle extends BaseActor implements Tick {
-	private final int MAX_IMAGES = 6; // number of images
+	private final String[] IMAGE_FILES = {"redCrate.png","blueCrate.png","greenCrate.png","redCrateHorizontal.png","blueCrateHorizontal.png","greenCrateHorizontal.png",
+										"bruntCar1_small.png","bruntCar2_small.png"};
 	
 	private String obstacleFile; // the filename for the obstacle image
 
@@ -37,7 +38,8 @@ public class Obstacle extends BaseActor implements Tick {
 	}
 	
 	private void basicObstacleConstructor(){
-		this.obstacleFile = randomObstacle();
+		Random rand = new Random();
+		this.obstacleFile = IMAGE_FILES[rand.nextInt(IMAGE_FILES.length)];
 		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
 	}
 
@@ -45,25 +47,6 @@ public class Obstacle extends BaseActor implements Tick {
 		this.obstacleFile = "";
 		this.sprite = image;
 		basicPostConstructor();
-	}
-
-	public String randomObstacle() {
-		Random rand = new Random();
-		int selectedImageFile = rand.nextInt(MAX_IMAGES) + 1;
-		switch (selectedImageFile) {
-		case 1:
-			return "redCrate.png";
-		case 2:
-			return "blueCrate.png";
-		case 3:
-			return "greenCrate.png";
-		case 4:
-			return "redCrateHorizontal.png";
-		case 5:
-			return "blueCrateHorizontal.png";
-		default:
-			return "greenCrateHorizontal.png";
-		}
 	}
 
 	public String getObstacleFile() {
