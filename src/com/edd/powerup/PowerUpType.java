@@ -19,7 +19,7 @@ public enum PowerUpType {
 	ENDURANCE(3,"powerup_endurance.png",7,5,10),
 	EVIL_ENDURANCE(1,"evil_powerup_endurance.png",7,-10,-5),
 	CORRUPTED_ENDURANCE(2,"corrupted_powerup_endurance.png",7,-15,15),
-	ATTACK_ORB(2,"powerup_attackorb.png",15);
+	ATTACK_ORB(200,"powerup_attackorb.png",15);
 	
 	// Portions work this way:
 	// Each PowerUpType gets a certain amount of "portions," and the higher number of portions one PowerUpType has, the higher likelihood it has of being generated.

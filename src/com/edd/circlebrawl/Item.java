@@ -6,12 +6,10 @@ public abstract class Item extends BaseActor implements Tick {
 
 	protected int multiple; // multiply any stat effects by this number
 	protected int efficacy; // the strength of the item
-	protected BaseGenerator generator; // the generator generating this item
 
-	protected void basicItemConstructor(int efficacy, int multiple, BaseGenerator generator){
+	protected void basicItemConstructor(int efficacy, int multiple){
 		this.efficacy = efficacy;
 		this.multiple = multiple;
-		this.generator = generator;
 	}
 	
 	/**

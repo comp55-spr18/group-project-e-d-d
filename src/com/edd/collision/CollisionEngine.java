@@ -10,19 +10,23 @@ import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Resource;
 import com.edd.powerup.PowerUp;
 
-public abstract class BaseCollisionEngine {
+public class CollisionEngine {
 
 	protected BaseActor actor;
 	protected MainApplication driver;
-	protected ActorAccesser accesser;
+	
+	public CollisionEngine(BaseActor actor, MainApplication driver){
+		this.actor = actor;
+		this.driver = driver;
+	}
 	
 	public CollisionResult move(int x, int y) {
 		if(actor instanceof Character){
 			Character character = (Character)actor;
-			ArrayList<Item> items = collidesWithItems(accesser.getItems(),x,y);
-			CollisionResult boundaryOverlap = collidesWithActors(accesser.getBoundaries(),x,y);
-			CollisionResult obstacleOverlap = collidesWithActors(accesser.getObstacles(),x,y);
-			CollisionResult characterOverlap = collidesWithActors(accesser.getCharacters(),x,y);
+			ArrayList<Item> items = collidesWithItems(driver.actorAccesser.getItems(),x,y);
+			CollisionResult boundaryOverlap = collidesWithActors(driver.actorAccesser.getBoundaries(),x,y);
+			CollisionResult obstacleOverlap = collidesWithActors(driver.actorAccesser.getObstacles(),x,y);
+			CollisionResult characterOverlap = collidesWithActors(driver.actorAccesser.getCharacters(),x,y);
 
 			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides || boundaryOverlap.xCollides;
 			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides || boundaryOverlap.yCollides;
@@ -47,29 +51,33 @@ public abstract class BaseCollisionEngine {
 		return new CollisionResult(true,true); // do not move!
 	}
 	
-	// removes the item from active item lists
-	protected abstract void cleanUpItem(Item item);
+	private void cleanUpItem(Item item){
+		if(item instanceof PowerUp)
+			driver.actorAccesser.removePowerUp((PowerUp)item);
+		if(item instanceof Resource)
+			driver.actorAccesser.removeResource((Resource)item);
+	}
 	
 	public boolean collidesWithAnything(){
-		for(BaseActor powerUp : accesser.getPowerUps())
+		for(BaseActor powerUp : driver.actorAccesser.getPowerUps())
 			if(CollisionUtil.overlaps(actor, powerUp))
 				return true;
-		for(BaseActor resource : accesser.getResources())
+		for(BaseActor resource : driver.actorAccesser.getResources())
 			if(CollisionUtil.overlaps(actor, resource))
 				return true;
-		for(BaseActor AI : accesser.getAIs())
+		for(BaseActor AI : driver.actorAccesser.getAIs())
 			if(CollisionUtil.overlaps(actor, AI))
 				return true;
-		for(BaseActor obstacle : accesser.getObstacles())
+		for(BaseActor obstacle : driver.actorAccesser.getObstacles())
 			if(CollisionUtil.overlaps(actor, obstacle))
 				return true;
-		for(BaseActor player : accesser.getPlayers())
+		for(BaseActor player : driver.actorAccesser.getPlayers())
 			if(CollisionUtil.overlaps(actor, player))
 				return true;
 		return false;
 	}
 	
-	protected CollisionResult collidesWithActors(ArrayList<BaseActor> otherActors, int x, int y) {
+	private CollisionResult collidesWithActors(ArrayList<BaseActor> otherActors, int x, int y) {
 		boolean xOverlaps = false;
 		boolean yOverlaps = false;
 		
@@ -84,7 +92,7 @@ public abstract class BaseCollisionEngine {
 		return new CollisionResult(xOverlaps,yOverlaps);
 	}
 	
-	protected ArrayList<Item> collidesWithItems(ArrayList<BaseActor> items, int x, int y){
+	private ArrayList<Item> collidesWithItems(ArrayList<BaseActor> items, int x, int y){
 		ArrayList<Item> retVal = new ArrayList<Item>();
 		for(BaseActor item : items){
 			if(item.collidesWith(actor))

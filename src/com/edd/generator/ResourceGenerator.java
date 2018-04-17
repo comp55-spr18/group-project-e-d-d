@@ -19,7 +19,7 @@ public class ResourceGenerator extends BaseGenerator {
 	@Override
 	public void spawn() {
 		for(int i=0;i<10;i++)
-			actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1,this));
+			actors.add(new Resource(gameType, driver,getRandomEfficacy(2,3),1));
 	}
 
 }

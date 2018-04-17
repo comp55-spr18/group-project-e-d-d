@@ -9,10 +9,8 @@ import com.edd.circlebrawl.Camera;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.MultiplayerSam_Test;
-import com.edd.collision.BaseCollisionEngine;
+import com.edd.collision.CollisionEngine;
 import com.edd.collision.CollisionResult;
-import com.edd.collision.MultiPlayerCollisionEngine;
-import com.edd.collision.SinglePlayerCollisionEngine;
 
 import acm.graphics.GLabel;
 
@@ -21,7 +19,7 @@ public class Player extends Character {
 	private final int BASE_SIZE = 100;
 	private final int BASE_DEFENSE = 10;
 	private final int BASE_SPEED = 5;
-	private final int BASE_STRENGTH = 50;
+	private final int BASE_STRENGTH = 20;
 	private final double BASE_ATTACK_SPEED = 2.3;
 	
 	private boolean keyW, keyS, keyA, keyD;
@@ -36,24 +34,24 @@ public class Player extends Character {
 
 	public Player(int x, int y, MainApplication mainApplication) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(GameType.SINGLEPLAYER,"", new SinglePlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(GameType.SINGLEPLAYER,"", new CollisionEngine(this,driver));
 		setPlayerSpritePos();
 	}
 
 	public Player(String name, int x, int y, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(GameType.SINGLEPLAYER,name, new SinglePlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(GameType.SINGLEPLAYER,name, new CollisionEngine(this,driver));
 		setPlayerSpritePos();
 	}
 	
 	public Player(String name, boolean isClient, int x, int y, int color, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicPlayerConstructor(GameType.MULTIPLAYER,name, c[color],new MultiPlayerCollisionEngine(this,driver));
+		basicPlayerConstructor(GameType.MULTIPLAYER,name, c[color],new CollisionEngine(this,driver));
 		if(isClient)
 			setPlayerSpritePos();
 	}
 	
-	protected void basicPlayerConstructor(GameType gameType, String name, Color color, BaseCollisionEngine collisionEngine){
+	protected void basicPlayerConstructor(GameType gameType, String name, Color color, CollisionEngine collisionEngine){
 		basicCharacterConstructor(collisionEngine,gameType,BASE_SIZE,BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,color);
 		basicPostConstructor();
 		this.name = name;
@@ -78,7 +76,7 @@ public class Player extends Character {
 		driver.add(namePlate);
 	}
 
-	protected void basicPlayerConstructor(GameType gameType, String name, BaseCollisionEngine collisionEngine){
+	protected void basicPlayerConstructor(GameType gameType, String name, CollisionEngine collisionEngine){
 		Random rand = new Random();
 		basicPlayerConstructor(gameType,name,c[rand.nextInt(c.length)],collisionEngine);
 	}

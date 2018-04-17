@@ -72,7 +72,7 @@ public class PowerUpGenerator extends BaseGenerator {
 	public void spawn() {
 		PowerUpType generatedType = generatePowerUpType(rand);
 		for(int i=0;i<3;i++)
-			actors.add(new PowerUp(gameType,driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType,this));
+			actors.add(new PowerUp(gameType,driver,getRandomEfficacy(generatedType.getMinEfficacy(),generatedType.getMaxEfficacy()),1,generatedType));
 	}
 	
 	@Override

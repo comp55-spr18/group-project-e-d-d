@@ -15,36 +15,33 @@ public class Obstacle extends BaseActor implements Tick {
 	private final int MAX_IMAGES = 6; // number of images
 	
 	private String obstacleFile; // the filename for the obstacle image
-	protected BaseGenerator generator; // the generator generating this obstacle
 
-	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator) {
+	public Obstacle(GameType gameType, MainApplication driver) {
 		basicPreConstructor(gameType,driver);
-		basicObstacleConstructor(generator);
+		basicObstacleConstructor();
 	}
 	
-	public Obstacle(GameType gameType, MainApplication driver, BaseGenerator generator, GImage image) {
+	public Obstacle(GameType gameType, MainApplication driver, GImage image) {
 		basicPreConstructor(gameType,driver);
-		basicObstacleConstructor(generator,image);
+		basicObstacleConstructor(image);
 	}
 	
-	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator) {
+	public Obstacle(int x, int y, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicObstacleConstructor(generator);
+		basicObstacleConstructor();
 	}
 	
-	public Obstacle(int x, int y, MainApplication driver, BaseGenerator generator, GImage image) {
+	public Obstacle(int x, int y, MainApplication driver, GImage image) {
 		basicPreConstructor(x,y,driver);
-		basicObstacleConstructor(generator,image);
+		basicObstacleConstructor(image);
 	}
 	
-	private void basicObstacleConstructor(BaseGenerator generator){
-		this.generator = generator;
+	private void basicObstacleConstructor(){
 		this.obstacleFile = randomObstacle();
 		basicPostConstructor("com/edd/obstacle/" + this.obstacleFile);
 	}
 
-	private void basicObstacleConstructor(BaseGenerator generator, GImage image){
-		this.generator = generator;
+	private void basicObstacleConstructor(GImage image){
 		this.obstacleFile = "";
 		this.sprite = image;
 		basicPostConstructor();

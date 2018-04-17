@@ -52,6 +52,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER, this);
 
+		setupMap();
 		add(this.background);
 
 		Random r = new Random();
@@ -211,7 +212,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							String type = powerUpInfo[5];
 							PowerUpType PUT = PowerUpType.stringToEnum(type);
 							PowerUp PU = new PowerUp(GameType.MULTIPLAYER, x, y, world, efficacy, multiple,
-									PowerUpType.stringToEnum(type), null);
+									PowerUpType.stringToEnum(type));
 							System.out.println("adding powerup" + powerUpID);
 							powerups.put(powerUpID, PU);
 						}
@@ -230,7 +231,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							int multiple = Integer.parseInt(resourceInfo[2]);
 							int x = Integer.parseInt(resourceInfo[3]);
 							int y = Integer.parseInt(resourceInfo[4]);
-							Resource r = new Resource(x, y, world, efficacy, multiple, null);
+							Resource r = new Resource(x, y, world, efficacy, multiple);
 							System.out.println("adding resource" + resourceID);
 							resources.put(resourceID, r);
 						}

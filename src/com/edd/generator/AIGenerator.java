@@ -12,7 +12,7 @@ public class AIGenerator extends BaseGenerator {
 		this.driver = driver;
 
 		maxSpawns = driver.AI_MAX;
-		spawnDelay = 10;
+		spawnDelay = 2;
 		
 		activated = true;
 	}
@@ -20,7 +20,7 @@ public class AIGenerator extends BaseGenerator {
 	
 	@Override
 	public void spawn() {
-		actors.add(new AI(gameType, driver, this));
+		actors.add(new AI(gameType, driver));
 	}
 
 }

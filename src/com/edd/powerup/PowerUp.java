@@ -18,16 +18,16 @@ public class PowerUp extends Item {
 	private boolean activated = false;
 	private AttackOrb attackOrb;
 	
-	public PowerUp(GameType gameType, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
+	public PowerUp(GameType gameType, MainApplication driver, int efficacy, int multiple, PowerUpType type) {
 		basicPreConstructor(gameType,driver);
-		basicItemConstructor(efficacy,multiple,generator);
+		basicItemConstructor(efficacy,multiple);
 		basicPowerUpConstructor(type);
 	}
 	
-	public PowerUp(GameType gameType, int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type, BaseGenerator generator) {
+	public PowerUp(GameType gameType, int x, int y, MainApplication driver, int efficacy, int multiple, PowerUpType type) {
 		this.gameType = gameType;
 		basicPreConstructor(x,y,driver);
-		basicItemConstructor(efficacy,multiple,generator);
+		basicItemConstructor(efficacy,multiple);
 		basicPowerUpConstructor(type);
 	}
 	
@@ -52,27 +52,22 @@ public class PowerUp extends Item {
 			case EVIL_SPEED:
 			case CORRUPTED_SPEED:
 				efficacy = consumer.modifySpeed(finalEfficacy);
-				System.out.println("Modify speed by "+finalEfficacy+"!");
 				break;
 			case STRENGTH:
 			case EVIL_STRENGTH:
 			case CORRUPTED_STRENGTH:
 				efficacy = consumer.modifyStrength(finalEfficacy);
-				System.out.println("Modify strength by "+finalEfficacy+"!");
 				break;
 			case ENDURANCE:
 			case EVIL_ENDURANCE:
 			case CORRUPTED_ENDURANCE:
 				efficacy = consumer.modifyDefense(finalEfficacy);
-				System.out.println("Modify defense by "+finalEfficacy+"!");
 				break;
 			case ATTACK_ORB:
 				if(!activated){
 					attackOrb = consumer.spawnAttackOrb(gameType);
-					System.out.println("Spawned attack orb!");
 				} else {
 					consumer.despawnAttackOrb(attackOrb);
-					System.out.println("Despawned attack orb!");
 				}
 				break;
 		}
@@ -92,7 +87,7 @@ public class PowerUp extends Item {
 		if(activated){
 			if(time <= 0) {
 				toggleEffect();
-				generator.addToRemoveList(this); // removing this powerup from ticklist
+				driver.actorAccesser.removePowerUp(this);
 			} else {
 				time--;
 			}

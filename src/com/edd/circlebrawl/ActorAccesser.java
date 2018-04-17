@@ -2,6 +2,10 @@ package com.edd.circlebrawl;
 
 import java.util.ArrayList;
 
+import com.edd.character.AI;
+import com.edd.obstacle.Obstacle;
+import com.edd.powerup.PowerUp;
+
 public class ActorAccesser {
 
 	private GameType gameType;
@@ -94,6 +98,51 @@ public class ActorAccesser {
 		if(gameType == GameType.SINGLEPLAYER)
 			return driver.AI_GEN.getActors();
 		return new ArrayList<BaseActor>();
+	}
+	
+	public void removeAI(AI ai){
+		switch(gameType){
+			case SINGLEPLAYER:
+				driver.AI_GEN.addToRemoveList(ai);
+				return;
+			case MULTIPLAYER:
+				// TODO: Sam, add to remove ticklist!
+				return;
+		}
+	}
+	
+	public void removeObstacle(Obstacle obstacle){
+		switch(gameType){
+			case SINGLEPLAYER:
+				driver.OBSTACLE_GEN.addToRemoveList(obstacle);
+				return;
+			case MULTIPLAYER:
+				// TODO: Sam, add to remove ticklist!
+				return;
+		}
+	}
+
+	public void removeResource(Resource resource){
+		switch(gameType){
+			case SINGLEPLAYER:
+				driver.RESOURCE_GEN.addToRemoveList(resource);
+				return;
+			case MULTIPLAYER:
+				// TODO: Sam, add to remove ticklist!
+				return;
+		}
+	}
+	
+	public void removePowerUp(PowerUp powerUp){
+		switch(gameType){
+			case SINGLEPLAYER:
+				driver.POWERUP_GEN.addToRemoveList(powerUp);
+				driver.POWERUP_GEN.use(powerUp);
+				return;
+			case MULTIPLAYER:
+				// TODO: Sam, add to remove ticklist and "use" the powerUp!
+				return;
+		}
 	}
 	
 }

@@ -8,24 +8,19 @@ import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.Resource;
-import com.edd.collision.BaseCollisionEngine;
+import com.edd.collision.CollisionEngine;
 import com.edd.collision.CollisionResult;
-import com.edd.collision.MultiPlayerCollisionEngine;
-import com.edd.collision.SinglePlayerCollisionEngine;
-import com.edd.generator.AIGenerator;
 
 public class AI extends Character {
 
-	private static final int DETECTION_RANGE_X = 400;
-	private static final int DETECTION_RANGE_Y = 200;
+	private static final int DETECTION_RANGE = 400;
 	private static final double DIRECTION_RESET_DELAY = .5; // time in seconds before AI chooses new direction
 
 	private final int BASE_DEFENSE = 8;
 	private final int BASE_SPEED = 4;
-	private final int BASE_STRENGTH = 30;
+	private final int BASE_STRENGTH = 10;
 	private final double BASE_ATTACK_SPEED = 2;
 	
-	private AIGenerator generator;
 	private Random rand;
 	
 	private int directionResetTicks;
@@ -40,9 +35,9 @@ public class AI extends Character {
 	 * @param driver the main driver of the game
 	 * @param generator the thing generating the AI
 	 */
-	public AI(int x, int y, GameType gameType, MainApplication driver, AIGenerator generator) {
+	public AI(int x, int y, GameType gameType, MainApplication driver) {
 		basicPreConstructor(x,y,driver);
-		basicAIConstructor(gameType,driver,generator);
+		basicAIConstructor(gameType,driver);
 	}
 	/***
 	 * AI is an artificially intelligent character. Its goals include growing stronger and killing the player.
@@ -50,15 +45,14 @@ public class AI extends Character {
 	 * @param driver the main driver of the game
 	 * @param generator the thing generating the AI
 	 */
-	public AI(GameType gameType, MainApplication driver, AIGenerator generator) {
+	public AI(GameType gameType, MainApplication driver) {
 		basicPreConstructor(gameType,driver);
-		basicAIConstructor(gameType,driver,generator);
+		basicAIConstructor(gameType,driver);
 	}
 	
-	private void basicAIConstructor(GameType gameType, MainApplication driver, AIGenerator generator){
+	private void basicAIConstructor(GameType gameType, MainApplication driver){
 		rand = new Random();
-		BaseCollisionEngine collisionEngine = gameType == GameType.SINGLEPLAYER ? new SinglePlayerCollisionEngine(this,driver) : new MultiPlayerCollisionEngine(this,driver);
-		basicCharacterConstructor(collisionEngine,gameType,80+rand.nextInt(31),BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+		basicCharacterConstructor(new CollisionEngine(this,driver),gameType,80+rand.nextInt(31),BASE_DEFENSE,BASE_SPEED,BASE_STRENGTH,BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		basicPostConstructor();
 		chooseNewRandomDirection(); // establishing initial direction
 	}
@@ -122,7 +116,7 @@ public class AI extends Character {
 		
 		for(BaseActor actor : parsedActors){
 			int distance = (int)Math.abs(x-actor.getX());
-			if(distance < minDist || minDist == 0){
+			if(distance < minDist || minDist == 0 && distance <= DETECTION_RANGE){
 				minDist = distance;
 				nearestActor = (BaseActor)actor;
 			}

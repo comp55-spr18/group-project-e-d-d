@@ -64,10 +64,10 @@ public class BoundaryGenerator extends BaseGenerator {
 			GImage westBoundary = new GImage(westBoundaryImage);
 			GImage eastBoundary = new GImage(eastBoundaryImage);
 			
-			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,this,northBoundary));
-			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MainApplication.MAP_HEIGHT-MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,this,southBoundary));
-			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,this,westBoundary));
-			actors.add(new Obstacle(MainApplication.MAP_WIDTH-MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,this,eastBoundary));
+			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,northBoundary));
+			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MainApplication.MAP_HEIGHT-MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,southBoundary));
+			actors.add(new Obstacle(MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,westBoundary));
+			actors.add(new Obstacle(MainApplication.MAP_WIDTH-MapBuilder.TILE_WIDTH*MapBuilder.TILE_BUFFER_X,MapBuilder.TILE_HEIGHT*MapBuilder.TILE_BUFFER_Y,driver,eastBoundary));
 			
 			hasSpawned = true;
 		}

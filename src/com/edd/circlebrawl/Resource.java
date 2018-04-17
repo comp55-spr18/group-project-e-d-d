@@ -26,17 +26,17 @@ public class Resource extends Item {
 	 * @param multiple
 	 *            the multiplier for stat effects
 	 */
-	public Resource(int x, int y, MainApplication driver, int efficacy, int multiple, BaseGenerator generator) {
+	public Resource(int x, int y, MainApplication driver, int efficacy, int multiple) {
 		basicPreConstructor(x,y,driver);
-		basicItemConstructor(efficacy,multiple,generator);
+		basicItemConstructor(efficacy,multiple);
 		basicResourceConstructor();
 		basicPostConstructor();
 		
 	}
 
-	public Resource(GameType gameType, MainApplication driver, int efficacy, int multiple, BaseGenerator generator) {
+	public Resource(GameType gameType, MainApplication driver, int efficacy, int multiple) {
 		basicPreConstructor(gameType,driver);
-		basicItemConstructor(efficacy,multiple,generator);
+		basicItemConstructor(efficacy,multiple);
 		basicResourceConstructor();
 		basicPostConstructor();
 		
@@ -59,7 +59,7 @@ public class Resource extends Item {
 	public void activate(BaseActor consumer) {
 		if (consumer instanceof Character) {
 			((Character) consumer).modifySize(efficacy * multiple);
-			generator.addToRemoveList(this);
+			driver.actorAccesser.removeResource(this);
 		}
 	}
 

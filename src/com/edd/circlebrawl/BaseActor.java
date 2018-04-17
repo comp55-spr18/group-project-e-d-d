@@ -5,11 +5,10 @@ import java.util.Random;
 import com.edd.character.AttackOrb;
 import com.edd.character.Character;
 import com.edd.character.Player;
-import com.edd.collision.BaseCollisionEngine;
+import com.edd.character.Saw;
 import com.edd.collision.CollisionBox;
+import com.edd.collision.CollisionEngine;
 import com.edd.collision.CollisionUtil;
-import com.edd.collision.MultiPlayerCollisionEngine;
-import com.edd.collision.SinglePlayerCollisionEngine;
 import com.edd.map.MapBuilder;
 
 import acm.graphics.GImage;
@@ -58,23 +57,36 @@ public abstract class BaseActor implements Actor, Tick {
 	}
 
 	private void applyTranslation() {
-		if (this instanceof AttackOrb) {
-			AttackOrb attackOrb = (AttackOrb) this;
-			if (attackOrb.getOwner() instanceof Player)
-				return;
-		}
 		if(driver instanceof MultiplayerSam_Test){
 			MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
 			Player p = multiDriver.getClientPlayer();
-			if(p != null){
-				System.out.println(p.getCam().getTotalTranslationX());
+			if(isValidTranslation(p))
 				sprite.move(p.getCam().getTotalTranslationX(),p.getCam().getTotalTranslationY());
-			}
+			
 		} else if(!(this instanceof Player)){
 			Player p = driver.player;
-			if(p != null)
+			if(isValidTranslation(p))
 				sprite.move(p.getCam().getTotalTranslationX(),p.getCam().getTotalTranslationY());
 		}
+	}
+	
+	private boolean isValidTranslation(Player p){
+		if(p == null)
+			return false;
+		
+		if(this instanceof Saw){
+			Saw s = (Saw)this;
+			if(s.getOwner() == p)
+				return false;
+		}
+		
+		if(this instanceof AttackOrb){
+			AttackOrb a = (AttackOrb)this;
+			if(a.getOwner() == p)
+				return false;
+		}
+		
+		return true;
 	}
 
 	// Setters for sprite
@@ -164,25 +176,16 @@ public abstract class BaseActor implements Actor, Tick {
 	public void setRandomLocation() {
 		Random rand = new Random();
 		int minX = MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH + MapBuilder.TILE_WIDTH;
-		;
 		int minY = MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT + MapBuilder.TILE_HEIGHT;
-		;
 		int maxX = MainApplication.MAP_WIDTH - (int) getWidth() - MapBuilder.TILE_BUFFER_X * MapBuilder.TILE_WIDTH - MapBuilder.TILE_WIDTH;
 		int maxY = MainApplication.MAP_HEIGHT - (int) getHeight() - MapBuilder.TILE_BUFFER_Y * MapBuilder.TILE_HEIGHT - MapBuilder.TILE_HEIGHT;
 
-		BaseCollisionEngine tempEngine = null;
+		CollisionEngine tempEngine = null;
 
 		if (this instanceof Character) {
 			tempEngine = ((Character) this).getCollisionEngine();
 		} else {
-			switch (gameType) {
-			case SINGLEPLAYER:
-				tempEngine = new SinglePlayerCollisionEngine(this, driver);
-				break;
-			case MULTIPLAYER:
-				tempEngine = new MultiPlayerCollisionEngine(this, driver);
-				break;
-			}
+			tempEngine = new CollisionEngine(this,driver);
 		}
 
 		constructCollisionBox();

@@ -7,7 +7,7 @@ import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
 import com.edd.circlebrawl.MultiplayerSam_Test;
-import com.edd.collision.BaseCollisionEngine;
+import com.edd.collision.CollisionEngine;
 import com.edd.collision.CollisionBox;
 import com.edd.collision.CollisionResult;
 
@@ -30,13 +30,13 @@ public abstract class Character extends BaseActor {
 	protected final double MIN_ATTACK_SPEED = .5;
 	
 	protected final int ATTACK_DURATION = MainApplication.TICKS_PER_SECOND/2;
-	private final int HIT_VELOCITY_REDUCTION_PER_TICK = 10;
-	private final int KNOCKBACK_VELOCITY_X = 100;
-	private final int KNOCKBACK_VELOCITY_Y = 100;
+	private final int HIT_VELOCITY_REDUCTION_PER_TICK = 5;
+	private final int KNOCKBACK_VELOCITY_X = 50;
+	private final int KNOCKBACK_VELOCITY_Y = 50;
 	
 	// ALL NUMBERS ABOVE CAN BE CHANGED AT WILL
 	
-	protected BaseCollisionEngine collisionEngine;
+	protected CollisionEngine collisionEngine;
 	
 	protected int size; // how large this Character is; also indicative of health
 	protected int defense; // how much damage this Character can take
@@ -55,7 +55,7 @@ public abstract class Character extends BaseActor {
 	private int attackTicks;
 	private int hitVelocityX, hitVelocityY;
 	
-	protected void basicCharacterConstructor(BaseCollisionEngine engine, GameType gameType, int size, int defense, int speed, int strength, double attackSpeed, Color color){
+	protected void basicCharacterConstructor(CollisionEngine engine, GameType gameType, int size, int defense, int speed, int strength, double attackSpeed, Color color){
 		this.collisionEngine = engine;
 		this.size = size;
 		this.defense = defense;
@@ -82,7 +82,6 @@ public abstract class Character extends BaseActor {
 		}
 		
 		size += modifyValue;
-		adjustSaw();
 		resize(modifyValue);
 
 		// making AttackOrbs' size scale
@@ -93,11 +92,6 @@ public abstract class Character extends BaseActor {
 		}
 		
 		return modifyValue;
-	}
-	
-	protected void adjustSaw(){
-		range = (int)(size*1.5);
-		saw.adjust();
 	}
 	
 	public int modifyDefense(int modifyValue) {
@@ -152,6 +146,12 @@ public abstract class Character extends BaseActor {
 		return modifyValue;
 	}
 	
+
+	protected void adjustSaw(){
+		range = (int)(size*1.5);
+		saw.adjust();
+	}
+	
 	private void resize(int modifyValue){
 		driver.remove(sprite);
 		
@@ -164,9 +164,7 @@ public abstract class Character extends BaseActor {
 		
 		driver.add(sprite);
 		
-		//driver.remove(saw);
-		//saw.setBounds(x - sprite.getWidth() * 2, y, (saw.getWidth()+modifyValue*1.5), saw.getHeight()+modifyValue*1.5);
-		//saw.move(modifyValue/1.5, modifyValue/1.5);
+		adjustSaw();
 		
 		constructCollisionBox();
 	}
@@ -179,11 +177,21 @@ public abstract class Character extends BaseActor {
 	public double getAttackSpeed(){ return attackSpeed; }
 	public int getRange(){ return range; }
 	public Saw getSaw() { return saw; }
-	public BaseCollisionEngine getCollisionEngine(){ return collisionEngine; }
+	public CollisionEngine getCollisionEngine(){ return collisionEngine; }
 	
 	public ArrayList<AttackOrb> getAttackOrbs(){ return attackOrbs; }
 	public AttackOrb spawnAttackOrb(GameType gameType){ return new AttackOrb(gameType,this,driver); }
 	public void despawnAttackOrb(AttackOrb attackOrbToRemove){ attackOrbRemovalList.add(attackOrbToRemove); }
+	
+	@Override
+	public void remove(){
+		super.remove();
+		if(attackOrbs != null)
+			for(AttackOrb attackOrb : attackOrbs)
+				attackOrb.remove();
+		if(saw != null)
+			saw.remove();
+	}
 	
 	protected void attemptAttack(){
 		if(!isAttacking && !attackedRecently){
@@ -209,7 +217,7 @@ public abstract class Character extends BaseActor {
 			hitVelocityY = KNOCKBACK_VELOCITY_Y;
 		}
 
-		//modifySize(-actor.getStrength()/2);
+		modifySize(-actor.getStrength()/2);
 	}
 	
 	public void onDeath(){
@@ -222,8 +230,7 @@ public abstract class Character extends BaseActor {
 		
 		if(this instanceof AI){
 			remove();
-			saw.remove();
-			driver.AI_GEN.addToRemoveList(this);
+			driver.actorAccesser.removeAI((AI)this);
 		}
 		if(this instanceof Player){
 			//Player p = (Player)this;
@@ -267,7 +274,10 @@ public abstract class Character extends BaseActor {
 				((Player)this).getCam().translate(-x, -y);
 			}
 		}
-	
+		
+		if(saw != null)
+			adjustSaw();
+		
 		if(attackOrbs != null)
 			for(AttackOrb attackOrb : attackOrbs)
 				attackOrb.move(x, y);
@@ -276,19 +286,26 @@ public abstract class Character extends BaseActor {
 	}
 	
 	/***
-	 * Moves the character in a polar direction.
+	 * Moves the character in a polar direction. NOTE: Does not work if character being moved is primary player
 	 * @param distance the distance to move the character
 	 * @param angle the angle to move the character
 	 */
 	public void movePolar(int distance, double angle) {
 		
-		int xChange = 0, yChange = 0;
-		// TODO: Implement xChange and yChange
+		double xSpritePreMove = sprite.getX();
+		double ySpritePreMove = sprite.getY();
 		
 		if(shouldMoveSprite())
 			sprite.movePolar(distance,angle);
-		this.x += xChange;
-		this.y += yChange;
+		
+		double xSpritePostMove = sprite.getX();
+		double ySpritePostMove = sprite.getY();
+		
+		this.x += Math.abs(xSpritePreMove-xSpritePostMove);
+		this.y += Math.abs(ySpritePreMove-ySpritePostMove);
+		
+		if(saw != null)
+			adjustSaw();
 		
 		if(attackOrbs != null)
 			for(AttackOrb attackOrb : attackOrbs)

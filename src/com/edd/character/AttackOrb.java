@@ -3,9 +3,9 @@ package com.edd.character;
 import java.awt.Color;
 import java.util.Random;
 
-import com.edd.circlebrawl.ActorAccesser;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
+import com.edd.circlebrawl.MultiplayerSam_Test;
 
 public class AttackOrb extends Character {
 
@@ -13,7 +13,7 @@ public class AttackOrb extends Character {
 	
 	private Random rand;
 	private Character owner;
-	private final int ATTACK_DELAY = 2; // delay, in seconds, between attacks
+	private final int BASE_ATTACK_SPEED = 1; // delay, in seconds, between attacks
 	private double currentAngle;
 	
 	/***
@@ -27,15 +27,35 @@ public class AttackOrb extends Character {
 		this.owner = owner;
 		this.owner.attackOrbs.add(this);
 		
-		basicPreConstructor((int)(owner.getSprite().getX()+owner.getWidth()/2),(int)(owner.getSprite().getY()-owner.getHeight()/2),driver);
+		basicPreConstructor((int)(owner.getX()+owner.getWidth()/2),(int)(owner.getY()-owner.getHeight()/2),driver);
 		basicCharacterConstructor(null,gameType,(int)(owner.getSize()*PERCENT_OF_CHARACTER),0,5,
-									(int)(owner.getStrength()*PERCENT_OF_CHARACTER),ATTACK_DELAY,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+									(int)(owner.getStrength()*PERCENT_OF_CHARACTER),BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		move(-size/2,-size/2);
 		basicPostConstructor();
+		
+		if(owner instanceof Player){
+			boolean shouldTranslate = false;
+			switch(gameType){
+				case SINGLEPLAYER:
+					shouldTranslate = true;
+					break;
+				case MULTIPLAYER:
+					MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+					if(owner == multiDriver.getClientPlayer())
+						shouldTranslate = true;
+					break;
+			}
+			if(shouldTranslate){
+				System.out.println("translating");
+				sprite.setLocation((int)(owner.getSprite().getX()+owner.getWidth()/2),(int)(owner.getSprite().getY()-owner.getHeight()/2));
+			}
+		}
+
 	}
 	
 	@Override
 	public void tick(){
+		super.tick();
 		attemptAttack();
 		
 		// move logic

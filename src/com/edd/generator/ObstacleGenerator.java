@@ -20,7 +20,7 @@ public class ObstacleGenerator extends BaseGenerator {
 
 	@Override
 	public void spawn() {
-		actors.add(new Obstacle(gameType, driver, this));
+		actors.add(new Obstacle(gameType, driver));
 	}
 
 	public boolean collidesWith(BaseActor anotherActor) {

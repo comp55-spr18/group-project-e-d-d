@@ -30,9 +30,9 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
 	public static final int TICKS_PER_SECOND = 120;
 
-	private Map map = MapBuilder.buildMap("com/edd/map/test-background.csv", 2);
+	private Map map;
 
-	public GImage background = map.createImage();
+	public GImage background;
 
 	public ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER, this);
 
@@ -56,6 +56,11 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public GButton muteButton;
 	public GButton pauseButton;
 
+	public void setupMap(){
+		map = MapBuilder.buildMap("com/edd/map/test-background.csv", 2);
+		background = map.createImage();
+	}
+	
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		add(new GImage("com/edd/osvaldo/brick4.jpg"));
@@ -63,6 +68,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		loading = new GImage("com/edd/osvaldo/CircleBrawlLoading.gif", (WINDOW_WIDTH - loading.getWidth()) / 2,
 				(WINDOW_HEIGHT - loading.getHeight()) / 2);
 		add(loading);
+		setupMap();
 	}
 
 	public void run() {
@@ -120,7 +126,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public void tick() {
 		// TODO Auto-generated method stub
 		if (test && !somePane.getPauseStatus()) {
-			// OBSTACLE_GEN.tick();
+			//OBSTACLE_GEN.tick();
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
 			BOUNDARY_GEN.spawn();
