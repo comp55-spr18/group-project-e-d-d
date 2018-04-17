@@ -28,7 +28,7 @@ public abstract class CollisionUtil {
 			tY = y-MDRPI;
 		
 		if(x > MDRPI || y > MDRPI || x < -MDRPI || y < -MDRPI){
-			result = result.merge(overlaps(moving,resting,tX,tY));
+			result.merge(overlaps(moving,resting,tX,tY));
 		}
 		
 		if(moving == resting) // if the two actors are the same
@@ -89,7 +89,7 @@ public abstract class CollisionUtil {
 	}
 	
 	public static boolean overlaps(BaseActor first, BaseActor second){
-		return overlaps(first, second, 0, 0).xCollides || overlaps(second,first,0,0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
+		return overlaps(first, second, 0, 0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
 	}
 	
 	private static boolean inRange(int t1b, int t1e, int t2b, int t2e){

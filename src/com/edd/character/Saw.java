@@ -36,7 +36,7 @@ public class Saw extends BaseActor {
 		int range = owner.getRange();
 		((GImage)sprite).setBounds(owner.getSprite().getX()+owner.getWidth()/2-range/2,owner.getSprite().getY()+owner.getHeight()/2-range/2,range,range);
 		x = (int)owner.getX()+(int)owner.getWidth()/2-owner.getRange()/2;
-		y = (int)owner.getY()+(int)owner.getHeight()-owner.getRange()/2;
+		y = (int)owner.getY()+(int)owner.getHeight()/2-owner.getRange()/2;
 		constructCollisionBox();
 	}
 	
