@@ -12,8 +12,7 @@ import com.edd.generator.BaseGenerator;
 import acm.graphics.GImage;
 
 public class Obstacle extends BaseActor implements Tick {
-	private final String[] IMAGE_FILES = {"redCrate.png","blueCrate.png","greenCrate.png","redCrateHorizontal.png","blueCrateHorizontal.png","greenCrateHorizontal.png",
-										"bruntCar1_small.png","bruntCar2_small.png"};
+	private final String[] IMAGE_FILES = {"bruntCar1_small.png","bruntCar2_small.png","sandbag2V.png"};
 	
 	private String obstacleFile; // the filename for the obstacle image
 

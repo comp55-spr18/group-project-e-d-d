@@ -61,6 +61,7 @@ public class Player extends Character {
 		driver.addKeyListeners();
 		driver.addMouseListeners();
 		adjustSaw();
+		this.gameType = gameType;
 	}
 	
 	private void setPlayerSpritePos(){
@@ -87,6 +88,29 @@ public class Player extends Character {
 		return c[n];
 	}
 
+	public void respawn(){
+		Random rand = new Random();
+		
+		remove();
+		basicPreConstructor(gameType,driver);
+		basicPlayerConstructor(gameType,name, c[rand.nextInt(c.length)],new CollisionEngine(this,driver));
+		
+		boolean setPlayerSpritePos = false;
+		
+		switch(gameType){
+			case SINGLEPLAYER:
+				setPlayerSpritePos = true;
+				break;
+			case MULTIPLAYER:
+				MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+				setPlayerSpritePos = multiDriver.getClientPlayer() == this;
+				break;
+		}
+		
+		if(setPlayerSpritePos)
+			setPlayerSpritePos();
+	}
+	
 	public String getName() { return name; }
 	
 	public void setName(String name) { this.name = name; }

@@ -228,9 +228,9 @@ public abstract class Character extends BaseActor {
 			driver.actorAccesser.removeAI((AI)this);
 		}
 		if(this instanceof Player){
-			//remove();
-			//Player p = (Player)this;
-			//p.respawn();
+			remove();
+			Player p = (Player)this;
+			p.respawn();
 		}
 	}
 	
