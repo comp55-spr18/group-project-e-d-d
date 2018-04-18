@@ -21,8 +21,8 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 
 public class MainApplication extends GraphicsApplication implements Tick {
-	public static final int WINDOW_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	public static final int WINDOW_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public static final int WINDOW_WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	public static final int WINDOW_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
@@ -51,11 +51,11 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public GButton muteButton;
 	public GButton pauseButton;
 
-	public void setupMap(){
+	public void setupMap() {
 		currentMap = MapBuilder.buildMap("com/edd/map/test-background.csv", 200, 200, 55, 55, 2);
 		backgroundImage = currentMap.createImage();
 	}
-	
+
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		add(new GImage("com/edd/osvaldo/brick4.jpg"));
@@ -124,7 +124,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
 			BOUNDARY_GEN.spawn();
-			AI_GEN.tick();
+			// AI_GEN.tick(); //TEMPORARILY COMMENTED OUT BY DANILO
 			player.tick();
 		}
 
@@ -146,38 +146,38 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public void resetGame() {
 
 	}
-	
-	public ActorAccesser getAccesser(){
+
+	public ActorAccesser getAccesser() {
 		return actorAccesser;
 	}
-	
-	public GImage getBackgroundImage(){
-		if(backgroundImage == null)
+
+	public GImage getBackgroundImage() {
+		if (backgroundImage == null)
 			setupMap();
 		return backgroundImage;
 	}
-	
-	public int getMapWidth(){
+
+	public int getMapWidth() {
 		return currentMap.getMapWidth();
 	}
-	
-	public int getMapHeight(){
+
+	public int getMapHeight() {
 		return currentMap.getMapHeight();
 	}
-	
-	public int getTilesInMapX(){
+
+	public int getTilesInMapX() {
 		return currentMap.getTilesInMapX();
 	}
-	
-	public int getTilesInMapY(){
+
+	public int getTilesInMapY() {
 		return currentMap.getTilesInMapY();
 	}
-	
-	public int getTilesBufferX(){
+
+	public int getTilesBufferX() {
 		return currentMap.getTilesBufferX();
 	}
-	
-	public int getTilesBufferY(){
+
+	public int getTilesBufferY() {
 		return currentMap.getTilesBufferY();
 	}
 }
