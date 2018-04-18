@@ -207,7 +207,7 @@ public class ServerHandler extends Thread {
 	}
 	
 	public void populatePowerups() {
-		int maxPowerups = 5;
+		int maxPowerups = 50;
 		if(this.SL.powerups.size() >= maxPowerups)
 			return;
 		while(this.SL.powerups.size() <= maxPowerups) {
