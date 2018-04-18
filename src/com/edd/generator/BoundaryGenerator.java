@@ -74,9 +74,9 @@ public class BoundaryGenerator extends BaseGenerator {
 			GImage eastBoundary = new GImage(eastBoundaryImage);
 			
 			actors.add(new Obstacle(tileWidth*tilesBufferX,tileHeight*tilesBufferY,driver,northBoundary));
-			actors.add(new Obstacle(tileWidth*tilesBufferX,mapHeight-tileHeight*tilesBufferY,driver,southBoundary));
+			actors.add(new Obstacle(tileWidth*tilesBufferX,mapHeight-tileHeight*(tilesBufferY+1),driver,southBoundary));
 			actors.add(new Obstacle(tileWidth*tilesBufferX,tileHeight*tilesBufferY,driver,westBoundary));
-			actors.add(new Obstacle(mapWidth-tileWidth*tilesBufferX,tileHeight*tilesBufferY,driver,eastBoundary));
+			actors.add(new Obstacle(mapWidth-tileWidth*(tilesBufferX+1),tileHeight*tilesBufferY,driver,eastBoundary));
 			
 			hasSpawned = true;
 		}
