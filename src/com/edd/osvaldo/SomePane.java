@@ -5,8 +5,6 @@ import java.awt.event.MouseEvent;
 
 import com.edd.character.Player;
 import com.edd.circlebrawl.MainApplication;
-import com.edd.map.Map;
-import com.edd.map.MapBuilder;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
@@ -27,12 +25,10 @@ public class SomePane extends GraphicsPane {
 
 	private boolean soundPaused = false;
 	private boolean gamePaused = false;
-	private boolean pauseGameAudioFlag = false;
 
 	public SomePane(MainApplication app) {
 		this.program = app;
-		program.player = new Player("Mike", app.getMapWidth() / 2 - 100, app.getMapHeight() / 2 - 100,
-				app);
+		program.player = new Player("Mike", app.getMapWidth() / 2 - 100, app.getMapHeight() / 2 - 100, app);
 		muteButton.setFillColor(Color.GREEN);
 		program.muteButton = this.muteButton;
 		pauseButton.setFillColor(Color.GREEN);
@@ -62,14 +58,17 @@ public class SomePane extends GraphicsPane {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// para.setText("you need\nto click\non the eyes\nto go back");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (gamePaused) {
 			checkResume(obj);
 			checkQuit(obj);
 		}
 		// mute button interaction
-		if (toggleMuteButton(obj) || togglePauseButton(obj) || gamePaused)
+		toggleMuteButton(obj);
+		// pause button interaction
+		togglePauseButton(obj);
+		// prevents the saw from engaging if you selected a valid button
+		if (obj == muteButton || obj == pauseButton || obj == resume || obj == quit || gamePaused)
 			return;
 		program.player.mousePressed(e);
 		program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[4]);
@@ -90,19 +89,32 @@ public class SomePane extends GraphicsPane {
 	 */
 	public boolean toggleMuteButton(GObject obj) {
 		if (obj == muteButton && !soundPaused && !gamePaused) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);// Button Click
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = true;
 			muteButton.setFillColor(Color.GRAY);
 			return true;
 		} else if (obj == muteButton && soundPaused && !gamePaused) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);// Button Click
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 			return true;
-		} else
-			return false;
+		} else if (obj == muteButton && !soundPaused && gamePaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); // Button Click
+			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
+			soundPaused = true;
+			muteButton.setFillColor(Color.GRAY);
+			return true;
+		} else if (obj == muteButton && soundPaused && gamePaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);// Button Click
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
+			soundPaused = false;
+			muteButton.setFillColor(Color.GREEN);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -119,14 +131,11 @@ public class SomePane extends GraphicsPane {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
-			pauseGameAudioFlag = true;
-			// System.out.println("pauseGameAudioFlag set to true!");
 			gamePaused = true;
 			pause();
 			return true;
 		} else if (obj == pauseButton) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
 			gamePaused = true;
 			pause();
 			return true;
@@ -144,7 +153,7 @@ public class SomePane extends GraphicsPane {
 		}
 	}
 
-	public void checkQuit(GObject obj) {
+	public void checkQuit(GObject obj) { // Not working need to revisit
 		if (obj == quit) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			System.exit(0);
@@ -157,18 +166,16 @@ public class SomePane extends GraphicsPane {
 
 	public void pause() {
 		program.add(resume);
-		program.add(quit); // Not working, need to revisit
+		program.add(quit);
 	}
 
 	public void unpause() {
 		gamePaused = false;
 		program.remove(resume);
 		program.remove(quit);
-		program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]);
-		if (pauseGameAudioFlag) {
-			soundPaused = false;
-			pauseGameAudioFlag = false;
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]);
+		if (!soundPaused) {
+			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[6]); // Stop pause menu music
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]); // Play start menu music
 		}
 	}
 }
