@@ -12,9 +12,9 @@ import acm.graphics.GImage;
 
 public abstract class MapBuilder {
 	
-	public static final GImage TILE_SET = new GImage("com/edd/map/spritesheet.png");
-	public static final int TILE_WIDTH = 32;
-	public static final int TILE_HEIGHT = 32;
+	public static final GImage TILE_SET = new GImage("com/edd/map/V3spritesheet.png");
+	public static final int TILE_WIDTH = 256;
+	public static final int TILE_HEIGHT = 256;
 	
 	public static final int ROWS_IN_SET = (int)TILE_SET.getWidth()/TILE_WIDTH;
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
@@ -69,7 +69,7 @@ public abstract class MapBuilder {
 	
 	private static void buildTileImages(int baselineID){
 		try {
-			FileReader fileReader = new FileReader("com/edd/map/spritesheet.csv");
+			FileReader fileReader = new FileReader("com/edd/map/V3Tileset.csv");
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			String line = null;
