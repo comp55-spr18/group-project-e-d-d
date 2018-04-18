@@ -404,6 +404,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	}
 	
 	public void removePowerUP(PowerUp PU) {
+		powerups.values().remove(PU);
 		NC.removePowerUp(PU);
 	}
 }
