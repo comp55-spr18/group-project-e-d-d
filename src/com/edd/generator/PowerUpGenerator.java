@@ -21,7 +21,7 @@ public class PowerUpGenerator extends BaseGenerator {
 		this.gameType = gameType;
 		this.driver = driver;
 		
-		maxSpawns = 50;
+		maxSpawns = 75;
 		spawnDelay = 3;
 		
 		activated = true;

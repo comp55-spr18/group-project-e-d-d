@@ -31,11 +31,11 @@ public class CollisionEngine {
 			boolean xOverlaps = obstacleOverlap.xCollides || characterOverlap.xCollides || boundaryOverlap.xCollides;
 			boolean yOverlaps = obstacleOverlap.yCollides || characterOverlap.yCollides || boundaryOverlap.yCollides;
 	
-			if(items != null && !items.isEmpty())
+			if(items != null && !items.isEmpty()){
 				for(Item item : items){
 					item.consume(character);
-					cleanUpItem(item);
 				}
+			}
 			
 			if(xOverlaps)
 				x = 0;
@@ -49,13 +49,6 @@ public class CollisionEngine {
 		}
 		
 		return new CollisionResult(true,true); // do not move!
-	}
-	
-	private void cleanUpItem(Item item){
-		if(item instanceof PowerUp)
-			driver.getAccesser().removePowerUp((PowerUp)item);
-		if(item instanceof Resource)
-			driver.getAccesser().removeResource((Resource)item);
 	}
 	
 	public boolean collidesWithAnything(){

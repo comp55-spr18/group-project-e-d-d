@@ -28,7 +28,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	// CHANGE NAME HERE
 	// String myName = this.getSaltString();
-	String myName = "Osvaldo";
+	String myName = "Zach";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
@@ -436,6 +436,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	}
 	
 	public void removeResource(Resource r) {
+		System.out.println(r);
 		NC.removeResource(r);
 		resources.remove(NC.getResourceID(r));
 	}

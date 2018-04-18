@@ -84,14 +84,7 @@ public abstract class Character extends BaseActor {
 		}
 		
 		size += modifyValue;
-		resize(modifyValue);
-
-		// making AttackOrbs' size scale
-		for(AttackOrb attackOrb : attackOrbs){
-			int attackOrbModifyValue = (int)(modifyValue*AttackOrb.PERCENT_OF_CHARACTER);
-			attackOrb.modifySize(attackOrbModifyValue);
-			attackOrb.move(modifyValue/2, -attackOrbModifyValue);
-		}
+		adjustSize(modifyValue);
 		
 		return modifyValue;
 	}
@@ -154,24 +147,40 @@ public abstract class Character extends BaseActor {
 		saw.adjust();
 	}
 	
-	private void resize(int modifyValue){
+	public void adjustSize(int adjustValue){
+		
+		setSize(size+adjustValue);
+		
+		if(this instanceof Player){
+			Player p = (Player)this;
+			p.getNameLabel().move(0, adjustValue);
+		}
+		
+		if(saw != null)
+			adjustSaw();
+		
+		// making AttackOrbs' size scale
+		if(attackOrbs != null)
+			for(AttackOrb attackOrb : attackOrbs){
+				attackOrb.setSize((int)(size*AttackOrb.PERCENT_OF_CHARACTER));
+				attackOrb.move(0, -adjustValue/2);
+			}
+	}
+	
+	public void setSize(int sizeVal){
+		
+		int difference = Math.abs(size-sizeVal);
+		
 		driver.remove(sprite);
 		
 		GOval oldSprite = (GOval)sprite;
 
-		sprite = new GOval(sprite.getX(),sprite.getY(),getWidth()+modifyValue,getHeight()+modifyValue);
+		sprite = new GOval(sprite.getX()-difference/2,sprite.getY()-difference/2,sizeVal,sizeVal);
 
 		((GOval)sprite).setFilled(true);
 		((GOval)sprite).setFillColor(oldSprite.getFillColor());
 		
 		driver.add(sprite);
-		
-		if(this instanceof Player){
-			Player p = (Player)this;
-			p.getNameLabel().move(modifyValue/2, modifyValue);
-		}
-		
-		adjustSaw();
 		
 		constructCollisionBox();
 	}

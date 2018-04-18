@@ -26,12 +26,14 @@ public class AttackOrb extends Character {
 		rand = new Random();
 		this.owner = owner;
 		this.owner.attackOrbs.add(this);
-		
+
 		basicPreConstructor((int)(owner.getX()+owner.getWidth()/2),(int)(owner.getY()-owner.getHeight()/2),driver);
+
 		basicCharacterConstructor(null,gameType,(int)(owner.getSize()*PERCENT_OF_CHARACTER),0,5,
 									(int)(owner.getStrength()*PERCENT_OF_CHARACTER),BASE_ATTACK_SPEED,new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
-		move(-size/2,-size/2);
 		basicPostConstructor();
+
+		move(-size/2,-size/2);
 		
 		if(owner instanceof Player){
 			boolean shouldTranslate = false;
@@ -52,14 +54,33 @@ public class AttackOrb extends Character {
 
 	}
 	
+	private void setAttackOrbPosition(){
+		x = owner.getX()+owner.getWidth()/2-size/2+1;
+		y = owner.getY()-owner.getHeight()-size/2;
+		sprite.setLocation(owner.getSprite().getX()+owner.getWidth()/2-size/2+1,owner.getSprite().getY()-owner.getHeight()/2-size/2);
+		currentAngle = 0;
+	}
+	
+	@Override
+	public void movePolar(int distance, double angle){
+		super.movePolar(distance, angle);
+		int distanceFromOwnerX = (int)((owner.getSprite().getX()+owner.getWidth()/2)-(sprite.getX()+size/2));
+		if((distanceFromOwnerX < -size/10 && distanceFromOwnerX > -size/4 && sprite.getY() < owner.getSprite().getY()) || Math.abs(distanceFromOwnerX) > owner.getWidth()*1.5)
+			setAttackOrbPosition();
+	}
+	
 	@Override
 	public void tick(){
 		super.tick();
 		attemptAttack();
 		
+		attackOrbMove();
+	}
+	
+	private void attackOrbMove(){
 		// move logic
 		currentAngle -= (360/MainApplication.TICKS_PER_SECOND);
-		movePolar((int)((2*Math.PI*owner.size)/MainApplication.TICKS_PER_SECOND),currentAngle);  // I HATE YOU MATH --Zach
+		movePolar((int)((2*Math.PI*owner.getSize())/MainApplication.TICKS_PER_SECOND),currentAngle);  // I HATE YOU MATH --Zach
 	}
 	
 	public Character getOwner(){ return owner; }
