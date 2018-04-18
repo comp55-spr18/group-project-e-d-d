@@ -52,7 +52,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public GButton pauseButton;
 
 	public void setupMap() {
-		currentMap = MapBuilder.buildMap("com/edd/map/V3Map.csv", 25, 25, 3, 3, 2);
+		currentMap = MapBuilder.buildMap("com/edd/map/V3Map.csv", 51, 51, 15, 14, 2);
 		backgroundImage = currentMap.createImage();
 	}
 
