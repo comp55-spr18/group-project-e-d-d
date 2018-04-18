@@ -178,4 +178,13 @@ public class SomePane extends GraphicsPane {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[3]); // Play start menu music
 		}
 	}
+
+	public void bringAllToFront() {
+		pauseButton.sendToFront();
+		muteButton.sendToFront();
+		if (gamePaused) {
+			resume.sendToFront();
+			quit.sendToFront();
+		}
+	}
 }
