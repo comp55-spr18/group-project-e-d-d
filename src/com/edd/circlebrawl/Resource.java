@@ -39,7 +39,6 @@ public class Resource extends Item {
 		basicItemConstructor(efficacy,multiple);
 		basicResourceConstructor();
 		basicPostConstructor();
-		
 	}
 	
 	private void basicResourceConstructor(){

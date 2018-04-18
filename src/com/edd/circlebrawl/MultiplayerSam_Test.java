@@ -158,6 +158,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			if (p.contains("powerup")) {
 				return "powerup";
 			}
+			if (p.contains("resource")) {
+				return "resource";
+			}
 			return "";
 		}
 
@@ -241,6 +244,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							resources.put(resourceID, r);
 						}
 					}
+					System.out.println("Resources: " + resources);
 				}
 				if (parsePacket(userInput).equals("removePU")) {
 					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
@@ -289,9 +293,25 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			return null;
 		}
 		
+		public String getResourceID(Resource PU) {
+			for (Entry<String, Resource> entry : world.resources.entrySet()) {
+				String ID = entry.getKey();
+				Resource PUA = entry.getValue();
+			    if(PU.equals(PUA)) {
+			    		return ID;
+			    }
+			}
+			return null;
+		}
+		
 		public void removePowerUp(PowerUp r) {
 			String ID = getPowerUpID(r);
 			sendPacket(out, "<removePU>" + ID + "</removePU>");
+		}
+		
+		public void removeResource(Resource r) {
+			String ID = getResourceID(r);
+			sendPacket(out, "<removeR>" + ID + "</removeR>");
 		}
 
 		public int getStartX() {
@@ -413,5 +433,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public void removePowerUP(PowerUp PU) {
 		NC.removePowerUp(PU);
 		powerups.remove(NC.getPowerUpID(PU));
+	}
+	
+	public void removeResource(Resource r) {
+		NC.removeResource(r);
+		resources.remove(NC.getResourceID(r));
 	}
 }

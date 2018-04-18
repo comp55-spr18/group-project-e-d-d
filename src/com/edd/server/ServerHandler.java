@@ -51,6 +51,7 @@ public class ServerHandler extends Thread {
 					handleNewClient(clientName);
 					sendPlayerList(clientName);
 					sendPowerUpList(clientName);
+					sendResourceList(clientName);
 				}
 				if(inputLine.contains("<remove>")) {
 					String clientName = this.string_between(inputLine, "<remove>", "</remove>");
@@ -182,11 +183,19 @@ public class ServerHandler extends Thread {
 	public void sendPowerUpList(String playerName) {
 		String allPowerups = "";
 		for (Entry<String, ServerPowerUp> entry : SL.powerups.entrySet()) {
-			String ID = entry.getKey();
 			ServerPowerUp SPU = entry.getValue();
 			allPowerups += SPU.generatePacket() + "%";
 		}
 		sendPlayerPacket("<powerup>" + allPowerups + "</powerup>");
+	}
+	
+	public void sendResourceList(String playerName) {
+		String allResources = "";
+		for (Entry<String, ServerResource> entry : SL.resources.entrySet()) {
+			ServerResource SR = entry.getValue();
+			allResources += SR.generatePacket() + "%";
+		}
+		sendPlayerPacket("<resource>" + allResources + "</resource>");
 	}
 	
 	public void handleNewClient(String playerName) {
@@ -215,6 +224,11 @@ public class ServerHandler extends Thread {
 		SL.powerups.remove(PUID);
 	}
 	
+	public void handleResourceRemove(String RID) {
+		sendGlobalPacket("<removeR>" + RID + "</removeR>", getPlayerName(out));
+		SL.resources.remove(RID);
+	}
+	
 	public void populatePowerups() {
 		int maxPowerups = 50;
 		if(this.SL.powerups.size() >= maxPowerups)
@@ -227,13 +241,13 @@ public class ServerHandler extends Thread {
 	}
 	
 	public void populateResources() {
-		int maxResources = 18;
+		int maxResources = 200;
 		if(this.SL.resources.size() >= maxResources)
 			return;
-		while(this.SL.resources.size() <= maxResources) {
+		while(this.SL.resources.size() < maxResources) {
 			ServerResource SR = new ServerResource();
 			SL.resources.put(SR.getID(), SR);
-			
+			this.sendGlobalPacket("<resource>"+SR.generatePacket()+"%</resource>");
 		}
 	}
 	

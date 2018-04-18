@@ -14,8 +14,10 @@ public class ServerResource {
 	public ServerResource() {
 		this.efficacy = getEfficacy(10, 20);
 		this.multiple = 1;
-		this.x = r.nextInt(830);
-		this.y = r.nextInt(751);
+		int min = 32*80;
+		int max = 32*170-min;
+		this.x = r.nextInt(max) + min;
+		this.y = r.nextInt(max) + min;
 		this.myID = getSaltString();
 	}
 	

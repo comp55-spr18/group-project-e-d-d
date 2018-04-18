@@ -128,10 +128,10 @@ public class ActorAccesser {
 				driver.RESOURCE_GEN.addToRemoveList(resource);
 				return;
 			case MULTIPLAYER:
-				//MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
-				//d.RESOURCE_GEN.addToRemoveList(resource);
+				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				d.RESOURCE_GEN.addToRemoveList(resource);
+				d.removeResource(resource);
 				return;
-				// TODO: Sam, add to remove ticklist!
 		}
 	}
 	
