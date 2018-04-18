@@ -412,5 +412,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	public void removePowerUP(PowerUp PU) {
 		NC.removePowerUp(PU);
+		powerups.remove(NC.getPowerUpID(PU));
 	}
 }

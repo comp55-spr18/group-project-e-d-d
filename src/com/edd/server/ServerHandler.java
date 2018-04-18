@@ -211,7 +211,7 @@ public class ServerHandler extends Thread {
 	}
 	
 	public void handlePowerUpRemove(String PUID) {
-		sendGlobalPacket("<removePU>" + PUID + "</removePU>");
+		sendGlobalPacket("<removePU>" + PUID + "</removePU>", getPlayerName(out));
 		SL.powerups.remove(PUID);
 	}
 	
