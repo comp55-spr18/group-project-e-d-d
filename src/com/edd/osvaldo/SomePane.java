@@ -18,11 +18,10 @@ public class SomePane extends GraphicsPane {
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
 	private GButton pauseButton = new GButton("Pause", (program.WINDOW_WIDTH + 900) / 2,
 			(program.WINDOW_HEIGHT + 600) / 2, 50, 50);
-	private GButton resume = new GButton("Resume", ((program.WINDOW_WIDTH - 200) / 2) - 150,
-			(program.WINDOW_HEIGHT - 200) / 2, 200, 100);
-	private GButton quit = new GButton("Quit", ((program.WINDOW_WIDTH - 200) / 2) + 150,
-			(program.WINDOW_HEIGHT - 200) / 2, 200, 100);
-
+	private GButton resume = new GButton("Resume", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2,
+			200, 100);
+	private GButton quit = new GButton("Quit", (program.WINDOW_WIDTH - 200) / 2,
+			(program.WINDOW_HEIGHT - 200) / 2 + 130, 200, 100);
 	private boolean soundPaused = false;
 	private boolean gamePaused = false;
 
@@ -167,6 +166,7 @@ public class SomePane extends GraphicsPane {
 	public void pause() {
 		program.add(resume);
 		program.add(quit);
+		bringAllToFront();
 	}
 
 	public void unpause() {
