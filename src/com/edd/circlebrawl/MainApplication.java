@@ -120,6 +120,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public void tick() {
 		// TODO Auto-generated method stub
 		if (test && !somePane.getPauseStatus()) {
+			somePane.bringAllToFront();
 			OBSTACLE_GEN.tick();
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
