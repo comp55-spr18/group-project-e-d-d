@@ -146,6 +146,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			if (p.contains("playerlist")) {
 				return "playerlist";
 			}
+			if (p.contains("removePU")) {
+				return "removePU";
+			}
 			if (p.contains("remove")) {
 				return "remove";
 			}
@@ -214,7 +217,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							String type = powerUpInfo[5];
 							PowerUpType PUT = PowerUpType.stringToEnum(type);
 							PowerUp PU = new PowerUp(GameType.MULTIPLAYER, x, y, world, efficacy, multiple,
-									PowerUpType.stringToEnum(type));
+							PowerUpType.stringToEnum(type));
 							System.out.println("adding powerup" + powerUpID);
 							powerups.put(powerUpID, PU);
 						}
@@ -238,6 +241,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							resources.put(resourceID, r);
 						}
 					}
+				}
+				if (parsePacket(userInput).equals("removePU")) {
+					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
+					powerups.remove(toRemove);
 				}
 				if (parsePacket(userInput).equals("remove")) {
 					String toRemove = string_between(userInput, "<remove>", "</remove>");
