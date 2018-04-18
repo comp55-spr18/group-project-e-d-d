@@ -214,7 +214,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							String type = powerUpInfo[5];
 							PowerUpType PUT = PowerUpType.stringToEnum(type);
 							PowerUp PU = new PowerUp(GameType.MULTIPLAYER, x, y, world, efficacy, multiple,
-									PowerUpType.stringToEnum(type));
+							PowerUpType.stringToEnum(type));
 							System.out.println("adding powerup" + powerUpID);
 							powerups.put(powerUpID, PU);
 						}
@@ -285,6 +285,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		public void removePowerUp(PowerUp r) {
 			String ID = getPowerUpID(r);
 			sendPacket(out, "<removePU>" + ID + "</removePU>");
+			powerups.remove(ID);
 		}
 
 		public int getStartX() {
@@ -404,7 +405,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	}
 	
 	public void removePowerUP(PowerUp PU) {
-		powerups.values().remove(PU);
 		NC.removePowerUp(PU);
 	}
 }
