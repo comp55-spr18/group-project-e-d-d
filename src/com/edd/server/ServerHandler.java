@@ -66,6 +66,10 @@ public class ServerHandler extends Thread {
 					handlePlayerRemove(clientName);
 					System.out.println(SL.clients);
 				}
+				if(inputLine.contains("<removePU>")) {
+					String PUID = this.string_between(inputLine, "<removePU>", "</removePU>");
+					handlePowerUpRemove(PUID);
+				}
 				if(inputLine.contains("<move>")) {
 					String[] packetData = this.string_between(inputLine, "<move>", "</move>").split(",");
 					String clientName = this.getPlayerName(out);
@@ -206,13 +210,19 @@ public class ServerHandler extends Thread {
 		System.out.println("Player:" + sp.getPlayerX() + ", " + sp.getPlayerY());
 	}
 	
+	public void handlePowerUpRemove(String PUID) {
+		sendGlobalPacket("<removePU>" + PUID + "</removePU>");
+		SL.powerups.remove(PUID);
+	}
+	
 	public void populatePowerups() {
 		int maxPowerups = 50;
 		if(this.SL.powerups.size() >= maxPowerups)
 			return;
-		while(this.SL.powerups.size() <= maxPowerups) {
+		while(this.SL.powerups.size() < maxPowerups) {
 			ServerPowerUp SPU = new ServerPowerUp();
 			SL.powerups.put(SPU.getID(), SPU);
+			this.sendGlobalPacket("<powerup>"+SPU.generatePacket()+"%</powerup>");
 		}
 	}
 	
@@ -223,6 +233,7 @@ public class ServerHandler extends Thread {
 		while(this.SL.resources.size() <= maxResources) {
 			ServerResource SR = new ServerResource();
 			SL.resources.put(SR.getID(), SR);
+			
 		}
 	}
 	

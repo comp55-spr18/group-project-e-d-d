@@ -146,6 +146,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			if (p.contains("playerlist")) {
 				return "playerlist";
 			}
+			if (p.contains("removePU")) {
+				return "removePU";
+			}
 			if (p.contains("remove")) {
 				return "remove";
 			}
@@ -239,6 +242,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 						}
 					}
 				}
+				if (parsePacket(userInput).equals("removePU")) {
+					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
+					powerups.remove(toRemove);
+				}
 				if (parsePacket(userInput).equals("remove")) {
 					String toRemove = string_between(userInput, "<remove>", "</remove>");
 					Player tR = characters.get(toRemove);
@@ -285,7 +292,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		public void removePowerUp(PowerUp r) {
 			String ID = getPowerUpID(r);
 			sendPacket(out, "<removePU>" + ID + "</removePU>");
-			powerups.remove(ID);
 		}
 
 		public int getStartX() {
