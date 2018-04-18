@@ -3,6 +3,7 @@ package com.edd.generator;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.edd.circlebrawl.BaseActor;
 import com.edd.circlebrawl.MainApplication;
 import com.edd.map.MapBuilder;
 import com.edd.obstacle.Obstacle;
@@ -29,22 +30,24 @@ public class BoundaryGenerator extends BaseGenerator {
 			
 			int tilesBufferX = driver.getTilesBufferX();
 			int tilesBufferY = driver.getTilesBufferY();
-			int tilesInMapX = driver.getTilesInMapX();
-			int tilesInMapY = driver.getTilesInMapY();
 			int mapWidth = driver.getMapWidth();
 			int mapHeight = driver.getMapHeight();
 			int tileWidth = MapBuilder.TILE_WIDTH;
 			int tileHeight = MapBuilder.TILE_HEIGHT;
+			
+			int tilesInMapX = driver.getTilesInMapX();
+			int tilesInMapY = driver.getTilesInMapY();
 			int totalBufferX = tilesBufferX*2;
 			int totalBufferY = tilesBufferY*2;
-			
-			GImage horizontalBoundary = new GImage("com/edd/obstacle/barbedWire.png");
-			GImage verticalBoundary = new GImage("com/edd/obstacle/barbedWireV.png");
 			
 			BufferedImage northBoundaryImage = new BufferedImage(tileWidth*tilesInMapX-totalBufferX*tileWidth,tileHeight,BufferedImage.TYPE_INT_ARGB);
 			BufferedImage southBoundaryImage = new BufferedImage(tileWidth*tilesInMapX-totalBufferX*tileWidth,tileHeight,BufferedImage.TYPE_INT_ARGB);
 			BufferedImage westBoundaryImage = new BufferedImage(tileWidth,tileHeight*tilesInMapY-totalBufferY*tileHeight,BufferedImage.TYPE_INT_ARGB);
 			BufferedImage eastBoundaryImage = new BufferedImage(tileWidth,tileHeight*tilesInMapY-totalBufferY*tileHeight,BufferedImage.TYPE_INT_ARGB);
+			
+			/*
+			GImage horizontalBoundary = new GImage("com/edd/obstacle/barbedWire.png");
+			GImage verticalBoundary = new GImage("com/edd/obstacle/barbedWireV.png");
 			
 			Graphics ng = northBoundaryImage.createGraphics();
 			Graphics sg = southBoundaryImage.createGraphics();
@@ -63,7 +66,7 @@ public class BoundaryGenerator extends BaseGenerator {
 			ng.dispose();
 			sg.dispose();
 			wg.dispose();
-			eg.dispose();
+			eg.dispose(); */
 			
 			GImage northBoundary = new GImage(northBoundaryImage);
 			GImage southBoundary = new GImage(southBoundaryImage);
