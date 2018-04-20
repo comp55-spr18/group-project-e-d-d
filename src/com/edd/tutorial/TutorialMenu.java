@@ -156,7 +156,7 @@ public class TutorialMenu extends GraphicsPane {
 		if (obj == combatTut) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			// TODO CHANGE THIS
-			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup = new GImage("com/edd/tutorial/combatTut.jpg");
 			popup.setSize(500, 500);
 			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
 					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
@@ -166,7 +166,7 @@ public class TutorialMenu extends GraphicsPane {
 		if (obj == obstaclesTut) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			// TODO CHANGE THIS
-			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup = new GImage("com/edd/tutorial/obstaclesTut.jpg");
 			popup.setSize(500, 500);
 			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
 					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
@@ -176,7 +176,7 @@ public class TutorialMenu extends GraphicsPane {
 		if (obj == resourcesTut) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			// TODO CHANGE THIS
-			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup = new GImage("com/edd/tutorial/resourcesTut.jpg");
 			popup.setSize(500, 500);
 			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
 					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
@@ -186,7 +186,7 @@ public class TutorialMenu extends GraphicsPane {
 		if (obj == enemiesTut) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			// TODO CHANGE THIS
-			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup = new GImage("com/edd/tutorial/aiTut.jpg");
 			popup.setSize(500, 500);
 			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
 					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
