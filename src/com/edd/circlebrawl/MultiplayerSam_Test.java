@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -28,7 +29,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	// CHANGE NAME HERE
 	// String myName = this.getSaltString();
-	String myName = "Zach";
+	String myName = "Mike";
 	boolean myNameSet = false;
 	// CHANGE NAME HERE
 
@@ -58,6 +59,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	@Override
 	public void init() {
+		myName = JOptionPane.showInputDialog("Enter name: ");
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER, this);
 
