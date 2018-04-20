@@ -18,7 +18,7 @@ public class ServerPowerUp implements ServerActor{
 	private CollisionBox cb;
 	private AccessServerElements ASE;
 	
-	public ServerPowerUp() {
+	public ServerPowerUp(AccessServerElements ASE) {
 		this.efficacy = getEfficacy(10, 20);
 		this.multiple = 1;
 		this.x = generateBound();
@@ -26,6 +26,7 @@ public class ServerPowerUp implements ServerActor{
 		this.cb = new CollisionBox(x, y, x + 60, y + 60);
 		this.type = getType();
 		this.myID = getSaltString();
+		this.ASE = ASE;
 		setValidSpawn();
 	}
 	
@@ -34,7 +35,7 @@ public class ServerPowerUp implements ServerActor{
 		while(CD.collides()) {
 			this.x = generateBound();
 			this.y = generateBound();
-			cb = new CollisionBox(x, y, x + 300, y + 300);
+			cb = new CollisionBox(x, y, x + 60, y + 60);
 		}
 	}
 	
