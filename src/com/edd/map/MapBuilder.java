@@ -40,13 +40,11 @@ public abstract class MapBuilder {
 					if (row < elements.length)
 					{
 						int id = Integer.parseInt(elements[row]);
-						GImage baseImage = tileImages.get(baselineID);
-						GImage primaryImage = tileImages.get(id);
-						if(primaryImage != null && baseImage != null){
-							map[row][col] = layerImages(primaryImage, baseImage);
+						if(tileImages.containsKey(id)) {
+							map[row][col] = tileImages.get(id);
 						} else {
-							System.out.println(id+"_err");
-							map[row][col] = tileImages.get(baselineID);
+							map[row][col] = new GImage("");
+							System.out.println("ERROR: No ID equivalent: "+id);
 						}
 					}
 					
@@ -95,15 +93,6 @@ public abstract class MapBuilder {
 		} catch(NumberFormatException ex){
 			System.out.println("Error reading map spritesheet.csv! -- ID value is not number?");
 		}
-	}
-	
-	private static GImage layerImages(GImage primaryImage, GImage baseImage){
-		BufferedImage result = new BufferedImage(TILE_WIDTH,TILE_HEIGHT,BufferedImage.TYPE_INT_RGB);
-		Graphics g = result.createGraphics();
-		g.drawImage(baseImage.getImage(), 0, 0, null);
-		g.drawImage(primaryImage.getImage(), 0, 0, null);
-		g.dispose();
-		return new GImage(result);
 	}
 
 	private static GImage getTile(int row, int col){

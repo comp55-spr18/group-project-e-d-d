@@ -23,8 +23,8 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 
 public class MainApplication extends GraphicsApplication implements Tick {
-	public static final int WINDOW_WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	public static final int WINDOW_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public static final int WINDOW_WIDTH = 1280;//(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	public static final int WINDOW_HEIGHT = 720;//(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
