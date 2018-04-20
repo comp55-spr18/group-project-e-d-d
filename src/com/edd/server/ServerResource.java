@@ -2,7 +2,9 @@ package com.edd.server;
 
 import java.util.Random;
 
+import com.edd.server.collision.AccessServerElements;
 import com.edd.server.collision.CollisionBox;
+import com.edd.server.collision.CollisionDetector;
 
 public class ServerResource implements ServerActor {
 	
@@ -13,20 +15,37 @@ public class ServerResource implements ServerActor {
 	private String myID;
 	Random r = new Random();
 	private CollisionBox cb;
+	private AccessServerElements ASE;
 	
 	public ServerResource() {
 		this.efficacy = getEfficacy(10, 20);
 		this.multiple = 1;
-		int min = 32*80;
-		int max = 32*170-min;
-		this.x = r.nextInt(max) + min;
-		this.y = r.nextInt(max) + min;
+		this.x = generateBound();
+		this.y = generateBound();
 		this.cb = new CollisionBox(x, y, x + 20, y + 20);
 		this.myID = getSaltString();
+		setValidSpawn();
+	}
+	
+	public void setValidSpawn() {
+		CollisionDetector CD = new CollisionDetector(this, ASE);
+		while(CD.collides()) {
+			this.x = generateBound();
+			this.y = generateBound();
+			cb = new CollisionBox(x, y, x + 300, y + 300);
+		}
 	}
 	
 	private int getEfficacy(int min, int max) {
 		return r.nextInt(max-min+1)+min; // Efficacy is between min and max.
+	}
+	
+	public int generateBound() {
+		Random rand = new Random();
+		int min = 32*80;
+		int max = 32*170-min;
+		this.x = rand.nextInt(max) + min;
+		return x;
 	}
 	
 	private String getSaltString() {
