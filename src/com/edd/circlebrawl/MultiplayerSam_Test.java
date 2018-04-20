@@ -35,6 +35,13 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public final HashMap<String, Player> characters = new HashMap<String, Player>();
 	public final HashMap<String, PowerUp> powerups = new HashMap<String, PowerUp>();
 	public final HashMap<String, Resource> resources = new HashMap<String, Resource>();
+	
+	public final HashMap<String, Player> charactersToAdd = new HashMap<String,Player>();
+	public final HashMap<String, PowerUp> powerupsToAdd = new HashMap<String, PowerUp>();
+	public final HashMap<String, Resource> resourcesToAdd = new HashMap<String, Resource>();
+	
+	public final ArrayList<String> powerupsToRemove = new ArrayList<String>();
+	public final ArrayList<String> resourcesToRemove = new ArrayList<String>();
 
 	private final BoundaryGenerator BOUNDARY_GEN = new BoundaryGenerator(this);
 	private Player player;
@@ -200,7 +207,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							int clientColor = Integer.parseInt(playerInfo[3]);
 							Player NP = new Player(clientName, false, clientX, clientY, clientColor, world);
 							System.out.println("adding player" + clientName);
-							characters.put(clientName, NP);
+							charactersToAdd.put(clientName, NP);
 							world.addPlayer(NP);
 						}
 					}
@@ -222,7 +229,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							PowerUp PU = new PowerUp(GameType.MULTIPLAYER, x, y, world, efficacy, multiple,
 							PowerUpType.stringToEnum(type));
 							System.out.println("adding powerup" + powerUpID);
-							powerups.put(powerUpID, PU);
+							powerupsToAdd.put(powerUpID, PU);
 						}
 					}
 				}
@@ -240,14 +247,14 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							int y = Integer.parseInt(resourceInfo[4]);
 							Resource r = new Resource(x, y, world, efficacy, multiple);
 							System.out.println("adding resource" + resourceID);
-							resources.put(resourceID, r);
+							resourcesToAdd.put(resourceID, r);
 						}
 					}
 					System.out.println("Resources: " + resources);
 				}
 				if (parsePacket(userInput).equals("removePU")) {
 					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
-					powerups.remove(toRemove);
+					powerupsToRemove.add(toRemove);
 				}
 				if (parsePacket(userInput).equals("remove")) {
 					String toRemove = string_between(userInput, "<remove>", "</remove>");
@@ -362,7 +369,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	}
 
 	public void addPlayer(Player p) {
-		characters.put(p.getName(), p);
+		charactersToAdd.put(p.getName(), p);
 	}
 
 	public void movePlayer(Player p, double xVelocity, double yVelocity) {
@@ -399,6 +406,12 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public ArrayList<BaseActor> getPlayerList() {
 		ArrayList<BaseActor> players = new ArrayList<BaseActor>();
+		
+		for(String playerID : charactersToAdd.keySet()){
+			characters.put(playerID, charactersToAdd.get(playerID));
+		}
+		charactersToAdd.clear();
+		
 		for (Player player : characters.values()) {
 			players.add(player);
 		}
@@ -407,6 +420,16 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public ArrayList<BaseActor> getPowerUps() {
 		ArrayList<BaseActor> PU = new ArrayList<BaseActor>();
+		
+		for(String powerUpID : powerupsToAdd.keySet()){
+			powerups.put(powerUpID, powerupsToAdd.get(powerUpID));
+		}
+		powerupsToAdd.clear();
+		for(String powerUpID : powerupsToRemove){
+			powerups.remove(powerUpID);
+		}
+		powerupsToRemove.clear();
+		
 		for (PowerUp powerup : powerups.values()) {
 			PU.add(powerup);
 		}
@@ -415,6 +438,16 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public ArrayList<BaseActor> getResources() {
 		ArrayList<BaseActor> GR = new ArrayList<BaseActor>();
+		
+		for(String resourceID : resourcesToAdd.keySet()){
+			resources.put(resourceID, resourcesToAdd.get(resourceID));
+		}
+		resourcesToAdd.clear();
+		for(String resourceID : resourcesToRemove){
+			resources.remove(resourceID);
+		}
+		resourcesToRemove.clear();
+		
 		for (Resource resource : resources.values()) {
 			GR.add(resource);
 		}
@@ -431,12 +464,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	
 	public void removePowerUP(PowerUp PU) {
 		NC.removePowerUp(PU);
-		powerups.remove(NC.getPowerUpID(PU));
 	}
 	
 	public void removeResource(Resource r) {
-		System.out.println(r);
 		NC.removeResource(r);
-		resources.remove(NC.getResourceID(r));
 	}
 }
