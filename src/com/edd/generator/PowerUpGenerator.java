@@ -77,10 +77,6 @@ public class PowerUpGenerator extends BaseGenerator {
 	
 	@Override
 	public void tick() {
-		for(BaseActor actor : actorsToRemove){
-			remove(actor);
-		}
-		
 		super.tick();
 		
 		if(activated) {
