@@ -26,10 +26,11 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 	private GImage corruptedSpeed;
 	private GImage evilSpeed;
 	private GImage attackOrb;
+	private GImage closeButton;
 	private GRect backdrop;
 	private GButton mainMenu;
 	private GButton muteButton;
-	private GButton popup = null;
+	private GImage popup = null;
 
 	/* instantiate and initalize graphical elements */
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
@@ -102,6 +103,12 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 		mainMenu = new GButton("Main Menu", (program.WINDOW_WIDTH + 900) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50,
 				50);
 		mainMenu.setFillColor(Color.GREEN);
+
+		// initialize the close window button
+		closeButton = new GImage("com/edd/tutorial/cancelButton.png");
+		closeButton.setSize(50, 50);
+		closeButton.setLocation((program.WINDOW_WIDTH - closeButton.getWidth()) / 2 + 210,
+				(program.WINDOW_HEIGHT - closeButton.getHeight()) / 2 - 210);
 	}
 
 	@Override
@@ -164,11 +171,11 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 		// (program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 		// program.add(popup);
 		// }
-		if (popup != null && obj == popup) {
+		if (popup != null && obj == closeButton) {
+			program.remove(closeButton);
 			program.remove(popup);
 			popup = null;
 		}
-		// if (program.popup != null && obj == program.popup)
 
 		// if (obj == rect) {
 		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
@@ -185,5 +192,96 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 		if (obj == mainMenu) {
 			program.switchToMenu();
 		}
+		if (obj == powerUpStrengthTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/strengthTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == corruptedStrengthTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/corruptedStrengthTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == evilStrengthTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/evilStrengthTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == powerUpEndurance) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/enduranceTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == corruptedEndurance) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/corruptedEnduranceTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == evilEndurance) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/evilEnduranceTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == powerUpSpeed) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/speedTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == corruptedSpeed) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/corruptedSpeedTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == evilSpeed) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/evilSpeedTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == attackOrb) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/attackOrbTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+
 	}
 }
