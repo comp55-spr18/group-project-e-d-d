@@ -3,8 +3,10 @@ package com.edd.circlebrawl;
 import java.util.ArrayList;
 
 import com.edd.character.AI;
+import com.edd.character.Player;
 import com.edd.obstacle.Obstacle;
 import com.edd.powerup.PowerUp;
+import com.edd.character.Character;
 
 public class ActorAccesser {
 
@@ -122,7 +124,7 @@ public class ActorAccesser {
 		}
 	}
 
-	public void removeResource(Resource resource){
+	public void removeResource(Character c, Resource resource){
 		switch(gameType){
 			case SINGLEPLAYER:
 				driver.RESOURCE_GEN.addToRemoveList(resource);
@@ -130,12 +132,12 @@ public class ActorAccesser {
 			case MULTIPLAYER:
 				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
 				d.RESOURCE_GEN.addToRemoveList(resource);
-				d.removeResource(resource);
+				d.removeResource((Player)c,resource);
 				return;
 		}
 	}
 	
-	public void removePowerUp(PowerUp powerUp){
+	public void removePowerUp(Character c,PowerUp powerUp){
 		switch(gameType){
 			case SINGLEPLAYER:
 				driver.POWERUP_GEN.addToRemoveList(powerUp);
@@ -145,7 +147,7 @@ public class ActorAccesser {
 				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
 				d.POWERUP_GEN.addToRemoveList(powerUp);
 				d.POWERUP_GEN.use(powerUp);
-				d.removePowerUP(powerUp);
+				d.removePowerUP((Player)c,powerUp);
 				return;
 		}
 	}

@@ -481,13 +481,15 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		return this.player;
 	}
 
-	public void removePowerUP(PowerUp PU) {
+	public void removePowerUP(Player p, PowerUp PU) {
 		NC.removePowerUp(PU);
-		powerups.remove(NC.getPowerUpID(PU));
+		if(p == player)
+			powerups.remove(NC.getPowerUpID(PU));
 	}
 
-	public void removeResource(Resource r) {
+	public void removeResource(Player p, Resource r) {
 		NC.removeResource(r);
-		resources.remove(NC.getResourceID(r));
+		if(p == player)
+			resources.remove(NC.getResourceID(r));
 	}
 }
