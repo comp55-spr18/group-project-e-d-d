@@ -183,16 +183,6 @@ public class TutorialMenu extends GraphicsPane {
 			program.add(popup);
 			program.add(closeButton);
 		}
-		if (obj == powerupsTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			// TODO CHANGE THIS
-			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
-			popup.setSize(500, 500);
-			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
-					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
-			program.add(popup);
-			program.add(closeButton);
-		}
 		if (obj == enemiesTut) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			// TODO CHANGE THIS
