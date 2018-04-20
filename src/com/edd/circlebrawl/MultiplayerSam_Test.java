@@ -454,7 +454,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		}
 		return GR;
 	}
-
+	
 	public ArrayList<BaseActor> getBoundaries() {
 		return BOUNDARY_GEN.getActors();
 	}
@@ -465,9 +465,11 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 	public void removePowerUP(PowerUp PU) {
 		NC.removePowerUp(PU);
+		powerups.remove(NC.getPowerUpID(PU));
 	}
 
 	public void removeResource(Resource r) {
 		NC.removeResource(r);
+		resources.remove(NC.getResourceID(r));
 	}
 }

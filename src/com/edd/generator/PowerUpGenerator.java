@@ -42,7 +42,7 @@ public class PowerUpGenerator extends BaseGenerator {
 	
 	public void use(PowerUp powerUp){
 		if(actors.contains(powerUp)){
-			actors.remove(powerUp);
+			addToRemoveList(powerUp);
 			usedPowerUps.add(powerUp);
 		}
 	}
