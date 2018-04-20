@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import acm.graphics.GImage;
 
-public abstract class MapBuilder {
+public class MapBuilder {
 	
 	public static final GImage TILE_SET = new GImage("com/edd/map/V3spritesheet.png");
 	public static final int TILE_WIDTH = 256;
@@ -22,10 +22,23 @@ public abstract class MapBuilder {
 	
 	public static HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
 	
-	public static Map buildMap(String mapFile, int tilesInMapX, int tilesInMapY, int tilesBufferX, int tilesBufferY, int baselineID){
-		if(tileImages.isEmpty())
-			buildTileImages(baselineID);
-		GImage[][] map = new GImage[tilesInMapX][tilesInMapY];
+	public int mapWidth;
+	public int mapHeight;
+	public int tilesInMapX;
+	public int tilesInMapY;
+	public int tilesBufferX;
+	public int tilesBufferY;
+	
+	public GImage buildMap(String mapFile, int tilesInMapX, int tilesInMapY, int tilesBufferX, int tilesBufferY, int baselineID){
+		buildTileImages(baselineID);		
+		this.tilesInMapX = tilesInMapX;
+		this.tilesInMapY = tilesInMapY;
+		this.tilesBufferX = tilesBufferX;
+		this.tilesBufferY = tilesBufferY;
+		this.mapWidth = tilesInMapX*TILE_WIDTH;
+		this.mapHeight = tilesInMapY*TILE_HEIGHT;
+		BufferedImage mapImage = new BufferedImage(mapWidth,mapHeight,BufferedImage.TYPE_INT_RGB);
+		Graphics g = mapImage.createGraphics();
 		
 		try {
 			FileReader fileReader = new FileReader(mapFile);
@@ -40,13 +53,10 @@ public abstract class MapBuilder {
 					if (row < elements.length)
 					{
 						int id = Integer.parseInt(elements[row]);
-						GImage baseImage = tileImages.get(baselineID);
-						GImage primaryImage = tileImages.get(id);
-						if(primaryImage != null && baseImage != null){
-							map[row][col] = layerImages(primaryImage, baseImage);
+						if(tileImages.containsKey(id)) {
+							g.drawImage(tileImages.get(id).getImage(),col*TILE_HEIGHT,row*TILE_WIDTH, null);
 						} else {
-							System.out.println(id+"_err");
-							map[row][col] = tileImages.get(baselineID);
+							System.out.println("ERROR: No ID equivalent: "+id);
 						}
 					}
 					
@@ -64,7 +74,8 @@ public abstract class MapBuilder {
 			System.out.println("Error reading map: "+mapFile+" -- ID value is not number?");
 		}
 		
-		return new Map(map,tilesInMapX,tilesInMapY,tilesBufferX,tilesBufferY,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
+		return new GImage(mapImage);
+		//return new Map(map,tilesInMapX,tilesInMapY,tilesBufferX,tilesBufferY,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
 	}
 	
 	private static void buildTileImages(int baselineID){
@@ -95,15 +106,6 @@ public abstract class MapBuilder {
 		} catch(NumberFormatException ex){
 			System.out.println("Error reading map spritesheet.csv! -- ID value is not number?");
 		}
-	}
-	
-	private static GImage layerImages(GImage primaryImage, GImage baseImage){
-		BufferedImage result = new BufferedImage(TILE_WIDTH,TILE_HEIGHT,BufferedImage.TYPE_INT_RGB);
-		Graphics g = result.createGraphics();
-		g.drawImage(baseImage.getImage(), 0, 0, null);
-		g.drawImage(primaryImage.getImage(), 0, 0, null);
-		g.dispose();
-		return new GImage(result);
 	}
 
 	private static GImage getTile(int row, int col){

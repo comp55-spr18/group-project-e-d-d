@@ -63,7 +63,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 		actorAccesser = new ActorAccesser(GameType.MULTIPLAYER, this);
 
 		setupMap();
-		add(this.backgroundImage);
+		add(this.currentMap);
 
 		Random r = new Random();
 		NC = new NetworkClient("138.68.18.227", 9993, r.nextInt(100), this);

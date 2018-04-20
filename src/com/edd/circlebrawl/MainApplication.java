@@ -23,8 +23,8 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 
 public class MainApplication extends GraphicsApplication implements Tick {
-	public static final int WINDOW_WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	public static final int WINDOW_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public static final int WINDOW_WIDTH = 1280;//(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	public static final int WINDOW_HEIGHT = 720;//(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
@@ -46,8 +46,8 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	private TutorialMenu tutMenu;
 	private PowerUpTutorialMenu powerupMenu;
 
-	protected Map currentMap;
-	protected GImage backgroundImage;
+	protected MapBuilder mapBuilder;
+	protected GImage currentMap;
 	protected ActorAccesser actorAccesser = new ActorAccesser(GameType.SINGLEPLAYER, this);
 
 	public AudioPlayer audio = AudioPlayer.getInstance();
@@ -56,8 +56,9 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	public GButton pauseButton;
 
 	public void setupMap() {
-		currentMap = MapBuilder.buildMap("com/edd/map/V3Map.csv", 51, 51, 15, 15, 2);
-		backgroundImage = currentMap.createImage();
+		if(mapBuilder == null)
+			mapBuilder = new MapBuilder();
+		currentMap = mapBuilder.buildMap("com/edd/map/V3Map.csv", 51, 51, 15, 15, 2);
 	}
 
 	public void init() {
@@ -164,33 +165,33 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		return actorAccesser;
 	}
 
-	public GImage getBackgroundImage() {
-		if (backgroundImage == null)
+	public GImage getCurrentMap() {
+		if (currentMap == null)
 			setupMap();
-		return backgroundImage;
+		return currentMap;
 	}
 
 	public int getMapWidth() {
-		return currentMap.getMapWidth();
+		return mapBuilder.mapWidth;
 	}
 
 	public int getMapHeight() {
-		return currentMap.getMapHeight();
+		return mapBuilder.mapHeight;
 	}
 
 	public int getTilesInMapX() {
-		return currentMap.getTilesInMapX();
+		return mapBuilder.tilesInMapX;
 	}
 
 	public int getTilesInMapY() {
-		return currentMap.getTilesInMapY();
+		return mapBuilder.tilesInMapY;
 	}
 
 	public int getTilesBufferX() {
-		return currentMap.getTilesBufferX();
+		return mapBuilder.tilesBufferX;
 	}
 
 	public int getTilesBufferY() {
-		return currentMap.getTilesBufferY();
+		return mapBuilder.tilesBufferY;
 	}
 }

@@ -18,7 +18,13 @@ public class Camera implements Tick {
 		this.totalTranslationY = totalTranslationY;
 		this.player = player;
 		this.app = app;
-		applyInitialTranslation();
+		if(app instanceof MultiplayerSam_Test) {
+			MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)app;
+			if(multiDriver.getClientPlayer() == player)
+				applyInitialTranslation();
+		} else {
+			applyInitialTranslation();
+		}
 	}
 	
 	private void applyInitialTranslation(){
