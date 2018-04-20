@@ -73,7 +73,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 				NC.sendExit();
 			}
 		}));
-
 	}
 
 	public String getSaltString() {
