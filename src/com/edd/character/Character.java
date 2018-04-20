@@ -43,7 +43,7 @@ public abstract class Character extends BaseActor {
 	protected int speed; // how fast this Character can move
 	protected int strength; // how much damage this Character can deal
 	protected int range; // how far the character can hit
-	protected double attackSpeed; // how fast the character can attack (higher = slower)
+	protected double attackSpeed; // how fast the character can attack (higher = faster)
 	
 	protected Saw saw;
 	protected ArrayList<AttackOrb> attackOrbs;
@@ -234,7 +234,7 @@ public abstract class Character extends BaseActor {
 			hitVelocityY = KNOCKBACK_VELOCITY_Y;
 		}
 		
-		modifySize(-actor.getStrength());
+		modifySize(-actor.getStrength() + actor.getDefense()/2);
 	}
 	
 	public void onDeath(){
