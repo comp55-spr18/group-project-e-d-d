@@ -2,9 +2,9 @@ package com.edd.server;
 
 import java.util.Random;
 
-import com.edd.server.collision.AccessServerElements;
-import com.edd.server.collision.CollisionBox;
-import com.edd.server.collision.CollisionDetector;
+//import com.edd.server.collision.AccessServerElements;
+//import com.edd.server.collision.CollisionBox;
+//import com.edd.server.collision.CollisionDetector;
 
 public class ServerResource implements ServerActor {
 	
@@ -14,27 +14,27 @@ public class ServerResource implements ServerActor {
 	private int y;
 	private String myID;
 	Random r = new Random();
-	private CollisionBox cb;
-	private AccessServerElements ASE;
+//	private CollisionBox cb;
+//	private AccessServerElements ASE;
 	
-	public ServerResource(AccessServerElements ASE) {
+	public ServerResource() {
 		this.efficacy = getEfficacy(10, 20);
 		this.multiple = 1;
 		this.x = generateBound();
 		this.y = generateBound();
-		this.cb = new CollisionBox(x, y, x + 20, y + 20);
+//		this.cb = new CollisionBox(x, y, x + 20, y + 20);
 		this.myID = getSaltString();
-		this.ASE = ASE;
+//		this.ASE = ASE;
 		//setValidSpawn();
 	}
 	
 	public void setValidSpawn() {
-		CollisionDetector CD = new CollisionDetector(this, ASE);
-		while(CD.collides()) {
-			this.x = generateBound();
-			this.y = generateBound();
-			cb = new CollisionBox(x, y, x + 20, y + 20);
-		}
+//		CollisionDetector CD = new CollisionDetector(this, ASE);
+//		while(CD.collides()) {
+//			this.x = generateBound();
+//			this.y = generateBound();
+//			cb = new CollisionBox(x, y, x + 20, y + 20);
+//		}
 	}
 	
 	private int getEfficacy(int min, int max) {
@@ -91,12 +91,12 @@ public class ServerResource implements ServerActor {
 		this.y = y;
 	}
 	
-	public CollisionBox getCollisionBox() {
-		return this.cb;
-	}
-	
-	public void setCollisionBox(CollisionBox cb) {
-		this.cb = cb;
-	}
-	
+//	public CollisionBox getCollisionBox() {
+//		return this.cb;
+//	}
+//	
+//	public void setCollisionBox(CollisionBox cb) {
+////		this.cb = cb;
+//	}
+//	
 }

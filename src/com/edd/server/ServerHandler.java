@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.edd.server.collision.AccessServerElements;
+//import com.edd.server.collision.AccessServerElements;
 
 import java.io.*;
 
@@ -20,7 +20,7 @@ public class ServerHandler extends Thread {
 	private ArrayList<ServerPlayer> players = new ArrayList<ServerPlayer>();
 	private ArrayList<ServerPowerUp> powerups = new ArrayList<ServerPowerUp>();
 	private ArrayList<ServerResource> resources = new ArrayList<ServerResource>();
-	AccessServerElements ASE;
+//	AccessServerElements ASE;
 	
 	public ServerHandler(Socket socket, ServerListener SL) {
 		super("ServerHandler");
@@ -43,7 +43,7 @@ public class ServerHandler extends Thread {
 		for(ServerResource sr : SL.resources.values()) {
 			resources.add(sr);
 		}
-		ASE = new AccessServerElements(players, powerups, resources);
+//		ASE = new AccessServerElements(players, powerups, resources);
 	}
 	
 	public String string_between(String input, String left, String right){
@@ -72,7 +72,7 @@ public class ServerHandler extends Thread {
 						continue;
 					}
 					
-					SL.clients.put(new ServerPlayer(clientName, ASE), out);
+					SL.clients.put(new ServerPlayer(clientName), out);
 					System.out.println("new client: " + SL.clients.keySet());
 					handleNewClient(clientName);
 					sendPlayerList(clientName);
@@ -260,7 +260,7 @@ public class ServerHandler extends Thread {
 		if(this.SL.powerups.size() >= maxPowerups)
 			return;
 		while(this.SL.powerups.size() < maxPowerups) {
-			ServerPowerUp SPU = new ServerPowerUp(ASE);
+			ServerPowerUp SPU = new ServerPowerUp();
 			SL.powerups.put(SPU.getID(), SPU);
 			this.sendGlobalPacket("<powerup>"+SPU.generatePacket()+"%</powerup>");
 		}
@@ -271,7 +271,7 @@ public class ServerHandler extends Thread {
 		if(this.SL.resources.size() >= maxResources)
 			return;
 		while(this.SL.resources.size() < maxResources) {
-			ServerResource SR = new ServerResource(ASE);
+			ServerResource SR = new ServerResource();
 			SL.resources.put(SR.getID(), SR);
 			this.sendGlobalPacket("<resource>"+SR.generatePacket()+"%</resource>");
 		}
