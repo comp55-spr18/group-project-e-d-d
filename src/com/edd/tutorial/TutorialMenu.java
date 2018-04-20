@@ -127,9 +127,12 @@ public class TutorialMenu extends GraphicsPane {
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 		}
-		if (obj == powerupsTut)
+		if (obj == powerupsTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.switchToPowerUpTutorialMenu();
+		}
 		if (popup != null && obj == popup) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.remove(popup);
 			popup = null;
 		}
@@ -140,34 +143,41 @@ public class TutorialMenu extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 
 		if (obj == mainMenu) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.switchToMenu();
 		}
 		if (obj == movementTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
 					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 			program.add(popup);
 		}
 		if (obj == combatTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
 					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 			program.add(popup);
 		}
 		if (obj == obstaclesTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
 					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 			program.add(popup);
 		}
 		if (obj == resourcesTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
 					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 			program.add(popup);
 		}
 		if (obj == powerupsTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
 					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 			program.add(popup);
 		}
 		if (obj == enemiesTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
 					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
 			program.add(popup);
