@@ -16,6 +16,7 @@ import com.edd.osvaldo.GButton;
 import com.edd.osvaldo.GraphicsApplication;
 import com.edd.osvaldo.MenuPane;
 import com.edd.osvaldo.SomePane;
+import com.edd.tutorial.PowerUpTutorialMenu;
 import com.edd.tutorial.TutorialMenu;
 
 import acm.graphics.GImage;
@@ -43,6 +44,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	private SomePane somePane;
 	private MenuPane menu;
 	private TutorialMenu tutMenu;
+	private PowerUpTutorialMenu powerupMenu;
 
 	protected Map currentMap;
 	protected GImage backgroundImage;
@@ -72,6 +74,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		tutMenu = new TutorialMenu(this);
+		powerupMenu = new PowerUpTutorialMenu(this);
 		switchToMenu();
 
 		long lastTime = System.nanoTime();
@@ -123,6 +126,10 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		switchToScreen(tutMenu);
 	}
 
+	public void switchToPowerUpTutorialMenu() {
+		switchToScreen(powerupMenu);
+	}
+
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
@@ -131,7 +138,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			RESOURCE_GEN.tick();
 			POWERUP_GEN.tick();
 			BOUNDARY_GEN.spawn();
-			AI_GEN.tick(); // TEMPORARILY COMMENTED OUT BY DANILO
+			AI_GEN.tick();
 			player.tick();
 		}
 	}

@@ -10,21 +10,20 @@ import com.edd.osvaldo.GraphicsPane;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-//dummy comment
-
 public class TutorialMenu extends GraphicsPane {
 	/* you will use program to get access to all of the GraphicsProgram calls */
 	private MainApplication program;
 
-	/* button instanitaiton list */
-	private GButton movementTut;
-	private GButton combatTut;
-	private GButton obstaclesTut;
-	private GButton resourcesTut;
-	private GButton powerupsTut;
-	private GButton enemiesTut;
+	/* button instantiation list */
+	private GImage movementTut;
+	private GImage combatTut;
+	private GImage obstaclesTut;
+	private GImage resourcesTut;
+	private GImage powerupsTut;
+	private GImage enemiesTut;
 	private GButton mainMenu;
 	private GButton muteButton;
+	private GImage popup = null;
 
 	/* instantiate and initalize graphical elements */
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
@@ -39,34 +38,40 @@ public class TutorialMenu extends GraphicsPane {
 		title.setLocation((program.WINDOW_WIDTH - title.getWidth()) / 2, program.WINDOW_HEIGHT / 2 - 200);
 
 		// initialize the movement tutorial button
-		movementTut = new GButton("Movement", (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 150) / 2, 100,
-				100);
-		movementTut.setFillColor(Color.GREEN);
+		movementTut = new GImage("com/edd/tutorial/Movement.gif");
+		movementTut.setSize(movementTut.getWidth() / 2, movementTut.getHeight() / 2);
+		movementTut.setLocation((program.WINDOW_WIDTH - movementTut.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - movementTut.getHeight()) / 2 - 50);
 
 		// initialize the combat tutorial button
-		combatTut = new GButton("Combat", (program.WINDOW_WIDTH - 100) / 2, (program.WINDOW_HEIGHT - 150) / 2, 100,
-				100);
-		combatTut.setFillColor(Color.GREEN);
+		combatTut = new GImage("com/edd/tutorial/Combat.gif");
+		combatTut.setSize(combatTut.getWidth() / 2, combatTut.getHeight() / 2);
+		combatTut.setLocation((program.WINDOW_WIDTH - combatTut.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - combatTut.getHeight()) / 2);
 
 		// initialize the obstacles tutorial button
-		obstaclesTut = new GButton("Obstacles", (program.WINDOW_WIDTH + 300) / 2, (program.WINDOW_HEIGHT - 150) / 2,
-				100, 100);
-		obstaclesTut.setFillColor(Color.GREEN);
+		obstaclesTut = new GImage("com/edd/tutorial/Obstacles.gif");
+		obstaclesTut.setSize(obstaclesTut.getWidth() / 2, obstaclesTut.getHeight() / 2);
+		obstaclesTut.setLocation((program.WINDOW_WIDTH - obstaclesTut.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - obstaclesTut.getHeight()) / 2 + 50);
 
 		// initialize the resources tutorial button
-		resourcesTut = new GButton("Resources", (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT + 150) / 2,
-				100, 100);
-		resourcesTut.setFillColor(Color.GREEN);
+		resourcesTut = new GImage("com/edd/tutorial/Resources.gif");
+		resourcesTut.setSize(resourcesTut.getWidth() / 2, resourcesTut.getHeight() / 2);
+		resourcesTut.setLocation((program.WINDOW_WIDTH - resourcesTut.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - resourcesTut.getHeight()) / 2 + 100);
 
 		// initialize the powerups tutorial button
-		powerupsTut = new GButton("Powerups", (program.WINDOW_WIDTH - 100) / 2, (program.WINDOW_HEIGHT + 150) / 2, 100,
-				100);
-		powerupsTut.setFillColor(Color.GREEN);
+		powerupsTut = new GImage("com/edd/tutorial/Power.gif");
+		powerupsTut.setSize(powerupsTut.getWidth() / 2, powerupsTut.getHeight() / 2);
+		powerupsTut.setLocation((program.WINDOW_WIDTH - powerupsTut.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - powerupsTut.getHeight()) / 2 + 165);
 
 		// initialize the enemies tutorial button
-		enemiesTut = new GButton("Enemies", (program.WINDOW_WIDTH + 300) / 2, (program.WINDOW_HEIGHT + 150) / 2, 100,
-				100);
-		enemiesTut.setFillColor(Color.GREEN);
+		enemiesTut = new GImage("com/edd/tutorial/AI.gif");
+		enemiesTut.setSize(enemiesTut.getWidth() / 2, enemiesTut.getHeight() / 2);
+		enemiesTut.setLocation((program.WINDOW_WIDTH - enemiesTut.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - enemiesTut.getHeight()) / 2 + 230);
 
 		// initialize the mute button
 		muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
@@ -111,24 +116,62 @@ public class TutorialMenu extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 
 		// mute button interaction
-		// if (obj == muteButton && !soundPaused) {
-		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-		// program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-		// soundPaused = true;
-		// muteButton.setFillColor(Color.GRAY);
-		// } else if (obj == muteButton && soundPaused) {
-		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-		// soundPaused = false;
-		// muteButton.setFillColor(Color.GREEN);
-		// }
-		//
-		//
-		// if (obj == rect) {
-		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-		// program.test = true;
-		// program.audio.stopSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-		// program.switchToSome();
-		// }
+		if (obj == muteButton && !soundPaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
+			soundPaused = true;
+			muteButton.setFillColor(Color.GRAY);
+		} else if (obj == muteButton && soundPaused) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
+			soundPaused = false;
+			muteButton.setFillColor(Color.GREEN);
+		}
+		if (obj == powerupsTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.switchToPowerUpTutorialMenu();
+		}
+		if (popup != null && obj == popup) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.remove(popup);
+			popup = null;
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+
+		if (obj == mainMenu) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.switchToMenu();
+		}
+		if (obj == movementTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+		} /*
+			 * if (obj == combatTut) { program.audio.playSound(program.MUSIC_FOLDER,
+			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
+			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
+			 * 500); program.add(popup); } if (obj == obstaclesTut) {
+			 * program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); popup
+			 * = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
+			 * (program.WINDOW_HEIGHT - 500) / 2, 500, 500); program.add(popup); } if (obj
+			 * == resourcesTut) { program.audio.playSound(program.MUSIC_FOLDER,
+			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
+			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
+			 * 500); program.add(popup); } if (obj == powerupsTut) {
+			 * program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); popup
+			 * = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
+			 * (program.WINDOW_HEIGHT - 500) / 2, 500, 500); program.add(popup); } if (obj
+			 * == enemiesTut) { program.audio.playSound(program.MUSIC_FOLDER,
+			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
+			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
+			 * 500); program.add(popup); }
+			 */
 	}
 }
