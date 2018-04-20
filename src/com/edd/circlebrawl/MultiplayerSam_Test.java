@@ -344,6 +344,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			System.out.print("");
 		} // wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
+		try {
+		Thread.sleep(2000);
+		} catch (InterruptedException e) {}
 		player = new Player(NC.clientName, true, NC.myStartX, NC.myStartY, NC.myStartColor, this);
 
 		long lastTime = System.nanoTime();
