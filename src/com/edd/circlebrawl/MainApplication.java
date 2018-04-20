@@ -16,6 +16,7 @@ import com.edd.osvaldo.GButton;
 import com.edd.osvaldo.GraphicsApplication;
 import com.edd.osvaldo.MenuPane;
 import com.edd.osvaldo.SomePane;
+import com.edd.tutorial.PopUpWindow;
 import com.edd.tutorial.PowerUpTutorialMenu;
 import com.edd.tutorial.TutorialMenu;
 
@@ -45,6 +46,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	private MenuPane menu;
 	private TutorialMenu tutMenu;
 	private PowerUpTutorialMenu powerupMenu;
+	public PopUpWindow popup;
 
 	protected Map currentMap;
 	protected GImage backgroundImage;
@@ -128,6 +130,14 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public void switchToPowerUpTutorialMenu() {
 		switchToScreen(powerupMenu);
+	}
+
+	public void triggerPopupWindow() {
+		popup.showContents();
+	}
+
+	public void closePopupWindow() {
+		popup.hideContents();
 	}
 
 	@Override

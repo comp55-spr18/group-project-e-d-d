@@ -21,6 +21,7 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 	private GButton attackOrbTut;
 	private GButton mainMenu;
 	private GButton muteButton;
+	private GButton popup = null;
 
 	/* instantiate and initalize graphical elements */
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
@@ -103,6 +104,16 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 		}
+		if (obj == strengthTut) {
+			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
+					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
+			program.add(popup);
+		}
+		if (popup != null && obj == popup) {
+			program.remove(popup);
+			popup = null;
+		}
+		// if (program.popup != null && obj == program.popup)
 
 		// if (obj == rect) {
 		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
