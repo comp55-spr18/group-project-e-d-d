@@ -83,7 +83,6 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		tutMenu = new TutorialMenu(this);
 		powerupMenu = new PowerUpTutorialMenu(this);
 		switchToMenu();
-		currentMap.move(player.getCam().getTotalTranslationX(), player.getCam().getTotalTranslationY());
 
 		long lastTime = System.nanoTime();
 		final double ticks = 120.0;
