@@ -258,6 +258,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 				if (parsePacket(userInput).equals("remove")) {
 					String toRemove = string_between(userInput, "<remove>", "</remove>");
 					Player tR = characters.get(toRemove);
+					if(tR == null)
+						continue;
 					tR.removePlayer();
 					tR.getNameLabel().setVisible(false); // TODO
 					System.out.println(tR.getX());
@@ -268,6 +270,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 					double xVelocity = Double.parseDouble(packet[1]);
 					double yVelocity = Double.parseDouble(packet[2]);
 					Player p = characters.get(clientName);
+					if(p == null)
+						continue;
 					movePlayer(p, xVelocity, yVelocity);
 					p.getNameLabel().move(xVelocity, yVelocity);
 				}
