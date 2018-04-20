@@ -273,7 +273,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 					if(p == null)
 						continue;
 					movePlayer(p, xVelocity, yVelocity);
-					p.getNameLabel().move(xVelocity, yVelocity);
 				}
 			}
 		}
