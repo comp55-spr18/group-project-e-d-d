@@ -49,6 +49,11 @@ public class Player extends Character {
 		basicPlayerConstructor(GameType.MULTIPLAYER,name, c[color],new CollisionEngine(this,driver));
 		if(isClient)
 			setPlayerSpritePos();
+		else {
+			MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+			Camera c = multiDriver.getClientPlayer().getCam();
+			sprite.setLocation(x+c.getTotalTranslationX(),y+c.getTotalTranslationY());
+		}
 	}
 	
 	protected void basicPlayerConstructor(GameType gameType, String name, Color color, CollisionEngine collisionEngine){
