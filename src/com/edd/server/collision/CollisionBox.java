@@ -15,4 +15,8 @@ public class CollisionBox {
 		this.ye = ye;
 	}
 	
+	@Override
+	public String toString(){
+		return "CollisionBox(XB: "+xb+", XE: "+xe+", YB: "+yb+", YE: "+ye+")";
+	}
 }

@@ -3,105 +3,23 @@ package com.edd.server.collision;
 
 public abstract class CollisionUtil {
 	
-	private static final int MDRPI = 5; // Max detection range per instance
-	
-	public static CollisionResult overlaps(CollisionBox moving, CollisionBox resting, int x, int y){
-		
-		CollisionResult result = new CollisionResult(false,false);
-
-		int tX = 0;
-		int tY = 0;
-		
-		if(x < -MDRPI)
-			tX = x+MDRPI;
-		else if(x > MDRPI)
-			tX = x-MDRPI;
-
-		if(y < -MDRPI)
-			tY = y+MDRPI;
-		else if(y > MDRPI)
-			tY = y-MDRPI;
-		
-		if(x > MDRPI || y > MDRPI || x < -MDRPI || y < -MDRPI){
-			result = result.merge(overlaps(moving,resting,tX,tY));
-		}
-		
-		if(moving == resting) // if the two actors are the same
-			return new CollisionResult(false,false);
-		
-		Direction direction = Direction.getDirectionFromVelocity(x,y);
-		Rate xRate = Rate.getRateFromVelocity(x);
-		Rate yRate = Rate.getRateFromVelocity(y);
-		
-		boolean xOverlap = false;
-		boolean yOverlap = false;
-		
-		int x1b = moving.xb+x; // far left end of moving actor
-		int y1b = moving.yb+y; // far up end of moving actor
-		int x1e = moving.xe+x; // far right end of moving actor
-		int y1e = moving.ye+y; // far down end of moving actor
-
-		int x2b = resting.xb; // far left end of resting actor
-		int y2b = resting.yb; // far up end of resting actor
-		int x2e = resting.xe; // far right end of resting actor
-		int y2e = resting.ye; // far down end of resting actor
-		
-		if(direction == Direction.NEUTRAL){
-			boolean overlaps = inRange(x1b,x1e,x2b,x2e) && inRange(y1b,y1e,y2b,y2e);
-			return new CollisionResult(overlaps,overlaps);
-		}
-		
-		if(inRange(y1b-y,y1e-y,y2b,y2e))
-			switch(xRate){
-				case INCREASING:
-						xOverlap = eastCheck(x1b,x1e,x2b,x2e);
-					break;
-				case DECREASING:
-						xOverlap = westCheck(x1b,x1e,x2b,x2e);
-					break;
-				case NEUTRAL:
-					// do nothing
-					break;
-		}
-
-		if(inRange(x1b-x,x1e-x,x2b,x2e))
-			switch(yRate){
-				case INCREASING:
-						yOverlap = southCheck(y1b,y1e,y2b,y2e);
-					break;
-				case DECREASING:
-						yOverlap = northCheck(y1b,y1e,y2b,y2e);
-					break;
-				case NEUTRAL:
-					// do nothing
-					break;
-		}
-		
-		return result.merge(new CollisionResult(xOverlap,yOverlap));
-	}
-	
 	public static boolean overlaps(CollisionBox first, CollisionBox second){
-		return overlaps(first, second, 0, 0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
+		int x1b = first.xb; // far left end of moving actor
+		int y1b = first.yb; // far up end of moving actor
+		int x1e = first.xe; // far right end of moving actor
+		int y1e = first.ye; // far down end of moving actor
+
+		int x2b = second.xb; // far left end of resting actor
+		int y2b = second.yb; // far up end of resting actor
+		int x2e = second.xe; // far right end of resting actor
+		int y2e = second.ye; // far down end of resting actor
+		
+		boolean overlaps = inRange(x1b,x1e,x2b,x2e) && inRange(y1b,y1e,y2b,y2e);
+		return overlaps;
 	}
 	
 	private static boolean inRange(int t1b, int t1e, int t2b, int t2e){
 		return (t1b >= t2b && t1b <= t2e) || (t1e >= t2b && t1e <= t2e) || (t2b >= t1b && t2b <= t1e) || (t2e >= t1b && t2e <= t1e);
-	}
-	
-	private static boolean northCheck(int y1b, int y1e, int y2b, int y2e){
-		return y1b <= y2e && y1b >= y2b;
-	}
-	
-	private static boolean southCheck(int y1b, int y1e, int y2b, int y2e){
-		return y1e >= y2b && y1b <= y2b;
-	}
-	
-	private static boolean eastCheck(int x1b, int x1e, int x2b, int x2e){
-		return x1e >= x2b && x1b <= x2b;
-	}
-	
-	private static boolean westCheck(int x1b, int x1e, int x2b, int x2e){
-		return x1b <= x2e && x1b >= x2b;
 	}
 	
 }

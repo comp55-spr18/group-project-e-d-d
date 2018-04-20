@@ -260,7 +260,7 @@ public class ServerHandler extends Thread {
 		if(this.SL.powerups.size() >= maxPowerups)
 			return;
 		while(this.SL.powerups.size() < maxPowerups) {
-			ServerPowerUp SPU = new ServerPowerUp();
+			ServerPowerUp SPU = new ServerPowerUp(ASE);
 			SL.powerups.put(SPU.getID(), SPU);
 			this.sendGlobalPacket("<powerup>"+SPU.generatePacket()+"%</powerup>");
 		}
@@ -271,7 +271,7 @@ public class ServerHandler extends Thread {
 		if(this.SL.resources.size() >= maxResources)
 			return;
 		while(this.SL.resources.size() < maxResources) {
-			ServerResource SR = new ServerResource();
+			ServerResource SR = new ServerResource(ASE);
 			SL.resources.put(SR.getID(), SR);
 			this.sendGlobalPacket("<resource>"+SR.generatePacket()+"%</resource>");
 		}
@@ -283,6 +283,7 @@ public class ServerHandler extends Thread {
 			this.SH = SH;
 		}
 	    public void run() {
+	    	   putToList();
 	       SH.populatePowerups();
 	       SH.populateResources();
 	    }

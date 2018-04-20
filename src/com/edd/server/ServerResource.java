@@ -17,13 +17,14 @@ public class ServerResource implements ServerActor {
 	private CollisionBox cb;
 	private AccessServerElements ASE;
 	
-	public ServerResource() {
+	public ServerResource(AccessServerElements ASE) {
 		this.efficacy = getEfficacy(10, 20);
 		this.multiple = 1;
 		this.x = generateBound();
 		this.y = generateBound();
 		this.cb = new CollisionBox(x, y, x + 20, y + 20);
 		this.myID = getSaltString();
+		this.ASE = ASE;
 		setValidSpawn();
 	}
 	
@@ -32,7 +33,7 @@ public class ServerResource implements ServerActor {
 		while(CD.collides()) {
 			this.x = generateBound();
 			this.y = generateBound();
-			cb = new CollisionBox(x, y, x + 300, y + 300);
+			cb = new CollisionBox(x, y, x + 20, y + 20);
 		}
 	}
 	
