@@ -32,7 +32,7 @@ public class SomePane extends GraphicsPane {
 		program.muteButton = this.muteButton;
 		pauseButton.setFillColor(Color.GREEN);
 		program.pauseButton = this.pauseButton;
-		background = app.getBackgroundImage();
+		background = app.getCurrentMap();
 		background.move(program.player.getCam().getTotalTranslationX(), program.player.getCam().getTotalTranslationY());
 		program.player.getNameLabel().setColor(Color.WHITE);
 		resume.setFillColor(Color.GREEN);
