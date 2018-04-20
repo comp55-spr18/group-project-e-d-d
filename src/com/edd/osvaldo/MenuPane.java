@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import com.edd.circlebrawl.MainApplication;
-import com.edd.circlebrawl.MultiplayerSam_Test;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
@@ -15,9 +14,9 @@ import acm.graphics.GObject;
 public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
-	private GButton singleplayer; // singleplayer option
-	private GButton multiplayer; // multiplayer option
-	private GButton tutorial; // tutorial option
+	private GImage singleplayer; // singleplayer option
+	private GImage multiplayer; // multiplayer option
+	private GImage tutorial; // tutorial option
 	private GButton muteButton;
 	private GButton quitButton;
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
@@ -49,20 +48,24 @@ public class MenuPane extends GraphicsPane {
 		// initialize title graphic
 		title.setLocation((program.WINDOW_WIDTH - title.getWidth()) / 2, program.WINDOW_HEIGHT / 2 - 200);
 
-		// nitialize singleplayer button
-		singleplayer = new GButton("Singleplayer", (program.WINDOW_WIDTH - 200) / 2, (program.WINDOW_HEIGHT - 200) / 2, 200,
-				100);
-		singleplayer.setFillColor(Color.GREEN);
+		// initialize singleplayer button
+		singleplayer = new GImage("com/edd/circlebrawl/Single.gif");
+		singleplayer.setSize(singleplayer.getWidth() / 2, singleplayer.getHeight() / 2);
+		singleplayer.setLocation((program.WINDOW_WIDTH - singleplayer.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - singleplayer.getHeight()) / 2 - 50);
 
 		// initialize mutliplayer button
-		multiplayer = new GButton("Multiplayer", (program.WINDOW_WIDTH - 200) / 2, ((program.WINDOW_HEIGHT - 200) / 2) + 130,
-				200, 100);
-		multiplayer.setFillColor(Color.GRAY);
+		multiplayer = new GImage("com/edd/circlebrawl/Multi.gif");
+		multiplayer.setSize(multiplayer.getWidth() / 2, multiplayer.getHeight() / 2);
+		multiplayer.setLocation((program.WINDOW_WIDTH - multiplayer.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - multiplayer.getHeight()) / 2 + 30);
 
-		// initilize tutorial button
-		tutorial = new GButton("Tutorial", (program.WINDOW_WIDTH - 200) / 2, ((program.WINDOW_HEIGHT - 200) / 2) + 260,
-				200, 100);
-		tutorial.setFillColor(Color.GREEN);
+		// initialize tutorial button
+		tutorial = new GImage("com/edd/circlebrawl/Tutorial.gif");
+		tutorial.setSize(tutorial.getWidth() / 2, tutorial.getHeight() / 2);
+		tutorial.setLocation((program.WINDOW_WIDTH - tutorial.getWidth()) / 2,
+				(program.WINDOW_HEIGHT - tutorial.getHeight()) / 2 + 95);
+		;
 
 		// initialize the mute button
 		muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
@@ -117,18 +120,18 @@ public class MenuPane extends GraphicsPane {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			System.exit(0);
 		}
-		if (obj == multiplayer) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			program.removeAll();
-			MultiplayerSam_Test m = new MultiplayerSam_Test();
-			m.init();
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException ie) {
-			}
-			m.run();
-
-		}
+		// if (obj == multiplayer) {
+		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+		// program.removeAll();
+		// MultiplayerSam_Test m = new MultiplayerSam_Test();
+		// m.init();
+		// try {
+		// Thread.sleep(3000);
+		// } catch (InterruptedException ie) {
+		// }
+		// m.run();
+		//
+		// }
 		if (obj == singleplayer) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.test = true;
