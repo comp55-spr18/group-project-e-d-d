@@ -23,7 +23,7 @@ public class TutorialMenu extends GraphicsPane {
 	private GImage enemiesTut;
 	private GButton mainMenu;
 	private GButton muteButton;
-	private GButton popup = null;
+	private GImage popup = null;
 
 	/* instantiate and initalize graphical elements */
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
@@ -148,39 +148,30 @@ public class TutorialMenu extends GraphicsPane {
 		}
 		if (obj == movementTut) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
 			program.add(popup);
-		}
-		if (obj == combatTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
-			program.add(popup);
-		}
-		if (obj == obstaclesTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
-			program.add(popup);
-		}
-		if (obj == resourcesTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
-			program.add(popup);
-		}
-		if (obj == powerupsTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
-			program.add(popup);
-		}
-		if (obj == enemiesTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-					(program.WINDOW_HEIGHT - 500) / 2, 500, 500);
-			program.add(popup);
-		}
+		} /*
+			 * if (obj == combatTut) { program.audio.playSound(program.MUSIC_FOLDER,
+			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
+			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
+			 * 500); program.add(popup); } if (obj == obstaclesTut) {
+			 * program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); popup
+			 * = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
+			 * (program.WINDOW_HEIGHT - 500) / 2, 500, 500); program.add(popup); } if (obj
+			 * == resourcesTut) { program.audio.playSound(program.MUSIC_FOLDER,
+			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
+			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
+			 * 500); program.add(popup); } if (obj == powerupsTut) {
+			 * program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); popup
+			 * = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
+			 * (program.WINDOW_HEIGHT - 500) / 2, 500, 500); program.add(popup); } if (obj
+			 * == enemiesTut) { program.audio.playSound(program.MUSIC_FOLDER,
+			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
+			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
+			 * 500); program.add(popup); }
+			 */
 	}
 }
