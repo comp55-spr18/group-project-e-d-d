@@ -77,7 +77,7 @@ public class ServerHandler extends Thread {
 					handleNewClient(clientName);
 				}
 				if(inputLine.contains("<getlist>")) {
-					String clientName = this.string_between(inputLine, "<getlist>", "<getlist>");
+					String clientName = this.string_between(inputLine, "<getlist>", "</getlist>");
 					sendPlayerList(clientName);
 					sendPowerUpList(clientName);
 					sendResourceList(clientName);
