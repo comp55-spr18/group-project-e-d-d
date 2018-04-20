@@ -21,6 +21,7 @@ public class ServerResource implements ServerActor {
 		int max = 32*170-min;
 		this.x = r.nextInt(max) + min;
 		this.y = r.nextInt(max) + min;
+		this.cb = new CollisionBox(x, y, x + 20, y + 20);
 		this.myID = getSaltString();
 	}
 	

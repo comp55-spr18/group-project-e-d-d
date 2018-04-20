@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.edd.server.collision.AccessServerElements;
+
 import java.io.*;
 
 public class ServerHandler extends Thread {
@@ -17,6 +20,7 @@ public class ServerHandler extends Thread {
 	private ArrayList<ServerPlayer> players = new ArrayList<ServerPlayer>();
 	private ArrayList<ServerPowerUp> powerups = new ArrayList<ServerPowerUp>();
 	private ArrayList<ServerResource> resources = new ArrayList<ServerResource>();
+	AccessServerElements ASE;
 	
 	public ServerHandler(Socket socket, ServerListener SL) {
 		super("ServerHandler");
@@ -27,6 +31,9 @@ public class ServerHandler extends Thread {
 	}
 	
 	public void putToList() {
+		players.removeAll(players);
+		players.removeAll(powerups);
+		players.removeAll(resources);
 		for(ServerPlayer sp : SL.clients.keySet()) {
 			players.add(sp);
 		}
@@ -36,6 +43,7 @@ public class ServerHandler extends Thread {
 		for(ServerResource sr : SL.resources.values()) {
 			resources.add(sr);
 		}
+		ASE = new AccessServerElements(players, powerups, resources);
 	}
 	
 	public String string_between(String input, String left, String right){
@@ -54,6 +62,7 @@ public class ServerHandler extends Thread {
 			while ((inputLine = in.readLine()) != null) {
 				System.out.println(inputLine);
 				if(inputLine.contains("<newclient>")) {
+					putToList();
 					String clientName = this.string_between(inputLine, "<newclient>", "</newclient>");
 					
 					// Check if this name exists
@@ -63,7 +72,7 @@ public class ServerHandler extends Thread {
 						continue;
 					}
 					
-					SL.clients.put(new ServerPlayer(clientName), out);
+					SL.clients.put(new ServerPlayer(clientName, ASE), out);
 					System.out.println("new client: " + SL.clients.keySet());
 					handleNewClient(clientName);
 					sendPlayerList(clientName);

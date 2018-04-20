@@ -22,6 +22,7 @@ public class ServerPowerUp implements ServerActor{
 		int max = 32*170-min;
 		this.x = r.nextInt(max) + min;
 		this.y = r.nextInt(max) + min;
+		this.cb = new CollisionBox(x, y, x + 60, y + 60);
 		this.type = getType();
 		this.myID = getSaltString();
 	}

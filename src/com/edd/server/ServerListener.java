@@ -12,7 +12,7 @@ public class ServerListener {
 	HashMap<String, ServerResource> resources = new HashMap<String, ServerResource>();
     public void listen() throws IOException {
  
-        int portNumber = 9991; // temp port. will fix this later
+        int portNumber = 9993; // temp port. will fix this later
         boolean listening = true;
          
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
