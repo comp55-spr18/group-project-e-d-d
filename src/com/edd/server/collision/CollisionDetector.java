@@ -1,16 +1,14 @@
 package com.edd.server.collision;
 
-import com.edd.server.ServerPlayer;
-import com.edd.server.ServerPowerUp;
-import com.edd.server.ServerResource;
+import com.edd.server.ServerActor;
 
 public class CollisionDetector {
 
-	private CollisionBox cb;
+	private ServerActor actor;
 	private AccessServerElements ase;
 	
-	public CollisionDetector(CollisionBox cb, AccessServerElements ase){
-		this.cb = cb;
+	public CollisionDetector(ServerActor actor, AccessServerElements ase){
+		this.actor = actor;
 		this.ase = ase;
 	}
 	
@@ -19,21 +17,21 @@ public class CollisionDetector {
 	 * @return if the actor is colliding with something
 	 */
 	public boolean collides(){
-		for(ServerPlayer player : ase.getPlayers()){
-			if(CollisionUtil.overlaps(cb,player.getCollisionBox())){
-				System.out.println("Collides with player " + player);
+		for(ServerActor player : ase.getPlayers()){
+			if(actor != player && CollisionUtil.overlaps(actor.getCollisionBox(),player.getCollisionBox())){
+				System.out.println(actor + " collides with player " + player);
 				return true;
 			}
 		}
-		for(ServerPowerUp powerUp : ase.getPowerUps()){
-			if(CollisionUtil.overlaps(cb,powerUp.getCollisionBox())){
-				System.out.println("Collides with powerUp " + powerUp);
+		for(ServerActor powerUp : ase.getPowerUps()){
+			if(actor != powerUp && CollisionUtil.overlaps(actor.getCollisionBox(),powerUp.getCollisionBox())){
+				System.out.println(actor + " collides with powerUp " + powerUp);
 				return true;
 			}
 		}
-		for(ServerResource resource : ase.getResource()){
-			if(CollisionUtil.overlaps(cb,resource.getCollisionBox())){
-				System.out.println("Collides with resource " + resource);
+		for(ServerActor resource : ase.getResource()){
+			if(actor != resource && CollisionUtil.overlaps(actor.getCollisionBox(),resource.getCollisionBox())){
+				System.out.println(actor + " collides with resource " + resource);
 				return true;
 			}
 		}

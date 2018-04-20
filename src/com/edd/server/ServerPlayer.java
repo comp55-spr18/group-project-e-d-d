@@ -29,7 +29,7 @@ public class ServerPlayer implements ServerActor{
 	}
 	
 	public void setValidSpawn() {
-		CollisionDetector CD = new CollisionDetector(cb, ASE);
+		CollisionDetector CD = new CollisionDetector(this, ASE);
 		while(CD.collides()) {
 			this.x = generateBound();
 			this.y = generateBound();
