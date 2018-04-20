@@ -62,7 +62,7 @@ public class ServerHandler extends Thread {
 			while ((inputLine = in.readLine()) != null) {
 				System.out.println(inputLine);
 				if(inputLine.contains("<newclient>")) {
-					putToList();
+					//putToList();
 					String clientName = this.string_between(inputLine, "<newclient>", "</newclient>");
 					
 					// Check if this name exists
@@ -283,7 +283,7 @@ public class ServerHandler extends Thread {
 			this.SH = SH;
 		}
 	    public void run() {
-	    	   putToList();
+	    	   //putToList();
 	       SH.populatePowerups();
 	       SH.populateResources();
 	    }

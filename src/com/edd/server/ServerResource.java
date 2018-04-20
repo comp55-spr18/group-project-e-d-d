@@ -25,7 +25,7 @@ public class ServerResource implements ServerActor {
 		this.cb = new CollisionBox(x, y, x + 20, y + 20);
 		this.myID = getSaltString();
 		this.ASE = ASE;
-		setValidSpawn();
+		//setValidSpawn();
 	}
 	
 	public void setValidSpawn() {
@@ -42,11 +42,17 @@ public class ServerResource implements ServerActor {
 	}
 	
 	public int generateBound() {
-		Random rand = new Random();
-		int min = 32*80;
-		int max = 32*170-min;
-		this.x = rand.nextInt(max) + min;
-		return x;
+//		int v;
+//		Random random = new Random();
+//		int min = 32*80;
+//		int max = 32*170-min;
+//		v = random.nextInt(max) + min;
+//		return v;
+		int min = 4077;
+		int max = 8000;
+		Random random = new Random();
+		int randomNumber = random.nextInt(max + 1 - min) + min;
+		return randomNumber;
 	}
 	
 	private String getSaltString() {

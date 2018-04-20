@@ -40,7 +40,7 @@ public class PowerUp extends Item {
 	@Override
 	public void activate(BaseActor consumer) {
 		if(consumer instanceof Character) {
-			this.consumer = (Character)consumer;;
+			this.consumer = (Character)consumer;
 			toggleEffect();
 		}
 	}
