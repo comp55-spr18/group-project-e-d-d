@@ -5,7 +5,7 @@ public abstract class CollisionUtil {
 	
 	private static final int MDRPI = 5; // Max detection range per instance
 	
-	public static CollisionResult overlaps(BaseActor moving, BaseActor resting, int x, int y){
+	public static CollisionResult overlaps(CollisionBox moving, CollisionBox resting, int x, int y){
 		
 		CollisionResult result = new CollisionResult(false,false);
 
@@ -36,18 +36,15 @@ public abstract class CollisionUtil {
 		boolean xOverlap = false;
 		boolean yOverlap = false;
 		
-		CollisionBox cb1 = moving.getCollisionBox();
-		CollisionBox cb2 = resting.getCollisionBox();
-		
-		int x1b = cb1.xb+x; // far left end of moving actor
-		int y1b = cb1.yb+y; // far up end of moving actor
-		int x1e = cb1.xe+x; // far right end of moving actor
-		int y1e = cb1.ye+y; // far down end of moving actor
+		int x1b = moving.xb+x; // far left end of moving actor
+		int y1b = moving.yb+y; // far up end of moving actor
+		int x1e = moving.xe+x; // far right end of moving actor
+		int y1e = moving.ye+y; // far down end of moving actor
 
-		int x2b = cb2.xb; // far left end of resting actor
-		int y2b = cb2.yb; // far up end of resting actor
-		int x2e = cb2.xe; // far right end of resting actor
-		int y2e = cb2.ye; // far down end of resting actor
+		int x2b = resting.xb; // far left end of resting actor
+		int y2b = resting.yb; // far up end of resting actor
+		int x2e = resting.xe; // far right end of resting actor
+		int y2e = resting.ye; // far down end of resting actor
 		
 		if(direction == Direction.NEUTRAL){
 			boolean overlaps = inRange(x1b,x1e,x2b,x2e) && inRange(y1b,y1e,y2b,y2e);
@@ -83,7 +80,7 @@ public abstract class CollisionUtil {
 		return result.merge(new CollisionResult(xOverlap,yOverlap));
 	}
 	
-	public static boolean overlaps(BaseActor first, BaseActor second){
+	public static boolean overlaps(CollisionBox first, CollisionBox second){
 		return overlaps(first, second, 0, 0).xCollides; // both xOverlaps & yOverlaps are true if direction is neutral (0,0 velocity) and it overlaps
 	}
 	
