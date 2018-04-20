@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.edd.server.collision.CollisionBox;
+
 public class ServerPlayer implements ServerActor{
 	
 	private String name;
 	private int x;
 	private int y;
 	private int color;
+	private CollisionBox cb;
 	
 	public ServerPlayer(String name) {
 		Random rand = new Random();
@@ -55,6 +58,14 @@ public class ServerPlayer implements ServerActor{
 	@Override
 	public String toString() {
 		return "name=" + name;
+	}
+	
+	public CollisionBox getCollisionBox() {
+		return this.cb;
+	}
+	
+	public void setCollisionBox(CollisionBox cb) {
+		this.cb = cb;
 	}
 	
 }

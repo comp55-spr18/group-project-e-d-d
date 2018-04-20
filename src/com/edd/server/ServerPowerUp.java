@@ -2,6 +2,8 @@ package com.edd.server;
 
 import java.util.Random;
 
+import com.edd.server.collision.CollisionBox;
+
 public class ServerPowerUp implements ServerActor{
 	
 	private int efficacy;
@@ -11,6 +13,7 @@ public class ServerPowerUp implements ServerActor{
 	private String type;
 	private String myID;
 	Random r = new Random();
+	private CollisionBox cb;
 	
 	public ServerPowerUp() {
 		this.efficacy = getEfficacy(10, 20);
@@ -76,4 +79,13 @@ public class ServerPowerUp implements ServerActor{
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public CollisionBox getCollisionBox() {
+		return this.cb;
+	}
+	
+	public void setCollisionBox(CollisionBox cb) {
+		this.cb = cb;
+	}
+	
 }
