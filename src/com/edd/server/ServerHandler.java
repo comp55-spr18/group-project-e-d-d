@@ -187,8 +187,8 @@ public class ServerHandler extends Thread {
 		String allPlayers = "";
 		for (Entry<ServerPlayer, PrintWriter> entry : SL.clients.entrySet()) {
 			String name = entry.getKey().getPlayerName();
-			int x = entry.getKey().getPlayerX();
-			int y = entry.getKey().getPlayerY();
+			int x = entry.getKey().getX();
+			int y = entry.getKey().getY();
 			int color = entry.getKey().getPlayerColor();
 		    if(name.equals(playerName))
 		    		continue;
@@ -217,9 +217,9 @@ public class ServerHandler extends Thread {
 	
 	public void handleNewClient(String playerName) {
 		ServerPlayer p = getPlayerKey(playerName);
-		String playerLoc = buildPlayerPacket(playerName, p.getPlayerX(), p.getPlayerY(), p.getPlayerColor());
+		String playerLoc = buildPlayerPacket(playerName, p.getX(), p.getY(), p.getPlayerColor());
 		sendGlobalPacket("<newclient>"+playerLoc+"</newclient>", playerName);
-		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getPlayerX() + "," + p.getPlayerY() + "," + p.getPlayerColor() + "</newclient>", playerName);
+		sendPlayerPacket("<newclient>JOIN_OK" + "," + p.getX() + "," + p.getY() + "," + p.getPlayerColor() + "</newclient>", playerName);
 	}
 	
 	public void handlePlayerRemove(String playerName) {
@@ -229,11 +229,11 @@ public class ServerHandler extends Thread {
 	public void handlePlayerMove(String clientName, String xVelocity, String yVelocity) {
 		sendGlobalPacket("<move>" + clientName + "," + xVelocity + "," + yVelocity + "</move>", clientName);
 		ServerPlayer sp = getPlayerKey(clientName);
-		int newX = (int)(sp.getPlayerX() + Double.parseDouble(xVelocity));
-		int newY = (int)(sp.getPlayerY() + Double.parseDouble(yVelocity));
-		sp.setPlayerX(newX);
-		sp.setPlayerY(newY);
-		System.out.println("Player:" + sp.getPlayerX() + ", " + sp.getPlayerY());
+		int newX = (int)(sp.getX() + Double.parseDouble(xVelocity));
+		int newY = (int)(sp.getY() + Double.parseDouble(yVelocity));
+		sp.setX(newX);
+		sp.setY(newY);
+		System.out.println("Player:" + sp.getX() + ", " + sp.getY());
 	}
 	
 	public void handlePowerUpRemove(String PUID) {

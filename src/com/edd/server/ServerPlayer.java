@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class ServerPlayer {
+public class ServerPlayer implements ServerActor{
 	
 	private String name;
 	private int x;
@@ -28,11 +28,11 @@ public class ServerPlayer {
 		return x;
 	}
 	
-	public int getPlayerX() {
+	public int getX() {
 		return x;
 	}
 	
-	public int getPlayerY() {
+	public int getY() {
 		return y;
 	}
 	
@@ -40,11 +40,11 @@ public class ServerPlayer {
 		return color;
 	}
 	
-	public void setPlayerX(int x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 	
-	public void setPlayerY(int y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 	
