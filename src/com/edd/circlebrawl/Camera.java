@@ -31,7 +31,7 @@ public class Camera implements Tick {
 		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();) {
 			GObject next = it.next();
 			if (next == player.sprite || next == player.getSaw().getSprite() || next == player.getNameLabel()
-					|| next.equals(app.muteButton) || next.equals(app.pauseButton) || next.equals(app.currentMap)) {
+					|| next.equals(app.muteButton) || next.equals(app.pauseButton)) {
 				continue;
 			} else
 				next.move(totalTranslationX, totalTranslationY);
@@ -42,7 +42,7 @@ public class Camera implements Tick {
 		for (Iterator<GObject> it = app.getGCanvas().iterator(); it.hasNext();) {
 			GObject next = it.next();
 			if (next == player.sprite || next == player.getSaw().getSprite() || next == player.getNameLabel()
-					|| next.equals(app.muteButton) || next.equals(app.pauseButton) || next.equals(app.currentMap)) {
+					|| next.equals(app.muteButton) || next.equals(app.pauseButton)) {
 				continue;
 			} else
 				next.move(-totalTranslationX, -totalTranslationY);
