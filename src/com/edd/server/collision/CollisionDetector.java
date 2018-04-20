@@ -20,16 +20,22 @@ public class CollisionDetector {
 	 */
 	public boolean collides(){
 		for(ServerPlayer player : ase.getPlayers()){
-			if(CollisionUtil.overlaps(cb,player.getCollisionBox()))
+			if(CollisionUtil.overlaps(cb,player.getCollisionBox())){
+				System.out.println("Collides with player " + player);
 				return true;
+			}
 		}
 		for(ServerPowerUp powerUp : ase.getPowerUps()){
-			if(CollisionUtil.overlaps(cb,powerUp.getCollisionBox()))
+			if(CollisionUtil.overlaps(cb,powerUp.getCollisionBox())){
+				System.out.println("Collides with powerUp " + powerUp);
 				return true;
+			}
 		}
 		for(ServerResource resource : ase.getResource()){
-			if(CollisionUtil.overlaps(cb,resource.getCollisionBox()))
+			if(CollisionUtil.overlaps(cb,resource.getCollisionBox())){
+				System.out.println("Collides with resource " + resource);
 				return true;
+			}
 		}
 		return false;
 	}
