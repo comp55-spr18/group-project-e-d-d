@@ -49,15 +49,11 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	private NetworkClient NC;
 	
 	private boolean done = false;
+	boolean resourcesComplete = false;
 
 	int ticks = 0;
 	int frames = 0;
-
-	private JTextField name;
-	private JPanel[] login = { new JPanel() };
-	private JLabel nameLabel;
-	private JButton button;
-
+	
 	@Override
 	public void init() {
 		myName = JOptionPane.showInputDialog("Enter name: ");
@@ -230,7 +226,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							String type = powerUpInfo[5];
 							PowerUpType PUT = PowerUpType.stringToEnum(type);
 							PowerUp PU = new PowerUp(GameType.MULTIPLAYER, x, y, world, efficacy, multiple,
-									PowerUpType.stringToEnum(type));
+							PowerUpType.stringToEnum(type));
 							System.out.println("adding powerup" + powerUpID);
 							powerupsToAdd.put(powerUpID, PU);
 						}
@@ -254,6 +250,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 						}
 					}
 					System.out.println("Resources: " + resources);
+					world.resourcesComplete = true;
 				}
 				if (parsePacket(userInput).equals("removePU")) {
 					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
@@ -289,6 +286,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 
 		public void sendExit() {
 			sendPacket(out, "<remove>" + this.clientName + "</remove>");
+		}
+		
+		public void sendGetList() {
+			sendPacket(out, "<getlist>" + this.clientName + "</getlist>");
 		}
 
 		public String getPowerUpID(PowerUp PU) {
@@ -355,9 +356,12 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			System.out.print("");
 		} // wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
-		startWait();
+		//startWait();
 		player = new Player(NC.clientName, true, NC.myStartX, NC.myStartY, NC.myStartColor, this);
-
+		NC.sendGetList();
+		while (!resourcesComplete) {
+			System.out.print("");
+		} // wait until complete
 		long lastTime = System.nanoTime();
 		final double ticks = 60.0;
 		double ns = 1000000000 / ticks;

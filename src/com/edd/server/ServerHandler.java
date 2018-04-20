@@ -75,6 +75,9 @@ public class ServerHandler extends Thread {
 					SL.clients.put(new ServerPlayer(clientName), out);
 					System.out.println("new client: " + SL.clients.keySet());
 					handleNewClient(clientName);
+				}
+				if(inputLine.contains("<getlist>")) {
+					String clientName = this.string_between(inputLine, "<getlist>", "<getlist>");
 					sendPlayerList(clientName);
 					sendPowerUpList(clientName);
 					sendResourceList(clientName);
