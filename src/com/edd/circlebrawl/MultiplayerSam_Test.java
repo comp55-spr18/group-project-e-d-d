@@ -225,7 +225,6 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 							powerups.put(powerUpID, PU);
 						}
 					}
-
 				}
 				if (parsePacket(userInput).equals("resource")) {
 					String packet = string_between(userInput, "<resource>", "</resource>");

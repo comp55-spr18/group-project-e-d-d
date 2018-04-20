@@ -1,7 +1,9 @@
 package com.edd.server;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,6 +14,9 @@ public class ServerHandler extends Thread {
 	private PrintWriter out = null;
 	private BufferedReader in = null;
 	private ServerListener SL = null;
+	private ArrayList<ServerPlayer> players = new ArrayList<ServerPlayer>();
+	private ArrayList<ServerPowerUp> powerups = new ArrayList<ServerPowerUp>();
+	private ArrayList<ServerResource> resources = new ArrayList<ServerResource>();
 	
 	public ServerHandler(Socket socket, ServerListener SL) {
 		super("ServerHandler");
@@ -19,6 +24,18 @@ public class ServerHandler extends Thread {
 		this.SL = SL;
 		Timer timer = new Timer();
 		timer.schedule(new Generation(this), 0, 5000);
+	}
+	
+	public void putToList() {
+		for(ServerPlayer sp : SL.clients.keySet()) {
+			players.add(sp);
+		}
+		for(ServerPowerUp spu : SL.powerups.values()) {
+			powerups.add(spu);
+		}
+		for(ServerResource sr : SL.resources.values()) {
+			resources.add(sr);
+		}
 	}
 	
 	public String string_between(String input, String left, String right){
