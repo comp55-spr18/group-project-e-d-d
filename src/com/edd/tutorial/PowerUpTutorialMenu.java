@@ -165,24 +165,12 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 			soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 		}
-		// if (obj == strengthTut) {
-		// popup = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) /
-		// 2,
-		// (program.WINDOW_HEIGHT - 500) / 2, 500, 500);
-		// program.add(popup);
-		// }
 		if (popup != null && obj == closeButton) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.remove(closeButton);
 			program.remove(popup);
 			popup = null;
 		}
-
-		// if (obj == rect) {
-		// program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-		// program.test = true;
-		// program.audio.stopSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-		// program.switchToSome();
-		// }
 	}
 
 	@Override

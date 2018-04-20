@@ -21,6 +21,7 @@ public class TutorialMenu extends GraphicsPane {
 	private GImage resourcesTut;
 	private GImage powerupsTut;
 	private GImage enemiesTut;
+	private GImage closeButton;
 	private GButton mainMenu;
 	private GButton muteButton;
 	private GImage popup = null;
@@ -81,6 +82,12 @@ public class TutorialMenu extends GraphicsPane {
 		mainMenu = new GButton("Main Menu", (program.WINDOW_WIDTH + 900) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50,
 				50);
 		mainMenu.setFillColor(Color.GREEN);
+
+		// initialize the close window button
+		closeButton = new GImage("com/edd/tutorial/cancelButton.png");
+		closeButton.setSize(50, 50);
+		closeButton.setLocation((program.WINDOW_WIDTH - closeButton.getWidth()) / 2 + 210,
+				(program.WINDOW_HEIGHT - closeButton.getHeight()) / 2 - 210);
 	}
 
 	@Override
@@ -131,10 +138,70 @@ public class TutorialMenu extends GraphicsPane {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.switchToPowerUpTutorialMenu();
 		}
-		if (popup != null && obj == popup) {
+		if (popup != null && obj == closeButton) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.remove(closeButton);
 			program.remove(popup);
 			popup = null;
+		}
+		if (obj == movementTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == combatTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			// TODO CHANGE THIS
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == obstaclesTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			// TODO CHANGE THIS
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == resourcesTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			// TODO CHANGE THIS
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == powerupsTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			// TODO CHANGE THIS
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
+		}
+		if (obj == enemiesTut) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			// TODO CHANGE THIS
+			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
+			popup.setSize(500, 500);
+			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
+					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
+			program.add(popup);
+			program.add(closeButton);
 		}
 	}
 
@@ -146,32 +213,5 @@ public class TutorialMenu extends GraphicsPane {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.switchToMenu();
 		}
-		if (obj == movementTut) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			popup = new GImage("com/edd/tutorial/movementTutPopup.jpg");
-			popup.setSize(500, 500);
-			popup.setLocation((program.WINDOW_WIDTH - popup.getWidth()) / 2,
-					(program.WINDOW_HEIGHT - popup.getHeight()) / 2);
-			program.add(popup);
-		} /*
-			 * if (obj == combatTut) { program.audio.playSound(program.MUSIC_FOLDER,
-			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
-			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
-			 * 500); program.add(popup); } if (obj == obstaclesTut) {
-			 * program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); popup
-			 * = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-			 * (program.WINDOW_HEIGHT - 500) / 2, 500, 500); program.add(popup); } if (obj
-			 * == resourcesTut) { program.audio.playSound(program.MUSIC_FOLDER,
-			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
-			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
-			 * 500); program.add(popup); } if (obj == powerupsTut) {
-			 * program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]); popup
-			 * = new GButton("This is a test string", (program.WINDOW_WIDTH - 500) / 2,
-			 * (program.WINDOW_HEIGHT - 500) / 2, 500, 500); program.add(popup); } if (obj
-			 * == enemiesTut) { program.audio.playSound(program.MUSIC_FOLDER,
-			 * program.SOUND_FILES[5]); popup = new GButton("This is a test string",
-			 * (program.WINDOW_WIDTH - 500) / 2, (program.WINDOW_HEIGHT - 500) / 2, 500,
-			 * 500); program.add(popup); }
-			 */
 	}
 }
