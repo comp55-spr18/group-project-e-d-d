@@ -32,8 +32,8 @@ public class ServerHandler extends Thread {
 	
 	public void putToList() {
 		players.removeAll(players);
-		players.removeAll(powerups);
-		players.removeAll(resources);
+		powerups.removeAll(powerups);
+		resources.removeAll(resources);
 		for(ServerPlayer sp : SL.clients.keySet()) {
 			players.add(sp);
 		}
@@ -288,6 +288,4 @@ public class ServerHandler extends Thread {
 	       SH.populateResources();
 	    }
 	}
-
-	
 }
