@@ -26,6 +26,8 @@ public class CollisionDetector {
 			}
 			for(ServerActor powerUp : ase.getPowerUps()){
 				if(actor != powerUp && CollisionUtil.overlaps(actor.getCollisionBox(),powerUp.getCollisionBox())){
+					System.out.println("CollisionBox of powerup is: "+powerUp.getCollisionBox());
+					System.out.println("CollisionBox of actor is: "+powerUp.getCollisionBox());
 					System.out.println(actor + " collides with powerUp " + powerUp);
 					return true;
 				}
