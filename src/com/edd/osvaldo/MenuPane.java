@@ -117,10 +117,6 @@ public class MenuPane extends GraphicsPane {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			System.exit(0);
 		}
-		if (obj == rect3) {
-			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
-			program.switchToTutorialMenu();
-		}
 		if (obj == rect2) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.removeAll();
@@ -138,6 +134,15 @@ public class MenuPane extends GraphicsPane {
 			program.test = true;
 			program.audio.stopSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
 			program.switchToSome();
+		}
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+
+		if (obj == rect3) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
+			program.switchToTutorialMenu();
 		}
 	}
 }
