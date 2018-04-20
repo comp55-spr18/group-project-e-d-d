@@ -59,6 +59,16 @@ public class MainApplication extends GraphicsApplication implements Tick {
 		if(mapBuilder == null)
 			mapBuilder = new MapBuilder();
 		currentMap = mapBuilder.buildMap("com/edd/map/V3Map.csv", 51, 51, 15, 15, 2);
+		checkMapLoc();
+	}
+	
+	public void checkMapLoc() {
+		if(currentMap == null)
+			return;
+		if(currentMap.getX() != 0 || currentMap.getY() != 0) {
+			currentMap.setLocation(0,0);
+		}
+		currentMap.sendToBack();
 	}
 
 	public void init() {
@@ -142,6 +152,7 @@ public class MainApplication extends GraphicsApplication implements Tick {
 			AI_GEN.tick();
 			player.tick();
 		}
+		checkMapLoc();
 	}
 
 	public void bringPlayersToFront() {

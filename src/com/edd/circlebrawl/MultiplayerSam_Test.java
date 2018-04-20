@@ -47,6 +47,8 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	private Player player;
 
 	private NetworkClient NC;
+	
+	private boolean done = false;
 
 	int ticks = 0;
 	int frames = 0;
@@ -336,6 +338,15 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	}
 
 	// For testing
+	
+	public void startWait() {
+		if(done)
+			return;
+		try {
+		Thread.sleep(2000);
+		} catch (InterruptedException e) {}
+		done = true;
+	}
 
 	@Override
 	public void run() {
@@ -344,9 +355,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			System.out.print("");
 		} // wait until complete
 		System.out.println(NC.getStartX() + " + " + NC.getStartY());
-		try {
-		Thread.sleep(2000);
-		} catch (InterruptedException e) {}
+		startWait();
 		player = new Player(NC.clientName, true, NC.myStartX, NC.myStartY, NC.myStartColor, this);
 
 		long lastTime = System.nanoTime();
@@ -398,6 +407,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public void tick() {
 		player.tick();
 		BOUNDARY_GEN.spawn();
+		checkMapLoc();
 	}
 
 	public void keyPressed(KeyEvent e) {
