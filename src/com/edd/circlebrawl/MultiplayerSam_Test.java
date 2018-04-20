@@ -407,6 +407,7 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 	public void tick() {
 		player.tick();
 		BOUNDARY_GEN.spawn();
+		checkMapLoc();
 	}
 
 	public void keyPressed(KeyEvent e) {

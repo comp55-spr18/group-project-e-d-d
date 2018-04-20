@@ -20,7 +20,8 @@ public class MapBuilder {
 	public static final int COLS_IN_SET = (int)TILE_SET.getHeight()/TILE_HEIGHT;
 	public static final int TOTAL_TILES = ROWS_IN_SET*COLS_IN_SET;
 	
-	public static HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
+	private HashMap<Integer,GImage> tileImages = new HashMap<Integer,GImage>();
+	private BufferedImage tileSetImage = new BufferedImage(ROWS_IN_SET*TILE_WIDTH,COLS_IN_SET*TILE_HEIGHT,BufferedImage.TYPE_INT_RGB);
 	
 	public int mapWidth;
 	public int mapHeight;
@@ -30,6 +31,7 @@ public class MapBuilder {
 	public int tilesBufferY;
 	
 	public GImage buildMap(String mapFile, int tilesInMapX, int tilesInMapY, int tilesBufferX, int tilesBufferY, int baselineID){
+		buildTileSet();
 		buildTileImages(baselineID);		
 		this.tilesInMapX = tilesInMapX;
 		this.tilesInMapY = tilesInMapY;
@@ -74,11 +76,18 @@ public class MapBuilder {
 			System.out.println("Error reading map: "+mapFile+" -- ID value is not number?");
 		}
 		
+		g.dispose();
 		return new GImage(mapImage);
 		//return new Map(map,tilesInMapX,tilesInMapY,tilesBufferX,tilesBufferY,TILE_WIDTH,TILE_HEIGHT,tileImages.get(baselineID));
 	}
 	
-	private static void buildTileImages(int baselineID){
+	private void buildTileSet() {
+		Graphics g = tileSetImage.createGraphics();
+		g.drawImage(TILE_SET.getImage(), 0, 0, null);
+		g.dispose();
+	}
+	
+	private void buildTileImages(int baselineID){
 		try {
 			FileReader fileReader = new FileReader("com/edd/map/V3Tileset.csv");
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -108,12 +117,8 @@ public class MapBuilder {
 		}
 	}
 
-	private static GImage getTile(int row, int col){
-		BufferedImage tileSet = new BufferedImage((int)TILE_SET.getWidth(),(int)TILE_SET.getHeight(),BufferedImage.TYPE_INT_ARGB);
-		Graphics g = tileSet.createGraphics();
-		g.drawImage(TILE_SET.getImage(), 0, 0, null);
-		g.dispose();
-		return new GImage(tileSet.getSubimage(col*TILE_WIDTH, row*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT));
+	private GImage getTile(int row, int col){
+		return new GImage(tileSetImage.getSubimage(col*TILE_WIDTH, row*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT));
 	}
 	
 }
