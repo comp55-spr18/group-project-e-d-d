@@ -257,7 +257,7 @@ public class MultiplayerDriver extends MainApplication implements Tick {
 				if (parsePacket(userInput).equals("removeR")) {
 					String toRemove = string_between(userInput, "<removeR>", "</removeR>");
 					world.remove(resources.get(toRemove).getSprite());
-					resourcesToRemove.add(toRemove);
+					//resourcesToRemove.add(toRemove);
 				}
 				if (parsePacket(userInput).equals("removePU")) {
 					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
