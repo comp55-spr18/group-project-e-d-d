@@ -8,7 +8,7 @@ import java.util.Random;
 import com.edd.circlebrawl.Camera;
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
-import com.edd.circlebrawl.MultiplayerSam_Test;
+import com.edd.circlebrawl.MultiplayerDriver;
 import com.edd.collision.CollisionEngine;
 import com.edd.collision.CollisionResult;
 
@@ -50,7 +50,7 @@ public class Player extends Character {
 		if(isClient)
 			setPlayerSpritePos();
 		else {
-			MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+			MultiplayerDriver multiDriver = (MultiplayerDriver)driver;
 			Camera c = multiDriver.getClientPlayer().getCam();
 			sprite.setLocation(x+c.getTotalTranslationX(),y+c.getTotalTranslationY());
 		}
@@ -108,7 +108,7 @@ public class Player extends Character {
 				setPlayerSpritePos = true;
 				break;
 			case MULTIPLAYER:
-				MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+				MultiplayerDriver multiDriver = (MultiplayerDriver)driver;
 				setPlayerSpritePos = multiDriver.getClientPlayer() == this;
 				break;
 		}
@@ -189,8 +189,8 @@ public class Player extends Character {
 		if(moveSuccess.yCollides)
 			yVelocity = 0;
 		
-		if(driver instanceof MultiplayerSam_Test)
-			((MultiplayerSam_Test)driver).moveSuccess(this, (int)xVelocity, (int)yVelocity);
+		if(driver instanceof MultiplayerDriver)
+			((MultiplayerDriver)driver).moveSuccess(this, (int)xVelocity, (int)yVelocity);
 
 		bringToFront();
 	}

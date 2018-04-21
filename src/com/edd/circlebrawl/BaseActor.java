@@ -57,8 +57,8 @@ public abstract class BaseActor implements Actor, Tick {
 	}
 
 	private void applyTranslation() {
-		if(driver instanceof MultiplayerSam_Test){
-			MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+		if(driver instanceof MultiplayerDriver){
+			MultiplayerDriver multiDriver = (MultiplayerDriver)driver;
 			Player p = multiDriver.getClientPlayer();
 			if(isValidTranslation(p))
 				sprite.move(p.getCam().getTotalTranslationX(),p.getCam().getTotalTranslationY());
