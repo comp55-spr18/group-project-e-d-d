@@ -180,6 +180,7 @@ public class PowerUpTutorialMenu extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 
 		if (obj == mainMenu) {
+			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.switchToMenu();
 		}
 		if (obj == powerUpStrengthTut) {
