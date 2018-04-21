@@ -24,7 +24,6 @@ public class MenuPane extends GraphicsPane {
 			program.WINDOW_HEIGHT / 2);
 	private GLabel sign = new GLabel("Under Construction?", ((program.WINDOW_WIDTH - 200) / 2) + 40,
 			((program.WINDOW_HEIGHT - 200) / 2) + 210);
-	private boolean soundPaused = false;
 
 	public MenuPane(MainApplication app) {
 		super();
@@ -69,7 +68,6 @@ public class MenuPane extends GraphicsPane {
 
 		// initialize the mute button
 		muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
-		muteButton.setFillColor(Color.GREEN);
 
 		// initialize the quit button
 		quitButton = new GButton("Quit", (program.WINDOW_WIDTH + 900) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
@@ -84,6 +82,10 @@ public class MenuPane extends GraphicsPane {
 		program.add(tutorial);
 		program.add(sign);
 		program.add(title);
+		if (program.soundPaused)
+			muteButton.setFillColor(Color.GRAY);
+		else
+			muteButton.setFillColor(Color.GREEN);
 		program.add(muteButton);
 		program.add(quitButton);
 	}
@@ -105,15 +107,15 @@ public class MenuPane extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 
 		// mute button interaction
-		if (obj == muteButton && !soundPaused) {
+		if (obj == muteButton && !program.soundPaused) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-			soundPaused = true;
+			program.soundPaused = true;
 			muteButton.setFillColor(Color.GRAY);
-		} else if (obj == muteButton && soundPaused) {
+		} else if (obj == muteButton && program.soundPaused) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-			soundPaused = false;
+			program.soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 		}
 		if (obj == quitButton) {

@@ -1,6 +1,5 @@
 package com.edd.circlebrawl;
 
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 
 import com.edd.character.Player;
@@ -9,7 +8,6 @@ import com.edd.generator.BoundaryGenerator;
 import com.edd.generator.ObstacleGenerator;
 import com.edd.generator.PowerUpGenerator;
 import com.edd.generator.ResourceGenerator;
-import com.edd.map.Map;
 import com.edd.map.MapBuilder;
 import com.edd.osvaldo.AudioPlayer;
 import com.edd.osvaldo.GButton;
@@ -23,8 +21,8 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 
 public class MainApplication extends GraphicsApplication implements Tick {
-	public static final int WINDOW_WIDTH = 1280;//(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	public static final int WINDOW_HEIGHT = 720;//(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public static final int WINDOW_WIDTH = 1280;// (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	public static final int WINDOW_HEIGHT = 720;// (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public static final String MUSIC_FOLDER = "sounds";
 	public static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3", "01. Scott Pilgrim Anthem.mp3",
 			"11. Bollywood.mp3", "saw.mp3", "theClickSound.mp3", "cheapShop.mp3" };
@@ -52,18 +50,19 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public AudioPlayer audio = AudioPlayer.getInstance();
 	public boolean test = false;
+	public boolean soundPaused = false;
 	public GButton muteButton;
 	public GButton pauseButton;
 
 	public void setupMap() {
-		if(mapBuilder == null)
+		if (mapBuilder == null)
 			mapBuilder = new MapBuilder();
 		currentMap = mapBuilder.buildMap("com/edd/map/V3Map.csv", 51, 51, 15, 15, 2);
 		sendMapToBack();
 	}
-	
+
 	public void sendMapToBack() {
-		if(currentMap != null)
+		if (currentMap != null)
 			currentMap.sendToBack();
 	}
 
@@ -119,13 +118,16 @@ public class MainApplication extends GraphicsApplication implements Tick {
 	}
 
 	public void switchToMenu() {
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
+		if (!soundPaused)
+			audio.playSound(MUSIC_FOLDER, SOUND_FILES[2], true);
 		switchToScreen(menu);
 	}
 
 	public void switchToSome() {
-		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
+		if (!soundPaused) {
+			audio.stopSound(MUSIC_FOLDER, SOUND_FILES[2]);
+			audio.playSound(MUSIC_FOLDER, SOUND_FILES[3]);
+		}
 		switchToScreen(somePane);
 	}
 
@@ -162,10 +164,6 @@ public class MainApplication extends GraphicsApplication implements Tick {
 
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e);
-	}
-
-	public void resetGame() {
-
 	}
 
 	public ActorAccesser getAccesser() {
