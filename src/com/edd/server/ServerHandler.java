@@ -100,6 +100,10 @@ public class ServerHandler extends Thread {
 					String PUID = this.string_between(inputLine, "<removePU>", "</removePU>");
 					handlePowerUpRemove(PUID);
 				}
+				if(inputLine.contains("<removeR>")) {
+					String PUID = this.string_between(inputLine, "<removeR>", "</removeR>");
+					handleResourceRemove(PUID);
+				}
 				if(inputLine.contains("<move>")) {
 					String[] packetData = this.string_between(inputLine, "<move>", "</move>").split(",");
 					String clientName = this.getPlayerName(out);
