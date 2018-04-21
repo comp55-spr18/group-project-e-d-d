@@ -45,7 +45,7 @@ public class ActorAccesser {
 			case SINGLEPLAYER:
 				return driver.POWERUP_GEN.getActors();
 			case MULTIPLAYER:
-				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				MultiplayerDriver d = (MultiplayerDriver)driver;
 				return d.getPowerUps();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
@@ -56,7 +56,7 @@ public class ActorAccesser {
 			case SINGLEPLAYER:
 				return driver.RESOURCE_GEN.getActors();
 			case MULTIPLAYER:
-				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				MultiplayerDriver d = (MultiplayerDriver)driver;
 				return d.getResources();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
@@ -67,7 +67,7 @@ public class ActorAccesser {
 			case SINGLEPLAYER:
 				return driver.BOUNDARY_GEN.getActors();
 			case MULTIPLAYER:
-				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				MultiplayerDriver d = (MultiplayerDriver)driver;
 				return d.getBoundaries();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
@@ -90,7 +90,7 @@ public class ActorAccesser {
 				ret.add(driver.player);
 				return ret;
 			case MULTIPLAYER:
-				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				MultiplayerDriver d = (MultiplayerDriver)driver;
 				return d.getPlayerList();
 		}
 		return new ArrayList<BaseActor>(); // only here so Java doesn't complain
@@ -130,7 +130,7 @@ public class ActorAccesser {
 				driver.RESOURCE_GEN.addToRemoveList(resource);
 				return;
 			case MULTIPLAYER:
-				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				MultiplayerDriver d = (MultiplayerDriver)driver;
 				d.RESOURCE_GEN.addToRemoveList(resource);
 				d.removeResource((Player)c,resource);
 				return;
@@ -144,7 +144,7 @@ public class ActorAccesser {
 				driver.POWERUP_GEN.use(powerUp);
 				return;
 			case MULTIPLAYER:
-				MultiplayerSam_Test d = (MultiplayerSam_Test)driver;
+				MultiplayerDriver d = (MultiplayerDriver)driver;
 				d.POWERUP_GEN.addToRemoveList(powerUp);
 				d.POWERUP_GEN.use(powerUp);
 				d.removePowerUP((Player)c,powerUp);

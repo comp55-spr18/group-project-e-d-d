@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.edd.circlebrawl.GameType;
 import com.edd.circlebrawl.MainApplication;
-import com.edd.circlebrawl.MultiplayerSam_Test;
+import com.edd.circlebrawl.MultiplayerDriver;
 
 public class AttackOrb extends Character {
 
@@ -42,7 +42,7 @@ public class AttackOrb extends Character {
 					shouldTranslate = true;
 					break;
 				case MULTIPLAYER:
-					MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
+					MultiplayerDriver multiDriver = (MultiplayerDriver)driver;
 					if(owner == multiDriver.getClientPlayer())
 						shouldTranslate = true;
 					break;
