@@ -101,7 +101,7 @@ public class ServerHandler extends Thread {
 					handlePowerUpRemove(PUID);
 				}
 				if(inputLine.contains("<removeR>")) {
-					String PUID = this.string_between(inputLine, "<removeR>", "</removeRR>");
+					String PUID = this.string_between(inputLine, "<removeR>", "</removeR>");
 					handleResourceRemove(PUID);
 				}
 				if(inputLine.contains("<move>")) {

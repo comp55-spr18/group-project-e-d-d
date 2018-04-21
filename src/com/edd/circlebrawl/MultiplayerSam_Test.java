@@ -151,6 +151,9 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 			if (p.contains("playerlist")) {
 				return "playerlist";
 			}
+			if (p.contains("removeR")) {
+				return "removeR";
+			}
 			if (p.contains("removePU")) {
 				return "removePU";
 			}
@@ -250,6 +253,10 @@ public class MultiplayerSam_Test extends MainApplication implements Tick {
 					}
 					System.out.println("Resources: " + resources);
 					world.resourcesComplete = true;
+				}
+				if (parsePacket(userInput).equals("removeR")) {
+					String toRemove = string_between(userInput, "<removeR>", "</removeR>");
+					resourcesToRemove.add(toRemove);
 				}
 				if (parsePacket(userInput).equals("removePU")) {
 					String toRemove = string_between(userInput, "<removePU>", "</removePU>");
