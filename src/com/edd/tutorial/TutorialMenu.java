@@ -30,7 +30,6 @@ public class TutorialMenu extends GraphicsPane {
 	private GImage background = new GImage("com/edd/osvaldo/brick4.jpg");
 	private GImage title = new GImage("com/edd/osvaldo/CircleBrawl.gif", program.WINDOW_WIDTH / 2,
 			program.WINDOW_HEIGHT / 2);
-	private boolean soundPaused = false;
 
 	public TutorialMenu(MainApplication app) { // not sure if I'll be using MainApplication
 		super();
@@ -76,7 +75,6 @@ public class TutorialMenu extends GraphicsPane {
 
 		// initialize the mute button
 		muteButton = new GButton("Mute", (program.WINDOW_WIDTH + 700) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50, 50);
-		muteButton.setFillColor(Color.GREEN);
 
 		// initialize the return to menu button
 		mainMenu = new GButton("Main Menu", (program.WINDOW_WIDTH + 900) / 2, (program.WINDOW_HEIGHT + 600) / 2, 50,
@@ -94,6 +92,10 @@ public class TutorialMenu extends GraphicsPane {
 	public void showContents() {
 		program.add(background);
 		program.add(title);
+		if (program.soundPaused)
+			muteButton.setFillColor(Color.GRAY);
+		else
+			muteButton.setFillColor(Color.GREEN);
 		program.add(muteButton);
 		program.add(movementTut);
 		program.add(combatTut);
@@ -123,15 +125,15 @@ public class TutorialMenu extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 
 		// mute button interaction
-		if (obj == muteButton && !soundPaused) {
+		if (obj == muteButton && !program.soundPaused) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.pauseSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-			soundPaused = true;
+			program.soundPaused = true;
 			muteButton.setFillColor(Color.GRAY);
-		} else if (obj == muteButton && soundPaused) {
+		} else if (obj == muteButton && program.soundPaused) {
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[5]);
 			program.audio.playSound(program.MUSIC_FOLDER, program.SOUND_FILES[2]);
-			soundPaused = false;
+			program.soundPaused = false;
 			muteButton.setFillColor(Color.GREEN);
 		}
 		if (obj == powerupsTut) {
