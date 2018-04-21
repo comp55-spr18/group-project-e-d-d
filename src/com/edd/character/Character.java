@@ -282,6 +282,10 @@ public abstract class Character extends BaseActor {
 				MultiplayerSam_Test multiDriver = (MultiplayerSam_Test)driver;
 				if(multiDriver.getClientPlayer() == this)
 					((Player)this).getCam().translate(-x, -y);
+				else {
+					Player p = (Player)this;
+					p.getNameLabel().move(x, y);
+				}
 			} else {
 				((Player)this).getCam().translate(-x, -y);
 			}
